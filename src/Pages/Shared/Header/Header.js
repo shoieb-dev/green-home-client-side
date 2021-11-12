@@ -18,7 +18,7 @@ const Header = () => {
                     <Navbar.Brand as={Link} to="/">
 
                         <div className="d-flex text-start">
-                            <div>
+                            <div className="bg-light ps-2 pt-1 rounded-start">
                                 <img
                                     src="https://i.ibb.co/pz3fBBX/B-GREEN.png"
                                     width="80"
@@ -27,8 +27,8 @@ const Header = () => {
                                     alt="logo"
                                 />
                             </div>
-                            <div className="">
-                                <span className="brand text-success"> GREEN HOME </span>
+                            <div className="bg-success px-3 rounded-end">
+                                <span className="brand text-white"> GREEN HOME </span>
                                 <h6> <span className="text-warning"> Properties </span> </h6>
                             </div>
                         </div>

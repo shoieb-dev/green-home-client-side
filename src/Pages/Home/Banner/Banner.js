@@ -27,7 +27,7 @@ const Banner = () => {
                         />
 
                         <Carousel.Caption>
-                            <h1 className="banner-text">MAKE YOUR HOME <br /> IN NATURE </h1>
+                            <h1 className="banner-text">CHOOSE YOUR HOME <br /> IN NATURE </h1>
                         </Carousel.Caption>
                     </Carousel.Item>
 

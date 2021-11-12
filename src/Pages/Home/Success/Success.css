@@ -1,0 +1,15 @@
+/* .success-bg{
+    background-image: url('https://i.ibb.co/DVV5q42/bd-map.png');
+    background-size: cover;
+    background-attachment: fixed;
+} */
+
+.success-card{
+    background-color: rgb(18, 71, 66);
+    margin: 10px;
+}
+.success-card:hover{
+    background-color: rgba(76, 210, 228, 0.83);
+    /* background-color: rgba(64, 224, 208, 0.342); */
+
+}
