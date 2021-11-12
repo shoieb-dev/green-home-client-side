@@ -1,23 +1,60 @@
-import logo from './logo.svg';
 import './App.css';
+import AuthProvider from './contexts/AuthProvider';
+import Header from './Pages/Shared/Header/Header';
+import Home from './Pages/Home/Home/Home';
+import Login from './Pages/Login/Login/Login';
+import Footer from './Pages/Shared/Footer/Footer';
+import NotFound from './Pages/NotFound/NotFound';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AuthProvider>
+        <Router>
+          <Header></Header>
+
+          <Switch>
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
+
+            <Route path="/home">
+              <Home></Home>
+            </Route>
+
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+
+            <Route path="*">
+              <NotFound></NotFound>
+            </Route>
+
+            {/* <PrivateRoute path="/booking/:serviceId">
+              <Booking></Booking>
+            </PrivateRoute>
+
+            <PrivateRoute path="/myPackages">
+              <MyPackages></MyPackages>
+            </PrivateRoute>
+
+            <PrivateRoute path="/addPackage">
+              <PackageAdding></PackageAdding>
+            </PrivateRoute>
+
+            <PrivateRoute path="/managePackages">
+              <PackageManaging></PackageManaging>
+            </PrivateRoute> */}
+
+
+          </Switch>
+
+          <Footer></Footer>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }
