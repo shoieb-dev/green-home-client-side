@@ -42,6 +42,7 @@ const Header = () => {
                             <Nav.Link as={HashLink} to="/home#banner">Home</Nav.Link>
                             <Nav.Link as={HashLink} to="/home#featured">Featured</Nav.Link>
                             <Nav.Link as={Link} to="/apartments">Apartments</Nav.Link>
+                            <Nav.Link as={Link} to="/addApartment">Add Apartments</Nav.Link>
                             <Nav.Link as={HashLink} to="/home#reviews">Reviews</Nav.Link>
 
                             {/* showing username in the navbar if the user logged in  */}
