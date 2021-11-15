@@ -8,16 +8,17 @@ import Login from './Pages/Login/Login/Login';
 import Footer from './Pages/Shared/Footer/Footer';
 import NotFound from './Pages/NotFound/NotFound';
 import Apartments from './Pages/Apartments/Apartments/Apartments';
-import ApartmentAdding from './Pages/ApartmentAdding/ApartmentAdding';
+import ApartmentAdding from './Pages/Dashboard/ApartmentAdding/ApartmentAdding';
 import Booking from './Pages/Booking/Booking/Booking';
 import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
 import Register from './Pages/Login/Register/Register';
-import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
-import ApartmentManaging from './Pages/ApartmentManaging/ApartmentManaging';
+import ApartmentManaging from './Pages/Dashboard/ApartmentManaging/ApartmentManaging';
 import MyApartments from './Pages/MyApartments/MyApartments';
 import Payment from './Pages/Payment/Payment';
 import MakeAdmin from './Pages/Dashboard/MakeAdmin/MakeAdmin';
 import ManageAllBookings from './Pages/Dashboard/ManageAllBookings/ManageAllBookings';
+import Reviews from './Pages/Home/Review/Reviews/Reviews';
+import ReviewAdding from './Pages/Home/Review/ReviewAdding/ReviewAdding';
 
 
 function App() {
@@ -48,32 +49,32 @@ function App() {
               <Register></Register>
             </Route>
 
-            <Route path="/dashboard">
-              <Dashboard></Dashboard>
-            </Route>
-
             <PrivateRoute path="/booking/:houseId">
               <Booking></Booking>
-            </PrivateRoute>
-
-            <PrivateRoute path="/addApartment">
-              <ApartmentAdding></ApartmentAdding>
-            </PrivateRoute>
-
-            <PrivateRoute path="/makeAdmin">
-              <MakeAdmin></MakeAdmin>
-            </PrivateRoute>
-
-            <PrivateRoute path="/manageApartments">
-              <ApartmentManaging></ApartmentManaging>
             </PrivateRoute>
 
             <PrivateRoute path="/myApartments">
               <MyApartments></MyApartments>
             </PrivateRoute>
 
+            <PrivateRoute path="/reviewAdding">
+              <ReviewAdding></ReviewAdding>
+            </PrivateRoute>
+
             <PrivateRoute path="/payment">
               <Payment></Payment>
+            </PrivateRoute>
+
+            <PrivateRoute path="/makeAdmin">
+              <MakeAdmin></MakeAdmin>
+            </PrivateRoute>
+
+            <PrivateRoute path="/addApartment">
+              <ApartmentAdding></ApartmentAdding>
+            </PrivateRoute>
+
+            <PrivateRoute path="/manageApartments">
+              <ApartmentManaging></ApartmentManaging>
             </PrivateRoute>
 
             <PrivateRoute path="/manageAllBookings">

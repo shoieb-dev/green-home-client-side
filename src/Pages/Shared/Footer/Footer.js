@@ -58,7 +58,7 @@ const Footer = () => {
                             <div className="mt-4">
                                 <Link as={HashLink} className="text-decoration-none text-white" to="/home#banner">Home</Link> <br />
                                 <Link as={HashLink} className="text-decoration-none text-white" to="/home#featured">Featured</Link> <br />
-                                <Link className="text-decoration-none text-white" to="/appartments">Apartments</Link> <br />
+                                <Link className="text-decoration-none text-white" to="/apartments">Apartments</Link> <br />
                                 <Link as={HashLink} className="text-decoration-none text-white" to="/home#reviews">Reviews</Link> <br />
                             </div>
                         </Col>

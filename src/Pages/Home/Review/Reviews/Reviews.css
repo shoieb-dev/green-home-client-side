@@ -1,0 +1,12 @@
+.review-bg{
+    background-image: url('https://i.ibb.co/LpvVZ4F/image.png');
+    background-attachment: fixed;
+    background-size: cover;
+}
+.review-bg2{
+    background-color: rgba(29, 25, 25, 0.6); 
+    border-radius: 10px;
+}
+.review-header{
+    text-shadow: 1px 1px 5px rgb(0, 0, 0);
+}

@@ -41,8 +41,8 @@ const Header = () => {
                         <Nav className="ms-auto fw-bold">
                             <Nav.Link as={HashLink} to="/home#banner">Home</Nav.Link>
                             <Nav.Link as={HashLink} to="/home#featured">Featured</Nav.Link>
-                            <Nav.Link as={Link} to="/apartments">Explore</Nav.Link>
                             <Nav.Link as={HashLink} to="/home#reviews">Reviews</Nav.Link>
+                            <Nav.Link as={Link} to="/apartments">Explore</Nav.Link>
 
                             {/* showing dashboard in the navbar if the user logged in  */}
                             {user?.email ?
@@ -51,6 +51,7 @@ const Header = () => {
                                         {!admin &&
                                             <div>
 
+                                                <NavDropdown.Item as={Link} to="/reviewAdding">Give a Review</NavDropdown.Item>
                                                 <NavDropdown.Item as={Link} to="/payment">Pay</NavDropdown.Item>
                                                 <NavDropdown.Item as={Link} to="/myApartments">My Bookings</NavDropdown.Item>
                                             </div>
