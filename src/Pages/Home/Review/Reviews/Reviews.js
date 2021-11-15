@@ -13,6 +13,7 @@ const Reviews = () => {
     }, [])
 
     return (
+        // review showing on homepage 
         <div id="reviews" className="review-bg py-5">
             <div className="py-5">
                 <h2 className="fw-bold text-white review-header">

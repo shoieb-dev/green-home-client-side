@@ -9,6 +9,7 @@ const Apartment = ({ apartment }) => {
     const { _id, name, price, area, img1, bed, bath, address } = apartment;
 
     return (
+        // apartments card items
         <div className="p-3">
 
             <Card className="card h-100">

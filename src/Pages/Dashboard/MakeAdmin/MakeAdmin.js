@@ -25,7 +25,6 @@ const MakeAdmin = () => {
                     setSuccess(true);
                 }
             })
-
         e.preventDefault()
     }
 

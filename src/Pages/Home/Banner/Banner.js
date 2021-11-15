@@ -42,8 +42,6 @@ const Banner = () => {
                             <h1 className="banner-text">BE GREEN <br /> BE HAPPY</h1>
                         </Carousel.Caption>
                     </Carousel.Item>
-
-
                 </Carousel>
             </>
         </div>

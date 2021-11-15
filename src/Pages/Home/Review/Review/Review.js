@@ -7,6 +7,7 @@ const Review = ({ review }) => {
     const { name, reviewtext, img } = review;
 
     return (
+        // Review Cards 
         <div className="p-3">
 
             <Card className="card h-100 bg-light">

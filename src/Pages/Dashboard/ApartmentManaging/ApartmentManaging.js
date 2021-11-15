@@ -25,9 +25,8 @@ const ApartmentManaging = () => {
             })
     }
 
-
-
     return (
+        // Apartment Managing
         <div className="manage-apartments">
             <h2 className="py-5">Manage Apartments</h2>
             {

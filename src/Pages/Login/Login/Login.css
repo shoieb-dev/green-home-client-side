@@ -5,6 +5,7 @@
     background-attachment: fixed;
 }
 
+/* extra transparent layer  */
 .bg-login2{
     min-height: 600px;
     margin-top: -20px;

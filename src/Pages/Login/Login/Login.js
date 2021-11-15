@@ -9,22 +9,11 @@ import { useHistory, useLocation } from 'react-router';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({});
-    const { user, loginUser, signInWithGoogle, handleResetPassword, isLoading, authError } = useAuth();
-    // const [error, setError] = useState('');
-    // const [message, setMessage] = useState('');
-    // const { signInUsingGoogle, isLogin,
-    //     handleRegistration,
-    //     handleNameChange,
-    //     handleEmailChange,
-    //     handlePassChange,
-    //     processLogin,
-    //     toggleLogin,
-    //     handleResetPassword,
-    // } = useAuth();
+    const { user, loginUser, signInWithGoogle, isLoading, authError } = useAuth();
 
     const location = useLocation();
     const history = useHistory();
-    // const redirect_uri = location.state?.from || '/';
+
     const handleOnChange = e => {
         const field = e.target.name;
         const value = e.target.value;
@@ -32,6 +21,7 @@ const Login = () => {
         newLoginData[field] = value;
         setLoginData(newLoginData);
     }
+
     const handleLoginSubmit = e => {
         loginUser(loginData.email, loginData.password, location, history);
         e.preventDefault();
@@ -40,22 +30,6 @@ const Login = () => {
     const handleGoogleSignIn = () => {
         signInWithGoogle(location, history)
     }
-
-    // const handleGoogleLogin = () => {
-    //     signInUsingGoogle()
-    //         .then(result => {
-    //             history.push(redirect_uri);
-    //         })
-    // }
-
-    // const handleEmailLogin = e => {
-    //     processLogin()
-    //         .then(result => {
-    //             setError('');
-    //             setMessage('Login Successful');
-    //             history.push(redirect_uri);
-    //         })
-    // }
 
 
     return (
@@ -90,24 +64,17 @@ const Login = () => {
                         {/* showing error/succuss massage  */}
                         <div className="d-flex justify-content-between">
                             <div className="fw-bold">
-                                {/* <span className="text-danger">{error}</span>
-                                <span className="text-success">{message}</span> */}
+
                                 {isLoading && <Spinner animation="grow" variant="success" />}
 
                                 {user?.email && <Alert variant={'success'}>Login successful!</Alert>}
 
                                 {authError && <Alert variant={'danger'}> {authError} </Alert>}
                             </div>
-
-                            {/* password reseting  */}
-                            <div>
-                                <p onClick={handleResetPassword} type="button" className="text-end">Forgot Password?</p>
-                            </div>
                         </div>
 
                         <div className="d-flex">
                             <Button
-                                // onClick={handleEmailLogin} 
                                 variant="dark" type="submit" className="w-50 btn-outline-success rounded-pill fw-bold text-white mt-4 mx-1"> Login </Button>
 
                             {/* google signin  */}

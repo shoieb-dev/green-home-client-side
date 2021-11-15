@@ -29,7 +29,7 @@ const Booking = () => {
     };
 
     return (
-        // Package details 
+        // Apartment details 
         <div className="body mt-5 text-start">
 
             <Container>
@@ -48,6 +48,7 @@ const Booking = () => {
                             <p>{house.description}</p>
                         </div>
                     </Col>
+
                     <Col xs={1} md={6} lg={4}>
                         {/* Booking form  */}
                         <div className="add-house py-5 mb-5 text-center text-white h-100">
@@ -72,8 +73,6 @@ const Booking = () => {
                 </Row>
 
             </Container>
-
-
         </div>
     );
 };

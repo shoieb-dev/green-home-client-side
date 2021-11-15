@@ -17,6 +17,7 @@ const ApartmentAdding = () => {
     };
 
     return (
+        // New Apartment adding form
         <div className="add-house">
             <div className="bg-add-house mx-auto">
                 <h2>Add a House</h2>

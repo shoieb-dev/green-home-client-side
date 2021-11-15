@@ -16,6 +16,7 @@ const ReviewAdding = () => {
     };
 
     return (
+        // Review adding form 
         <div className="add-house">
             <div className="bg-add-house mx-auto">
                 <h2>Add a Review</h2>
