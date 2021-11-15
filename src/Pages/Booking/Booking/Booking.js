@@ -12,14 +12,14 @@ const Booking = () => {
     const { user } = useAuth();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/houses/${houseId}`)
+        fetch(`https://evening-plateau-00418.herokuapp.com/houses/${houseId}`)
             .then(res => res.json())
             .then(data => setHouse(data));
     }, [houseId])
 
     const onSubmit = data => {
         console.log(data);
-        axios.post(`http://localhost:5000/bookings`, data)
+        axios.post(`https://evening-plateau-00418.herokuapp.com/bookings`, data)
             .then(res => {
                 if (res.data.insertedId) {
                     alert('House Booked Successfully');

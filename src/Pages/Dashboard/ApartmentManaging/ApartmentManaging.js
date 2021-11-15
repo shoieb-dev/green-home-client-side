@@ -7,13 +7,13 @@ const ApartmentManaging = () => {
     const [apartments, setApartments] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/houses`)
+        fetch(`https://evening-plateau-00418.herokuapp.com/houses`)
             .then(res => res.json())
             .then(data => setApartments(data));
     }, []);
 
     const handleDelete = id => {
-        axios.delete(`http://localhost:5000/houses/${id}`)
+        axios.delete(`https://evening-plateau-00418.herokuapp.com/houses/${id}`)
             .then(res => {
                 if (res.data.deletedCount > 0) {
                     alert('Are you sure to delete this Booking?');

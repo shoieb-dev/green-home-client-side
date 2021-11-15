@@ -6,7 +6,7 @@ const FeaturedApartments = () => {
     const [apartments, setApartments] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/houses')
+        fetch('https://evening-plateau-00418.herokuapp.com/houses')
             .then(res => res.json())
             .then(data => setApartments(data.slice(0, 6)));
     }, [])

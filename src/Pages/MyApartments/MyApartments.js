@@ -9,13 +9,13 @@ const MyApartments = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/myApartments/${user?.email}`)
+        fetch(`https://evening-plateau-00418.herokuapp.com/myApartments/${user?.email}`)
             .then((res) => res.json())
             .then((data) => setApartments(data));
     }, [user.email]);
 
     const handleDelete = email => {
-        axios.delete(`http://localhost:5000/myApartments/${user?.email}`)
+        axios.delete(`https://evening-plateau-00418.herokuapp.com/myApartments/${user?.email}`)
             .then(res => {
                 console.log(res.data.deletedCount);
                 if (res.data.deletedCount > 0) {

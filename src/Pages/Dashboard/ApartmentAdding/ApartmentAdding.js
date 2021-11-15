@@ -7,7 +7,7 @@ const ApartmentAdding = () => {
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = data => {
         console.log(data);
-        axios.post('http://localhost:5000/houses', data)
+        axios.post('https://evening-plateau-00418.herokuapp.com/houses', data)
             .then(res => {
                 if (res.data.insertedId) {
                     alert('House Added Successfully');
