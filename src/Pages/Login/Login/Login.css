@@ -1,0 +1,18 @@
+.bg-login{
+    background-image: url("https://i.ibb.co/vsQh0F6/image.png");
+    background-size: cover;
+    min-height: 600px;
+    background-attachment: fixed;
+}
+
+.bg-login2{
+    min-height: 600px;
+    margin-top: -20px;
+    background-size: cover;
+    background-color: RGBA(12, 11, 11, 0.59);
+}
+.login-card{
+    border-radius: 50px;
+    border: 2px solid #51e76a;
+    box-shadow: 0 0 30px #60e067;
+}

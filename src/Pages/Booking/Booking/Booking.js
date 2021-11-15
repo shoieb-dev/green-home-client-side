@@ -19,7 +19,7 @@ const Booking = () => {
 
     const onSubmit = data => {
         console.log(data);
-        axios.post(`https://localhost:5000/bookings`, data)
+        axios.post(`http://localhost:5000/bookings`, data)
             .then(res => {
                 if (res.data.insertedId) {
                     alert('House Booked Successfully');

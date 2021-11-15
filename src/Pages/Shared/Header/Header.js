@@ -6,7 +6,7 @@ import useAuth from '../../../hooks/useAuth';
 import './Header.css';
 
 const Header = () => {
-    const { user, logOut } = useAuth();
+    const { user, logout, admin } = useAuth();
 
     return (
         <div>
@@ -42,21 +42,32 @@ const Header = () => {
                             <Nav.Link as={HashLink} to="/home#banner">Home</Nav.Link>
                             <Nav.Link as={HashLink} to="/home#featured">Featured</Nav.Link>
                             <Nav.Link as={Link} to="/apartments">Explore</Nav.Link>
-                            <Nav.Link as={Link} to="/addApartment">Add Apartments</Nav.Link>
                             <Nav.Link as={HashLink} to="/home#reviews">Reviews</Nav.Link>
 
-                            {/* showing username in the navbar if the user logged in  */}
+                            {/* showing dashboard in the navbar if the user logged in  */}
                             {user?.email ?
                                 <>
-                                    <NavDropdown title={user?.displayName} menuVariant="dark" className="btn-outline-info rounded-pill px-3 ms-2" id="basic-nav-dropdown">
-                                        <NavDropdown.Item as={Link} to="/addApartment">Add Apartment</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/manageApartments">Manage Apartments</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/myApartments">My Apartments</NavDropdown.Item>
-                                        <NavDropdown.Divider />
-                                        <NavDropdown.Item onClick={logOut} variant="secondary" className="bg-warning text-black rounded-pill">Logout {user?.displayName}</NavDropdown.Item>
+                                    <NavDropdown title="Dashboard" menuVariant="success" className="btn-outline-success rounded-pill px-1 mx-2" id="basic-nav-dropdown">
+                                        {!admin &&
+                                            <div>
+
+                                                <NavDropdown.Item as={Link} to="/payment">Pay</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="/myApartments">My Bookings</NavDropdown.Item>
+                                            </div>
+                                        }
+                                        {admin &&
+                                            <div>
+
+                                                <NavDropdown.Item as={Link} to="/addApartment">Add Apartment</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="/manageApartments">Manage Apartments</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="/manageAllBookings">Manage All Bookings</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="/makeAdmin">Make Admin</NavDropdown.Item>
+                                            </div>
+                                        }
+
+                                        <Nav.Link onClick={logout} className="btn-success btn-outline-danger text-white rounded-pill ps-4">Logout {user?.displayName}</Nav.Link>
                                     </NavDropdown>
                                 </>
-
                                 :
                                 <Nav.Link as={Link} to="/login" className="btn-success btn-outline-warning text-white rounded-pill px-3">Login</Nav.Link>
                             }

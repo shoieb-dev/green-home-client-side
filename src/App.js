@@ -10,6 +10,14 @@ import NotFound from './Pages/NotFound/NotFound';
 import Apartments from './Pages/Apartments/Apartments/Apartments';
 import ApartmentAdding from './Pages/ApartmentAdding/ApartmentAdding';
 import Booking from './Pages/Booking/Booking/Booking';
+import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
+import Register from './Pages/Login/Register/Register';
+import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
+import ApartmentManaging from './Pages/ApartmentManaging/ApartmentManaging';
+import MyApartments from './Pages/MyApartments/MyApartments';
+import Payment from './Pages/Payment/Payment';
+import MakeAdmin from './Pages/Dashboard/MakeAdmin/MakeAdmin';
+import ManageAllBookings from './Pages/Dashboard/ManageAllBookings/ManageAllBookings';
 
 
 function App() {
@@ -36,26 +44,45 @@ function App() {
               <Login></Login>
             </Route>
 
-            <Route path="/addApartment">
-              <ApartmentAdding></ApartmentAdding>
+            <Route path="/register">
+              <Register></Register>
             </Route>
 
-            <Route path="/booking/:houseId">
-              <Booking></Booking>
+            <Route path="/dashboard">
+              <Dashboard></Dashboard>
             </Route>
+
+            <PrivateRoute path="/booking/:houseId">
+              <Booking></Booking>
+            </PrivateRoute>
+
+            <PrivateRoute path="/addApartment">
+              <ApartmentAdding></ApartmentAdding>
+            </PrivateRoute>
+
+            <PrivateRoute path="/makeAdmin">
+              <MakeAdmin></MakeAdmin>
+            </PrivateRoute>
+
+            <PrivateRoute path="/manageApartments">
+              <ApartmentManaging></ApartmentManaging>
+            </PrivateRoute>
+
+            <PrivateRoute path="/myApartments">
+              <MyApartments></MyApartments>
+            </PrivateRoute>
+
+            <PrivateRoute path="/payment">
+              <Payment></Payment>
+            </PrivateRoute>
+
+            <PrivateRoute path="/manageAllBookings">
+              <ManageAllBookings></ManageAllBookings>
+            </PrivateRoute>
 
             <Route path="*">
               <NotFound></NotFound>
             </Route>
-
-
-            {/*<PrivateRoute path="/myPackages">
-              <MyPackages></MyPackages>
-            </PrivateRoute>
-            
-            <PrivateRoute path="/managePackages">
-            <PackageManaging></PackageManaging>
-          </PrivateRoute> */}
 
           </Switch>
 
