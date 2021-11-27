@@ -1,14 +1,12 @@
 # GREEN HOME PROPERTIES
 
-This is a CRUD project on the apartment selling related site [GREEN HOME PROPERTIES](https://niche-website-ms.web.app/).
+This is a full-stack responsive property booking website [GREEN HOME PROPERTIES](https://niche-website-ms.web.app/).
 
 
 ## KEY Features
 
-* Creating new apartments for sale
-* Deleting existing packages
-* Apartment details on bookings page with booking form.
-* Email-Password and Google login system.
-* Admin Panel
-* Customer Review Adding
-* Attractive Apartments in Natures
+* Provides two different dashboard functionalities for the user and admin.
+* The user can provide reviews, which will be displayed on the homepage.
+* The user can delete any booked apartment from his booked list.
+* Admins can add new apartments and delete existing apartments.
+* Admins can add new admins.
