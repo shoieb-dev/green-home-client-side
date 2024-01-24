@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
+import { API_ENDPOINTS } from '../../../services/api';
 import Apartment from '../Apartment/Apartment';
 import './Apartments.css';
 
@@ -7,10 +8,10 @@ const Apartments = () => {
     const [apartments, setApartments] = useState([]);
 
     useEffect(() => {
-        fetch('https://evening-plateau-00418.herokuapp.com/houses')
-            .then(res => res.json())
-            .then(data => setApartments(data));
-    }, [])
+        fetch(API_ENDPOINTS.houses)
+            .then((res) => res.json())
+            .then((data) => setApartments(data));
+    }, []);
 
     return (
         <div className="py-5">
@@ -23,12 +24,12 @@ const Apartments = () => {
 
             <Container className="apartment-bg">
                 <Row xs={1} md={2} lg={3}>
-                    {
-                        apartments.map(apartment => <Apartment
+                    {apartments.map((apartment) => (
+                        <Apartment
                             key={apartment._id}
                             apartment={apartment}
-                        ></Apartment>)
-                    }
+                        ></Apartment>
+                    ))}
                 </Row>
             </Container>
         </div>

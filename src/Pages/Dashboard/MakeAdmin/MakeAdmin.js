@@ -1,38 +1,42 @@
-import React, { useState } from 'react';
-import { Alert, Button, Form } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Alert, Button, Form } from "react-bootstrap";
+import { API_ENDPOINTS } from "../../../services/api";
 
 const MakeAdmin = () => {
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState("");
     const [success, setSuccess] = useState(false);
 
-    const handleOnBlur = e => {
+    const handleOnBlur = (e) => {
         setEmail(e.target.value);
-    }
+    };
 
-    const handleAdminSubmit = e => {
+    const handleAdminSubmit = (e) => {
         const user = { email };
-        fetch('https://evening-plateau-00418.herokuapp.com/users/admin', {
-            method: 'PUT',
+        fetch(`${API_ENDPOINTS.users}/admin`, {
+            method: "PUT",
             headers: {
-                'content-type': 'application/json'
+                "content-type": "application/json",
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(user),
         })
-            .then(res => res.json())
-            .then(data => {
+            .then((res) => res.json())
+            .then((data) => {
                 if (data.modifiedCount) {
                     console.log(data);
                     setSuccess(true);
                 }
-            })
-        e.preventDefault()
-    }
+            });
+        e.preventDefault();
+    };
 
     return (
         <div className="body bg-secondary pb-5">
             <h2 className="text-white">Make an Admin</h2>
 
-            <Form onSubmit={handleAdminSubmit} className="bg-light w-50 mx-auto rounded-pill py-5 mt-5">
+            <Form
+                onSubmit={handleAdminSubmit}
+                className="bg-light w-50 mx-auto rounded-pill py-5 mt-5"
+            >
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className="fw-bold">Email address</Form.Label>
                     <Form.Control
@@ -43,8 +47,18 @@ const MakeAdmin = () => {
                         required
                     />
                 </Form.Group>
-                {success && <Alert variant={'success'}>successfully Made an Admin !</Alert>}
-                <Button type="submit" variant="light" className="btn-outline-success">Make Admin</Button>
+                {success && (
+                    <Alert variant={"success"}>
+                        successfully Made an Admin !
+                    </Alert>
+                )}
+                <Button
+                    type="submit"
+                    variant="light"
+                    className="btn-outline-success"
+                >
+                    Make Admin
+                </Button>
             </Form>
         </div>
     );
