@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { Alert, Button, Form, Spinner } from 'react-bootstrap';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
+import { Alert, Button, Form, InputGroup, Spinner } from 'react-bootstrap';
+import { useHistory, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import './Login.css';
-import { useHistory, useLocation } from 'react-router';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({});
-    const { user, loginUser, signInWithGoogle, isLoading, authError } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
+    const { user, loginUser, signInWithGoogle, isLoading, authError, setAuthError } = useAuth();
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const location = useLocation();
     const history = useHistory();
 
     const handleOnChange = e => {
+        setAuthError('')
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
@@ -23,13 +30,15 @@ const Login = () => {
     }
 
     const handleLoginSubmit = e => {
-        loginUser(loginData.email, loginData.password, location, history);
         e.preventDefault();
-    }
+        setAuthError('');
+        loginUser(loginData.email, loginData.password, location, history);
+    };
 
     const handleGoogleSignIn = () => {
-        signInWithGoogle(location, history)
-    }
+        setAuthError('');
+        signInWithGoogle(location, history);
+    };
 
 
     return (
@@ -52,13 +61,20 @@ const Login = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Control
-                                type="password"
-                                name="password"
-                                onChange={handleOnChange}
-                                placeholder="Password"
-                                required
-                            />
+                            <InputGroup>
+                                <Form.Control
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    onChange={handleOnChange}
+                                    placeholder="Password"
+                                    required
+                                />
+                                {/* <InputGroup.Append> */}
+                                <Button variant="outline-light" className='bg-white text-secondary' onClick={() => togglePasswordVisibility('password')}>
+                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                                </Button>
+                                {/* </InputGroup.Append> */}
+                            </InputGroup>
                         </Form.Group>
 
                         {/* showing error/succuss massage  */}
@@ -78,13 +94,13 @@ const Login = () => {
                                 variant="dark" type="submit" className="w-50 btn-outline-success rounded-pill fw-bold text-white mt-4 mx-1"> Login </Button>
 
                             {/* google signin  */}
-                            <Button onClick={handleGoogleSignIn} variant="light" type="submit" className="w-50 btn-outline-success rounded-pill fw-bold mt-4 mx-1">
+                            <Button onClick={handleGoogleSignIn} variant="light" type="button" className="w-50 btn-outline-success rounded-pill fw-bold mt-4 mx-1">
                                 <FontAwesomeIcon icon={faGoogle} /> Continue with Google
                             </Button>
                         </div>
                     </Form>
 
-                    <Button as={Link} to="/register" variant="white" type="submit" className="fw-bold mt-4 w-100 mx-auto">Don't have an account? </Button>
+                    <Button onClick={() => setAuthError('')} as={Link} to="/register" variant="white" type="button" className="fw-bold mt-4 w-100 mx-auto">Don't have an account? </Button>
 
                 </div>
             </div>

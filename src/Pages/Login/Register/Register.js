@@ -1,44 +1,56 @@
 import React, { useState } from 'react';
-import { Alert, Button, Form, Spinner } from 'react-bootstrap';
+import { Alert, Button, Form, InputGroup, Spinner } from 'react-bootstrap';
 import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Register = () => {
-    const [loginData, setLoginData] = useState({});
+    const [registerData, setRegisterData] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
     const history = useHistory();
-    const { user, registerUser, isLoading, authError } = useAuth();
+    const { user, registerUser, isLoading, authError, setAuthError } = useAuth();
 
-    const handleOnBlur = e => {
+    const handleOnChange = e => {
+        setAuthError('');
         const field = e.target.name;
         const value = e.target.value;
-        const newLoginData = { ...loginData };
-        newLoginData[field] = value;
-        setLoginData(newLoginData);
+        setRegisterData(prevState => ({ ...prevState, [field]: value }));
     }
-    const handleLoginSubmit = e => {
-        if (loginData.password !== loginData.password2) {
-            alert('Your password did not match');
+
+    const handleRegisterSubmit = e => {
+        e.preventDefault();
+        if (registerData.password !== registerData.password2) {
+            setAuthError('Your password did not match');
             return
         }
-        registerUser(loginData.email, loginData.password, loginData.name, history);
-        e.preventDefault();
+        registerUser(registerData.email, registerData.password, registerData.name, history);
 
     }
+
+    const togglePasswordVisibility = (field) => {
+        if (field === 'password') {
+            setShowPassword(!showPassword);
+        } else if (field === 'password2') {
+            setShowPassword2(!showPassword2);
+        }
+    };
+
     return (
         <div className="bg-login body">
             <div className="p-5 bg-login2">
                 <div className="p-5 mx-auto w-50 text-start bg-light login-card">
-
-                    {!isLoading && <form onSubmit={handleLoginSubmit}>
+                    <Form onSubmit={handleRegisterSubmit}>
                         <h3 className="text-center mb-5">Sign Up</h3>
 
                         <Form.Group
                             className="mb-3" controlId="formBasicName">
                             <Form.Control
-                                type="name"
+                                type="text"
                                 name="name"
-                                onBlur={handleOnBlur}
+                                onChange={handleOnChange}
                                 placeholder="Enter name"
                                 required
                             />
@@ -48,27 +60,44 @@ const Register = () => {
                             <Form.Control
                                 type="email"
                                 name="email"
-                                onBlur={handleOnBlur}
+                                onChange={handleOnChange}
                                 placeholder="Enter email"
                                 required
                             />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Control
-                                type="password"
-                                name="password"
-                                onBlur={handleOnBlur} placeholder="Password"
-                            />
+                            <InputGroup>
+                                <Form.Control
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    onChange={handleOnChange}
+                                    placeholder="Password"
+                                    required
+                                />
+                                {/* <InputGroup.Append> */}
+                                <Button variant="outline-light" className='bg-white text-secondary' onClick={() => togglePasswordVisibility('password')}>
+                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                                </Button>
+                                {/* </InputGroup.Append> */}
+                            </InputGroup>
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Control
-                                type="password"
-                                name="password2"
-                                onBlur={handleOnBlur}
-                                placeholder="Retype Password"
-                            />
+                        <Form.Group className="mb-3" controlId="formBasicPassword2">
+                            <InputGroup>
+                                <Form.Control
+                                    type={showPassword2 ? "text" : "password"}
+                                    name="password2"
+                                    onChange={handleOnChange}
+                                    placeholder="Retype Password"
+                                    required
+                                />
+                                {/* <InputGroup.Append> */}
+                                <Button variant="outline-light" className='bg-white text-secondary' onClick={() => togglePasswordVisibility('password2')}>
+                                    <FontAwesomeIcon icon={showPassword2 ? faEyeSlash : faEye} />
+                                </Button>
+                                {/* </InputGroup.Append> */}
+                            </InputGroup>
                         </Form.Group>
 
                         {/* showing error/succuss massage  */}
@@ -88,7 +117,7 @@ const Register = () => {
                         <div className="d-flex">
                             <Button variant="dark" type="submit" className="w-75 btn-outline-success rounded-pill fw-bold text-white mt-4 mx-auto">Sign Up </Button>
                         </div>
-                    </form>}
+                    </Form>
 
                     <Button as={Link} to="/login" variant="white" type="submit" className="fw-bold mt-4 w-100">Already have an account? </Button>
 
