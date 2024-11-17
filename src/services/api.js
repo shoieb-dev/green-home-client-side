@@ -1,5 +1,7 @@
 // api.js
-const API_BASE_URL = "https://green-home-server-side.vercel.app";
+const serverUrl = "https://green-home-server-side.vercel.app";
+const localUrl = "http://localhost:5000";
+const API_BASE_URL = serverUrl;
 
 export const API_ENDPOINTS = {
     houses: `${API_BASE_URL}/houses`,
