@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from 'react-router-dom';
 import { API_ENDPOINTS } from "../../../services/api";
@@ -7,12 +7,26 @@ import { API_ENDPOINTS } from "../../../services/api";
 const Booking = () => {
     const { houseId } = useParams();
     const [house, setHouse] = useState({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
         fetch(`${API_ENDPOINTS.houses}/${houseId}`)
             .then((res) => res.json())
-            .then((data) => setHouse(data));
+            .then((data) => {
+                setHouse(data);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
     }, [houseId]);
+
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <Spinner animation="border" variant="success" />
+            </div>
+        );
+    }
 
     return (
         // Apartment details
@@ -32,7 +46,6 @@ const Booking = () => {
                             src={house.img1}
                             alt=""
                         />
-
                     </Col>
                     <Col xs={1} md={6} lg={4}>
                         <h4 className="text-success">{house.heading}</h4>
