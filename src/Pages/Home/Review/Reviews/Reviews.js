@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner, Alert } from "react-bootstrap";
 import { API_ENDPOINTS } from "../../../../services/api";
 import Review from "../Review/Review";
 import "./Reviews.css";
@@ -10,23 +10,15 @@ const Reviews = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    /*   useEffect(() => {
-    fetch(API_ENDPOINTS.reviews)
-      .then((res) => res.json())
-      .then((data) => setReviews(data));
-  }, []); */
-
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const response = await fetch(API_ENDPOINTS.reviews);
 
                 if (!response.ok) {
-                    throw new Error(
-                        `Failed to fetch data: ${response.statusText}`
-                    );
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
                 }
-
                 const data = await response.json();
                 setReviews(data);
             } catch (error) {
@@ -39,8 +31,24 @@ const Reviews = () => {
         fetchData();
     }, []);
 
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+                <Spinner animation="border" variant="warning" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+                <Alert variant="danger">Error: {error}</Alert>
+            </div>
+        );
+    }
+
     return (
-        // review showing on homepage
+        // Reviews Section
         <div id="reviews" className="review-bg py-5">
             <div className="py-5">
                 <h2 className="fw-bold text-white review-header">
