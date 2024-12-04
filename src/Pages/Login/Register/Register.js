@@ -1,41 +1,32 @@
-import React, { useState } from 'react';
-import { Alert, Button, Form, InputGroup, Spinner } from 'react-bootstrap';
-import useAuth from '../../../hooks/useAuth';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import { Alert, Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
-    const [registerData, setRegisterData] = useState({});
+    const [registerData, setRegisterData] = useState({ name: "", email: "", password: "", password2: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
     const { user, registerUser, isLoading, authError, setAuthError } = useAuth();
 
-    const handleOnChange = e => {
-        setAuthError('');
-        const field = e.target.name;
-        const value = e.target.value;
-        setRegisterData(prevState => ({ ...prevState, [field]: value }));
-    }
+    const handleOnChange = (e) => {
+        setAuthError("");
+        const { name, value } = e.target;
+        setRegisterData((prevState) => ({ ...prevState, [name]: value }));
+    };
 
-    const handleRegisterSubmit = e => {
+    const handleRegisterSubmit = (e) => {
         e.preventDefault();
-        if (registerData.password !== registerData.password2) {
-            setAuthError('Your password did not match');
-            return
-        }
-        registerUser(registerData.email, registerData.password, registerData.name, history);
+        const { password, password2 } = registerData;
 
-    }
-
-    const togglePasswordVisibility = (field) => {
-        if (field === 'password') {
-            setShowPassword(!showPassword);
-        } else if (field === 'password2') {
-            setShowPassword2(!showPassword2);
+        if (password !== password2) {
+            setAuthError("Passwords do not match.");
+            return;
         }
+        registerUser(registerData.email, registerData.password, registerData.name, navigate);
     };
 
     return (
@@ -45,8 +36,7 @@ const Register = () => {
                     <Form onSubmit={handleRegisterSubmit}>
                         <h3 className="text-center mb-5">Sign Up</h3>
 
-                        <Form.Group
-                            className="mb-3" controlId="formBasicName">
+                        <Form.Group className="mb-3" controlId="formBasicName">
                             <Form.Control
                                 type="text"
                                 name="name"
@@ -75,11 +65,13 @@ const Register = () => {
                                     placeholder="Password"
                                     required
                                 />
-                                {/* <InputGroup.Append> */}
-                                <Button variant="outline-light" className='bg-white text-secondary' onClick={() => togglePasswordVisibility('password')}>
+                                <Button
+                                    variant="outline-light"
+                                    className="bg-white text-secondary"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
                                     <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                                 </Button>
-                                {/* </InputGroup.Append> */}
                             </InputGroup>
                         </Form.Group>
 
@@ -92,35 +84,32 @@ const Register = () => {
                                     placeholder="Retype Password"
                                     required
                                 />
-                                {/* <InputGroup.Append> */}
-                                <Button variant="outline-light" className='bg-white text-secondary' onClick={() => togglePasswordVisibility('password2')}>
+                                <Button
+                                    variant="outline-light"
+                                    className="bg-white text-secondary"
+                                    onClick={() => setShowPassword2(!showPassword2)}
+                                >
                                     <FontAwesomeIcon icon={showPassword2 ? faEyeSlash : faEye} />
                                 </Button>
-                                {/* </InputGroup.Append> */}
                             </InputGroup>
                         </Form.Group>
 
-                        {/* showing error/succuss massage  */}
-                        <div className="d-flex justify-content-between">
-                            <div className="fw-bold">
-                                {/* <span className="text-danger">{error}</span>
-                                <span className="text-success">{message}</span> */}
-
-                                {isLoading && <Spinner animation="grow" variant="success" />}
-
-                                {user?.email && <Alert variant={'success'}> User Created successfully! </Alert>}
-
-                                {authError && <Alert variant={'danger'}> {authError} </Alert>}
-                            </div>
+                        <div className="text-center">
+                            {isLoading && <Spinner animation="grow" variant="success" />}
+                            {user?.email && <Alert variant="success">User Created Successfully!</Alert>}
+                            {authError && <Alert variant="danger">{authError}</Alert>}
                         </div>
 
-                        <div className="d-flex">
-                            <Button variant="dark" type="submit" className="w-75 btn-outline-success rounded-pill fw-bold text-white mt-4 mx-auto">Sign Up </Button>
+                        <div className="d-flex justify-content-center mt-4">
+                            <Button variant="dark" type="submit" className="w-75 btn-outline-success rounded-pill fw-bold text-white">
+                                Sign Up
+                            </Button>
                         </div>
                     </Form>
 
-                    <Button as={Link} to="/login" variant="white" type="submit" className="fw-bold mt-4 w-100">Already have an account? </Button>
-
+                    <Button as={Link} to="/login" variant="white" type="button" className="fw-bold mt-4 w-100">
+                        Already have an account?
+                    </Button>
                 </div>
             </div>
         </div>
