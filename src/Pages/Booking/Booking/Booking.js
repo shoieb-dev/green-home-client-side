@@ -1,37 +1,18 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router";
-import useAuth from "../../../hooks/useAuth";
+import { Link } from 'react-router-dom';
 import { API_ENDPOINTS } from "../../../services/api";
 
 const Booking = () => {
     const { houseId } = useParams();
     const [house, setHouse] = useState({});
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm();
-    const { user } = useAuth();
 
     useEffect(() => {
         fetch(`${API_ENDPOINTS.houses}/${houseId}`)
             .then((res) => res.json())
             .then((data) => setHouse(data));
     }, [houseId]);
-
-    const onSubmit = (data) => {
-        console.log(data);
-        axios.post(API_ENDPOINTS.bookings, data).then((res) => {
-            if (res.data.insertedId) {
-                alert("House Booked Successfully");
-                reset();
-            }
-        });
-    };
 
     return (
         // Apartment details
@@ -51,58 +32,14 @@ const Booking = () => {
                             src={house.img1}
                             alt=""
                         />
-                        <div>
-                            <h4 className="text-success">{house.heading}</h4>
-                            <p>{house.description}</p>
-                        </div>
+
                     </Col>
-
                     <Col xs={1} md={6} lg={4}>
-                        {/* Booking form  */}
-                        <div className="add-house py-5 mb-5 text-center text-white h-100">
-                            <h4>Book This Apartment</h4>
-                            <form
-                                className=""
-                                onSubmit={handleSubmit(onSubmit)}
-                            >
-                                <input
-                                    defaultValue={user.displayName}
-                                    {...register("name")}
-                                />
-
-                                <input
-                                    defaultValue={user.email}
-                                    {...register("email", { required: true })}
-                                />
-                                {errors.email && (
-                                    <span className="error">
-                                        This field is required
-                                    </span>
-                                )}
-
-                                <input
-                                    defaultValue={house.name}
-                                    {...register("house", { required: true })}
-                                />
-
-                                <input
-                                    defaultValue={house.price}
-                                    {...register("price", { required: true })}
-                                />
-
-                                <input
-                                    placeholder="Phone Number"
-                                    defaultValue=""
-                                    {...register("phone", { required: true })}
-                                />
-
-                                <input
-                                    type="submit"
-                                    value="Book This Apartment"
-                                    className="btn-outline-success"
-                                />
-                            </form>
-                        </div>
+                        <h4 className="text-success">{house.heading}</h4>
+                        <p style={{ textAlign: "justify" }} className="">{house.description}</p>
+                        <Link to={`/booking/${houseId}/bookingForm`}>
+                            <Button variant="outline-success" className="px-5 w-100 rounded-pill">Book Now</Button>
+                        </Link>
                     </Col>
                 </Row>
             </Container>
