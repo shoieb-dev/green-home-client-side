@@ -1,5 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+    getAuth,
+    signInWithPopup,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile,
+    GoogleAuthProvider,
+    signOut,
+    onAuthStateChanged,
+} from "firebase/auth";
 import { API_ENDPOINTS } from "../services/api";
 import initializeFirebase from "./../Pages/Login/Firebase/firebase.init";
 
@@ -31,51 +40,46 @@ const useFirebase = () => {
         setAuthError(errorMessages[error.code] || error.message);
     }, []);
 
-    const registerUser = useCallback((email, password, name, history) => {
+    const registerUser = useCallback((email, password, name, navigate) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(() => {
                 setAuthError("");
-
                 const newUser = { email, displayName: name };
                 setUser(newUser);
 
-                // save user to the database
                 saveUser(email, name, "POST");
 
                 // send name to firebase after creation
-                updateProfile(auth.currentUser, {
-                    displayName: name,
-                })
-                    .then(() => { })
-                    .catch((error) => { });
-                history.replace("/");
+                updateProfile(auth.currentUser, { displayName: name }).catch(console.error);
+                navigate("/");
             })
             .catch(handleAuthError)
             .finally(() => setIsLoading(false));
     }, [auth, handleAuthError]);
 
-    const loginUser = useCallback((email, password, location, history) => {
+    const loginUser = useCallback((email, password, location, navigate) => {
         setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const destination = location?.state?.from || "/";
-                history.replace(destination);
+            .then(() => {
+                const destination = location?.state?.from || "/";  // If no `from`, redirect to home
+                navigate(destination);  // Redirect back to original page or default
                 setAuthError("");
             })
             .catch(handleAuthError)
             .finally(() => setIsLoading(false));
     }, [auth, handleAuthError]);
 
-    const signInWithGoogle = useCallback((location, history) => {
+    const signInWithGoogle = useCallback((location, navigate) => {
+        console.log('location', location);
         setIsLoading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
                 saveUser(user.email, user.displayName, "PUT");
-                setAuthError("");
                 const destination = location?.state?.from || "/";
-                history.replace(destination);
+                navigate(destination);
+                setAuthError("");
             })
             .catch(handleAuthError)
             .finally(() => setIsLoading(false));
@@ -83,36 +87,34 @@ const useFirebase = () => {
 
     // observer user state
     useEffect(() => {
-        const unsubscribed = onAuthStateChanged(auth, (user) => {
-            setUser(user || {});
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser || {});
             setIsLoading(false);
         });
-        return () => unsubscribed;
+        return () => unsubscribe();
     }, [auth]);
 
     useEffect(() => {
         if (user.email) {
             fetch(`${API_ENDPOINTS.users}/${user.email}`)
                 .then((res) => res.json())
-                .then((data) => setAdmin(data.admin));
+                .then((data) => setAdmin(data.admin))
+                .catch(console.error);
         }
     }, [user.email]);
 
     const logout = useCallback(() => {
         setIsLoading(true);
-        signOut(auth)
-            .finally(() => setIsLoading(false));
+        signOut(auth).catch(console.error).finally(() => setIsLoading(false));
     }, [auth]);
 
     const saveUser = (email, displayName, method) => {
         const user = { email, displayName };
         fetch(API_ENDPOINTS.users, {
-            method: method,
-            headers: {
-                "content-type": "application/json",
-            },
+            method,
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user),
-        }).then();
+        }).catch(console.error);
     };
 
     return {
