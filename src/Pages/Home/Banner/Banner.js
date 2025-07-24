@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Carousel, Spinner } from 'react-bootstrap';
-import './Banner.css';
+import React, { useState } from "react";
+import { Carousel, Spinner } from "react-bootstrap";
+import "./Banner.css";
 
 const slides = [
     {
@@ -31,13 +31,13 @@ const Banner = () => {
 
     return (
         <div id="banner">
-            <Carousel fade>
+            <Carousel fade interval={3000}>
                 {slides.map((slide, index) => (
                     <Carousel.Item key={index}>
                         <div style={{ position: "relative", height: "600px", width: "100%" }}>
                             {/* Loader */}
                             {!loadedImages[index] && (
-                                <div className='spinner-container'>
+                                <div className="spinner-container">
                                     <Spinner
                                         animation="border"
                                         variant="success"
@@ -51,7 +51,7 @@ const Banner = () => {
                                 className="d-block w-100"
                                 src={slide.src}
                                 alt={slide.alt}
-                                style={{ height: "600px", display: loadedImages[index] ? "block" : "none", }}
+                                style={{ height: "600px", display: loadedImages[index] ? "block" : "none" }}
                                 onLoad={() => handleImageLoad(index)}
                             />
                         </div>
