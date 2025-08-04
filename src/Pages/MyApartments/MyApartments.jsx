@@ -9,21 +9,19 @@ const MyApartments = () => {
     const [apartments, setApartments] = useState([]);
 
     useEffect(() => {
-        fetch(`${API_ENDPOINTS.myApartments}/${user?.email}`)
+        fetch(`${API_ENDPOINTS.bookings}/${user?.email}`)
             .then((res) => res.json())
             .then((data) => setApartments(data));
     }, [user.email]);
 
     const handleDelete = (email) => {
-        axios
-            .delete(`${API_ENDPOINTS.myApartments}/${user?.email}`)
-            .then((res) => {
-                console.log(res.data.deletedCount);
-                if (res.data.deletedCount > 0) {
-                    alert("Are you sure to delete this Booking?");
-                    console.log(res.data);
-                }
-            });
+        axios.delete(`${API_ENDPOINTS.bookings}/${user?.email}`).then((res) => {
+            console.log(res.data.deletedCount);
+            if (res.data.deletedCount > 0) {
+                alert("Are you sure to delete this Booking?");
+                console.log(res.data);
+            }
+        });
     };
 
     return (
