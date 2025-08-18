@@ -14,7 +14,9 @@ const ManageAllBookings = () => {
     useEffect(() => {
         axiosInstance
             .get(API_ENDPOINTS.bookings)
-            .then((res) => setBookings(res?.data))
+            .then((res) =>
+                setBookings(res?.data.sort((a, b) => new Date(b.bookedAt).getTime() - new Date(a.bookedAt).getTime()))
+            )
             .catch(console.error);
     }, [axiosInstance]);
 
@@ -85,10 +87,11 @@ const ManageAllBookings = () => {
                     <table className="w-full table-auto border-collapse border border-gray-300">
                         <thead className="bg-green-700 text-white">
                             <tr>
-                                <th className="border px-4 py-2">#</th>
-                                <th className="border px-4 py-2">User</th>
+                                {/* <th className="border px-4 py-2">#</th> */}
                                 <th className="border px-4 py-2">Apartment</th>
-                                <th className="border px-4 py-2">Date</th>
+                                <th className="border px-4 py-2">User Name</th>
+                                <th className="border px-4 py-2">User Email</th>
+                                <th className="border px-4 py-2">Booking Date</th>
                                 <th className="border px-4 py-2">Status</th>
                                 <th className="border px-4 py-2">Actions</th>
                             </tr>
@@ -96,9 +99,10 @@ const ManageAllBookings = () => {
                         <tbody>
                             {bookings.map((booking, index) => (
                                 <tr key={booking._id} className="text-center">
-                                    <td className="border px-4 py-2">{index + 1}</td>
-                                    <td className="border px-4 py-2">{booking.email}</td>
+                                    {/* <td className="border px-4 py-2">{index + 1}</td> */}
                                     <td className="border px-4 py-2">{booking.house}</td>
+                                    <td className="border px-4 py-2">{booking.name}</td>
+                                    <td className="border px-4 py-2">{booking.email}</td>
                                     <td className="border px-4 py-2">
                                         {moment(booking.bookedAt).format("DD-MM-YYYY")}
                                     </td>
