@@ -37,15 +37,19 @@ const UserProfile = ({ onClose }) => {
                 </div>
 
                 {/* Dashboard link */}
-                <div className="mt-3">
-                    <button
-                        type="button"
-                        onClick={handleGoDashboard}
-                        className="text-white bg-green-500 hover:bg-green-600 rounded w-full p-2"
-                    >
-                        Go to Dashboard
-                    </button>
-                </div>
+                {!["/dashboard", "/manageAllBookings", "/addApartment", "/manageApartments"].includes(
+                    window.location.pathname
+                ) && (
+                    <div className="mt-3">
+                        <button
+                            type="button"
+                            onClick={handleGoDashboard}
+                            className="text-white bg-green-500 hover:bg-green-600 rounded w-full p-2"
+                        >
+                            Go to Dashboard
+                        </button>
+                    </div>
+                )}
 
                 {/* Logout */}
                 <div className="mt-2">
