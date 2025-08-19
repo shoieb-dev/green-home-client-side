@@ -5,7 +5,7 @@ import "./Sidebar.css";
 
 export default function Sidebar() {
     return (
-        <aside className="w-72 h-screen bg-[#97c0db] text-black flex flex-col">
+        <aside className="fixed top-0 left-0 w-72 h-screen bg-[#97c0db] text-black flex flex-col">
             {/* Logo / Brand */}
             <div className="p-4 text-2xl font-bold border-gray-700">Green Home</div>
 
@@ -17,7 +17,7 @@ export default function Sidebar() {
                     className={({ isActive }) =>
                         `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200
              ${isActive ? "bg-green-700 font-semibold text-white" : "text-black"}
-             hover:bg-green-700 hover:text-white`
+             hover:bg-green-500 hover:text-white`
                     }
                 >
                     <MdDashboard className="text-lg" />
@@ -29,7 +29,7 @@ export default function Sidebar() {
                     className={({ isActive }) =>
                         `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200
              ${isActive ? "bg-green-700 font-semibold text-white" : "text-black"}
-             hover:bg-green-700 hover:text-white`
+             hover:bg-green-500 hover:text-white`
                     }
                 >
                     <MdBookOnline className="text-lg" />
@@ -41,7 +41,7 @@ export default function Sidebar() {
                     className={({ isActive }) =>
                         `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200
              ${isActive ? "bg-green-700 font-semibold text-white" : "text-black"}
-             hover:bg-green-700 hover:text-white`
+             hover:bg-green-500 hover:text-white`
                     }
                 >
                     <MdAddHome className="text-lg" />
@@ -53,7 +53,7 @@ export default function Sidebar() {
                     className={({ isActive }) =>
                         `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200
              ${isActive ? "bg-green-700 font-semibold text-white" : "text-black"}
-             hover:bg-green-700 hover:text-white`
+             hover:bg-green-500 hover:text-white`
                     }
                 >
                     <MdHomeWork className="text-lg" />
