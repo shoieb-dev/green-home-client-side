@@ -23,7 +23,7 @@ const UserProfile = ({ onClose }) => {
 
     return (
         <div id="profile" onClick={toggleOpen} className="fixed inset-0">
-            <div className="nav-item absolute right-10 top-16 bg-white p-4 rounded-lg shadow-lg w-72 fade-in">
+            <div className="nav-item absolute right-5 top-16 bg-white p-4 rounded-lg shadow-lg w-72 fade-in">
                 <p className="font-semibold text-left text-lg text-gray-500">User Profile</p>
 
                 {/* User info */}
@@ -37,9 +37,15 @@ const UserProfile = ({ onClose }) => {
                 </div>
 
                 {/* Dashboard link */}
-                {!["/dashboard", "/manageAllBookings", "/addApartment", "/manageApartments"].includes(
-                    window.location.pathname
-                ) && (
+                {![
+                    "/dashboard",
+                    "/manageAllBookings",
+                    "/addApartment",
+                    "/manageApartments",
+                    "/makeAdmin",
+                    "/payment",
+                    "/bookings",
+                ].includes(window.location.pathname) && (
                     <div className="mt-3">
                         <button
                             type="button"
