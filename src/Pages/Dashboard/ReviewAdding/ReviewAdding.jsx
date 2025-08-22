@@ -47,8 +47,8 @@ const ReviewAdding = () => {
     };
 
     return (
-        <div className="container mt-20">
-            <div className="p-4 shadow rounded bg-white mx-auto" /* style={{ maxWidth: "600px" }} */>
+        <div className="container mt-30">
+            <div className="p-4 shadow rounded bg-white mx-auto" style={{ maxWidth: "600px" }}>
                 <h2 className="text-center mb-4">Add a Review</h2>
 
                 {message && <Alert variant={message.includes("✅") ? "success" : "danger"}>{message}</Alert>}
