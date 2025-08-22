@@ -1,4 +1,3 @@
-import React from "react";
 import { LuConstruction } from "react-icons/lu";
 
 const Payment = () => {

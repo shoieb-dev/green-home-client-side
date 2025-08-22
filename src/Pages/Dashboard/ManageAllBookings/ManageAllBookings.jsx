@@ -1,8 +1,8 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { API_ENDPOINTS } from "../../../services/api";
-import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
+import { useEffect, useState } from "react";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
+import { API_ENDPOINTS } from "../../../services/api";
 
 const ManageAllBookings = () => {
     const { axiosInstance } = useAxiosInstance();

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { API_ENDPOINTS } from "../../../services/api";
 import "./ApartmentManaging.css";
@@ -19,9 +19,7 @@ const ApartmentManaging = () => {
                 alert("Are you sure to delete this Booking?");
                 console.log(res.data.deletedCount);
                 console.log(res.data);
-                const remaining = apartments.filter(
-                    (apartment) => apartment._id !== id
-                );
+                const remaining = apartments.filter((apartment) => apartment._id !== id);
                 setApartments(remaining);
             }
         });

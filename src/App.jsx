@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PublicLayout from "./components/layout/PublicLayout/PublicLayout";
 import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout";
