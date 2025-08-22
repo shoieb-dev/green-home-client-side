@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { API_ENDPOINTS } from "../../../../services/api";
-import useAuth from "../../../../hooks/useAuth";
+import { API_ENDPOINTS } from "../../../services/api";
+import useAuth from "../../../hooks/useAuth";
 import { Form, Button, Alert } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
-import { useAxiosInstance } from "../../../../hooks/useAxiosInstance";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 
 const ReviewAdding = () => {
     const { user } = useAuth();

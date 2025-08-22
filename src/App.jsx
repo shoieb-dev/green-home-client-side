@@ -22,9 +22,9 @@ import ApartmentAdding from "./Pages/Dashboard/ApartmentAdding/ApartmentAdding";
 import ApartmentManaging from "./Pages/Dashboard/ApartmentManaging/ApartmentManaging";
 import MakeAdmin from "./Pages/Dashboard/MakeAdmin/MakeAdmin";
 import ManageAllBookings from "./Pages/Dashboard/ManageAllBookings/ManageAllBookings";
-import ReviewAdding from "./Pages/Home/Review/ReviewAdding/ReviewAdding";
-import MyApartments from "./Pages/MyApartments/MyApartments";
-import Payment from "./Pages/Payment/Payment";
+import ReviewAdding from "./Pages/Dashboard/ReviewAdding/ReviewAdding";
+import MyApartments from "./Pages/Dashboard/MyApartments/MyApartments";
+import Payment from "./Pages/Dashboard/Payment/Payment";
 
 function App() {
     return (

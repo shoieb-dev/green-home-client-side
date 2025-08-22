@@ -1,9 +1,9 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import { useAxiosInstance } from "../../hooks/useAxiosInstance";
-import { API_ENDPOINTS } from "../../services/api";
+import useAuth from "../../../hooks/useAuth";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
+import { API_ENDPOINTS } from "../../../services/api";
 
 const MyApartments = () => {
     const { user } = useAuth();
