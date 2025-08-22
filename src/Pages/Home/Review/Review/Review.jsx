@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { faQuoteLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Avatar from "../../../../assets/images/avatar1.png";
 
 const Review = ({ review }) => {
     const { name, reviewtext, img } = review;
@@ -10,21 +11,26 @@ const Review = ({ review }) => {
         // Review Cards
         <div className="p-3">
             <Card className="card h-100 bg-light">
-                <Card.Img variant="top" src={img} className="w-25 rounded-circle mx-auto" />
+                <Card.Img variant="top" src={img || Avatar} className="w-25 rounded-circle mx-auto" />
 
-                <Card.Body>
-                    <FontAwesomeIcon icon={faQuoteLeft} className="" />
-                    <Card.Text>
-                        {reviewtext}
-                        <div className="py-3">
-                            <FontAwesomeIcon icon={faStar} className="" />
-                            <FontAwesomeIcon icon={faStar} className="" />
-                            <FontAwesomeIcon icon={faStar} className="" />
-                            <FontAwesomeIcon icon={faStar} className="" />
-                            <FontAwesomeIcon icon={faStar} className="" />
+                <Card.Body className="d-flex flex-column items-center">
+                    <FontAwesomeIcon icon={faQuoteLeft} className="mb-2" />
+                    <div className="flex-grow-1 d-flex align-items-center justify-content-center">
+                        <Card.Text className="px-3">{reviewtext}</Card.Text>
+                    </div>
+
+                    <div className="mt-auto py-3">
+                        <div className="d-flex justify-content-center py-2">
+                            {[...Array(5)].map((_, index) => (
+                                <FontAwesomeIcon
+                                    key={index}
+                                    icon={faStar}
+                                    className={index < (review.rating || 0) ? "text-warning" : "text-muted"}
+                                />
+                            ))}
                         </div>
-                    </Card.Text>
-                    <Card.Title>{name}</Card.Title>
+                        <Card.Title className="mt-2">{name}</Card.Title>
+                    </div>
                 </Card.Body>
             </Card>
         </div>
