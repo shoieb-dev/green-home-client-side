@@ -1,12 +1,25 @@
-.review-bg{
-    background-image: url('https://i.ibb.co/LpvVZ4F/image.png');
+.review-bg {
+    background-image: url("https://i.ibb.co/LpvVZ4F/image.png");
     background-attachment: fixed;
     background-size: cover;
 }
-.review-bg2{
-    background-color: rgba(29, 25, 25, 0.6); 
+.review-bg2 {
+    background-color: rgba(29, 25, 25, 0.6);
     border-radius: 10px;
 }
-.review-header{
+.review-header {
     text-shadow: 1px 1px 5px rgb(0, 0, 0);
+}
+/* Scale active slide */
+.swiper-slide {
+    transition: transform 0.3s;
+}
+
+.swiper-slide-active {
+    transform: scale(1.1);
+}
+
+/* Optional: reduce opacity for side slides */
+.swiper-slide:not(.swiper-slide-active) {
+    opacity: 0.7;
 }

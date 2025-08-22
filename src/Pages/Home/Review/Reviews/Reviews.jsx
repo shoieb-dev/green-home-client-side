@@ -1,6 +1,11 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
-import { Container, Row, Spinner, Alert } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Alert, Container, Spinner } from "react-bootstrap";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { API_ENDPOINTS } from "../../../../services/api";
 import Review from "../Review/Review";
 import "./Reviews.css";
@@ -15,25 +20,23 @@ const Reviews = () => {
             try {
                 setLoading(true);
                 const response = await fetch(API_ENDPOINTS.reviews);
-
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                    throw new Error(`Failed to fetch: ${response.statusText}`);
                 }
                 const data = await response.json();
                 setReviews(data);
-            } catch (error) {
-                setError(error.message);
+            } catch (err) {
+                setError(err.message);
             } finally {
                 setLoading(false);
             }
         };
-
         fetchData();
     }, []);
 
     if (loading) {
         return (
-            <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "50vh" }}>
                 <Spinner animation="border" variant="warning" />
             </div>
         );
@@ -41,29 +44,49 @@ const Reviews = () => {
 
     if (error) {
         return (
-            <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
-                <Alert variant="danger">Error: {error}</Alert>
+            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "50vh" }}>
+                <Alert variant="danger" className="text-center">
+                    Error: {error}
+                </Alert>
             </div>
         );
     }
 
     return (
-        // Reviews Section
-        <div id="reviews" className="review-bg py-5">
-            <div className="py-5">
+        <section id="reviews" className="review-bg py-5">
+            <Container className="py-5 text-center">
                 <h2 className="fw-bold text-white review-header">
-                    Happy <span className="text-warning">Clients</span> Says
+                    Happy <span className="text-warning">Clients</span> Say
                 </h2>
-            </div>
+            </Container>
 
             <Container className="review-bg2">
-                <Row xs={1} md={2} lg={3}>
+                <Swiper
+                    modules={[Autoplay, Navigation, Pagination, EffectCoverflow]}
+                    effect="coverflow"
+                    autoplay={{ delay: 3000, disableOnInteraction: false }}
+                    grabCursor={true}
+                    centeredSlides={true}
+                    loop={true}
+                    navigation={true}
+                    pagination={{ clickable: true }}
+                    slidesPerView={3}
+                    coverflowEffect={{
+                        rotate: 50,
+                        stretch: 0,
+                        depth: 100,
+                        modifier: 1,
+                        slideShadows: true,
+                    }}
+                >
                     {reviews.map((review) => (
-                        <Review key={review._id} review={review}></Review>
+                        <SwiperSlide key={review._id}>
+                            <Review review={review} />
+                        </SwiperSlide>
                     ))}
-                </Row>
+                </Swiper>
             </Container>
-        </div>
+        </section>
     );
 };
 
