@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import useAuth from "../../../hooks/useAuth";
 
-const UserProfile = ({ onClose }) => {
+const UserProfile = ({ onClose, userPhoto }) => {
     const { user, admin, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const UserProfile = ({ onClose }) => {
 
                 {/* User info */}
                 <div className="flex gap-3 items-center mt-2 border-b border-gray-200 pb-2">
-                    <img className="rounded-pill h-16 w-16" src={user?.photoURL || Avatar1} alt="user-profile" />
+                    <img className="rounded-pill h-16 w-16" src={userPhoto || Avatar1} alt="user-profile" />
                     <div className="text-left">
                         <p className="font-semibold text-xl mb-1">{user?.displayName || "N/A"}</p>
                         <p className="text-gray-500 text-sm mb-1">{admin ? "Admin" : "User"}</p>

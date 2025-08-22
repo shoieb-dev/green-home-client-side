@@ -13,6 +13,7 @@ const ReviewAdding = () => {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [message, setMessage] = useState("");
+    const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
 
     const onSubmit = async (data) => {
         try {
@@ -24,7 +25,7 @@ const ReviewAdding = () => {
             const reviewData = {
                 name: user?.displayName || data.name,
                 email: user?.email,
-                img: user?.photoURL || data.img,
+                img: userPhoto || data.img,
                 reviewtext: data.reviewtext,
                 rating,
                 createdAt: new Date().toISOString(),

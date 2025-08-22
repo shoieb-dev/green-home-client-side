@@ -11,7 +11,7 @@ import UserProfile from "./UserProfile";
 const Header = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
-
+    const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -57,14 +57,10 @@ const Header = () => {
                         {/* Auth Section */}
                         {user?.email ? (
                             <div className="d-flex align-items-center ml-5 cursor-pointer" onClick={toggleOpen}>
-                                <img
-                                    className="rounded-full w-8 h-8"
-                                    src={user.photoURL || Avatar1}
-                                    alt="user-profile"
-                                />
+                                <img className="rounded-full w-8 h-8" src={userPhoto || Avatar1} alt="user-profile" />
                                 <span className="ms-2 me-2 text-success fw-semibold">{user.displayName}</span>
                                 <MdKeyboardArrowDown className="text-black text-14" />
-                                {isOpen && <UserProfile onClose={toggleOpen} />}
+                                {isOpen && <UserProfile onClose={toggleOpen} userPhoto={userPhoto} />}
                             </div>
                         ) : (
                             <button
