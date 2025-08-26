@@ -70,11 +70,27 @@ const Reviews = () => {
                     loop={true}
                     navigation={true}
                     pagination={{ clickable: true }}
-                    slidesPerView={3}
+                    breakpoints={{
+                        0: {
+                            // mobile
+                            slidesPerView: 1,
+                            coverflowEffect: { rotate: 30, depth: 100 },
+                        },
+                        768: {
+                            // tablet
+                            slidesPerView: 1.5,
+                            coverflowEffect: { rotate: 40, depth: 120 },
+                        },
+                        1200: {
+                            // desktop
+                            slidesPerView: 3,
+                            coverflowEffect: { rotate: 50, depth: 120 },
+                        },
+                    }}
                     coverflowEffect={{
                         rotate: 50,
                         stretch: 0,
-                        depth: 100,
+                        depth: 150,
                         modifier: 1,
                         slideShadows: true,
                     }}
