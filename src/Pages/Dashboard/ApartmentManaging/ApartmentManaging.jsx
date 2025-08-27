@@ -1,55 +1,98 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import ConfirmationModal from "../../../components/modals/ConfirmationModal";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
 import "./ApartmentManaging.css";
 
 const ApartmentManaging = () => {
+    const { axiosInstance } = useAxiosInstance();
     const [apartments, setApartments] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalAction, setModalAction] = useState(() => () => {});
+    const [modalData, setModalData] = useState({ title: "", message: "" });
 
     useEffect(() => {
-        fetch(API_ENDPOINTS.houses)
-            .then((res) => res.json())
-            .then((data) => setApartments(data));
-    }, []);
+        axiosInstance
+            .get(API_ENDPOINTS.houses)
+            .then((res) => setApartments(res?.data))
+            .catch(console.error);
+    }, [axiosInstance]);
 
-    const handleDelete = (id) => {
-        axios.delete(`${API_ENDPOINTS.houses}/${id}`).then((res) => {
-            if (res.data.deletedCount > 0) {
-                alert("Are you sure to delete this Booking?");
-                console.log(res.data.deletedCount);
-                console.log(res.data);
-                const remaining = apartments.filter((apartment) => apartment._id !== id);
-                setApartments(remaining);
-            }
+    const handleOpenModal = (id) => {
+        setModalData({
+            title: "Confirm Deletion",
+            message: "Are you sure you want to delete this apartment?",
         });
+
+        setModalAction(() => () => {
+            axiosInstance
+                .delete(`${API_ENDPOINTS.houses}/${id}`)
+                .then(() => {
+                    setApartments((prev) => prev.filter((b) => b._id !== id));
+                })
+                .catch((err) => console.error("Delete failed:", err));
+
+            setShowModal(false);
+        });
+
+        setShowModal(true);
     };
 
     return (
-        // Apartment Managing
-        <div className="manage-apartments">
-            <h2 className="py-5">Manage Apartments</h2>
-            {apartments.map((apartment) => (
-                <div key={apartment._id}>
-                    <Row className="m-2 bg-secondary rounded-pill w-75 mx-auto p-3 text-white">
-                        <Col>
-                            <h4 className="text-start"> {apartment.name} </h4>
-                        </Col>
-                        <Col>
-                            <Button
-                                variant="outline-danger"
-                                className="btn-dark"
-                                onClick={() => {
-                                    handleDelete(apartment._id);
-                                }}
-                            >
-                                Delete
-                            </Button>
-                        </Col>
-                    </Row>
+        <>
+            <ConfirmationModal
+                isOpen={showModal}
+                title={modalData.title}
+                message={modalData.message}
+                onConfirm={modalAction}
+                onCancel={() => setShowModal(false)}
+            />
+            <div className="p-6 mt-16 bg-white shadow-md rounded-lg">
+                <h2 className="text-2xl font-semibold mb-4">Manage Apartments</h2>
+                <div className="overflow-x-auto">
+                    <table className="w-full table-auto border-collapse border border-gray-300">
+                        <thead className="bg-green-700 text-white">
+                            <tr>
+                                {/* <th className="border px-4 py-2">#</th> */}
+                                <th className="border px-4 py-2">Name</th>
+                                <th className="border px-4 py-2">Address</th>
+                                <th className="border px-4 py-2">Area</th>
+                                <th className="border px-4 py-2">Price</th>
+                                <th className="border px-4 py-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {apartments.map((item, index) => (
+                                <tr key={index} className="border-b hover:bg-gray-100 transition text-center">
+                                    {/* <td className="border px-4 py-2">{index + 1}</td> */}
+                                    <td className="border px-8 py-2 text-left">{item.name}</td>
+                                    <td className="border px-4 py-2">{item.address}</td>
+                                    <td className="border px-4 py-2">{item.area} sft</td>
+                                    <td className="border px-4 py-2">${item.price}</td>
+                                    <td className="border px-4 py-2 space-x-2">
+                                        <button
+                                            onClick={() => {
+                                                handleOpenModal(item._id);
+                                            }}
+                                            className="bg-red-500 text-white px-3 py-1 rounded"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            {apartments.length === 0 && (
+                                <tr>
+                                    <td colSpan="6" className="text-center py-6 text-gray-500">
+                                        No apartment found.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
-            ))}
-        </div>
+            </div>
+        </>
     );
 };
 
