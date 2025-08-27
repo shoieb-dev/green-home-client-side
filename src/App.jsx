@@ -17,7 +17,7 @@ import NotFound from "./Pages/NotFound/NotFound";
 // Dashboard pages
 import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
 import BookingForm from "./Pages/Booking/Booking/BookingForm";
-import ApartmentAdding from "./Pages/Dashboard/ApartmentAdding/ApartmentAdding";
+import AddApartment from "./Pages/Dashboard/AddApartment/AddApartment";
 import ApartmentManaging from "./Pages/Dashboard/ApartmentManaging/ApartmentManaging";
 import MakeAdmin from "./Pages/Dashboard/MakeAdmin/MakeAdmin";
 import ManageAllBookings from "./Pages/Dashboard/ManageAllBookings/ManageAllBookings";
@@ -57,7 +57,7 @@ function App() {
                             <Route path="/payment" element={<Payment />} />
                             <Route path="/manageAllBookings" element={<ManageAllBookings />} />
                             <Route path="/manageApartments" element={<ApartmentManaging />} />
-                            <Route path="/addApartment" element={<ApartmentAdding />} />
+                            <Route path="/addApartment" element={<AddApartment />} />
                             <Route path="/makeAdmin" element={<MakeAdmin />} />
                         </Route>
                     </Routes>
