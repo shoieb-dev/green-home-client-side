@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-tooltip/dist/react-tooltip.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PublicLayout from "./components/layout/PublicLayout/PublicLayout";
 import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout";
