@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Avatar1 from "../../../assets/images/avatar1.png";
+import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
 import "./Header.css";
 import UserProfile from "./UserProfile";
@@ -11,30 +12,72 @@ import UserProfile from "./UserProfile";
 const Header = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
     const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
 
+    useEffect(() => {
+        const handleResize = () => {
+            const screenWidth = window.innerWidth;
+            if (screenWidth < 768) {
+                setIsCollapsed(true);
+            } else {
+                setIsCollapsed(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    const dashboardRoutes = [
+        "/dashboard",
+        "/booking",
+        "/bookings",
+        "/reviewAdding",
+        "/payment",
+        "/manageAllBookings",
+        "/manageApartments",
+        "/addApartment",
+        "/makeAdmin",
+    ];
+
+    const isDashboardPage = dashboardRoutes.includes(location.pathname);
+
     return (
         <Navbar collapseOnSelect expand="lg" variant="light" className="header" fixed="top">
-            {/* <div className="mx-5 d-flex align-items-center"> */}
             <Container fluid className="mx-2">
                 {/* Brand / Logo */}
-                <Navbar.Brand as={Link} to="/">
-                    <div className="d-flex text-start align-items-center">
-                        <div className="bg-light ps-2 pt-1 rounded-start">
-                            <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="80" height="50" alt="logo" />
+                <div
+                    onClick={isDashboardPage ? toggleSidebar : () => navigate("/")}
+                    className="navbar-brand d-flex text-start align-items-center cursor-pointer"
+                >
+                    {isCollapsed ? (
+                        <div className="bg-light ps-1 pt-1 mb-3.5 rounded">
+                            <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="50" height="50" alt="logo" />
                         </div>
-                        <div className="bg-success px-3 rounded-end">
-                            <span className="brand text-white">GREEN HOME</span>
-                            <h6 className="m-0">
-                                <span className="text-warning">Properties</span>
-                            </h6>
-                        </div>
-                    </div>
-                </Navbar.Brand>
+                    ) : (
+                        <>
+                            <div className="bg-light ps-2 pt-1 rounded-start">
+                                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="80" height="50" alt="logo" />
+                            </div>
+                            <div className="bg-success px-3 rounded-end">
+                                <span className="brand text-white">GREEN HOME</span>
+                                <h6 className="m-0">
+                                    <span className="text-warning">Properties</span>
+                                </h6>
+                            </div>
+                        </>
+                    )}
+                </div>
 
                 {/* Mobile Toggle */}
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
