@@ -30,7 +30,7 @@ const MyApartments = () => {
     };
 
     return (
-        <div className="p-6 mt-16 bg-white h-screen shadow-md rounded-lg">
+        <div className="p-6 bg-white h-screen shadow-md rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Manage Booked Apartments</h2>
 
             <div className="overflow-x-auto">

@@ -81,7 +81,7 @@ const ManageAllBookings = () => {
                 onConfirm={modalAction}
                 onCancel={() => setShowModal(false)}
             />
-            <div className="p-6 mt-16 bg-white h-screen shadow-md rounded-lg">
+            <div className="p-6 bg-white h-screen shadow-md rounded-lg">
                 <h2 className="text-2xl font-semibold mb-4">Manage All Bookings</h2>
                 <div className="overflow-x-auto">
                     <table className="w-full table-auto border-collapse border border-gray-300">

@@ -24,7 +24,7 @@ const AddApartment = () => {
     };
 
     return (
-        <div className="mt-16 bg-gray-100 flex items-center justify-center p-6">
+        <div className="bg-gray-100 flex items-center justify-center p-6">
             <div className="w-full bg-white rounded-2xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-700 pb-6">Add New Apartment</h2>
 
