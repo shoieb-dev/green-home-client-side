@@ -23,21 +23,28 @@ export default function Sidebar() {
 
     useEffect(() => {
         const handleResize = () => {
-            const screenWidth = window.innerWidth;
-            if (screenWidth < 768) {
-                setIsCollapsed(true);
-            } else {
-                setIsCollapsed(false);
-            }
+            setIsCollapsed(window.innerWidth < 768);
         };
+
+        handleResize(); // ✅ run on mount
 
         window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [setIsCollapsed]);
 
-        // Cleanup
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    const adminLinks = [
+        { to: "/manageAllBookings", label: "Manage All Bookings", icon: MdBookOnline },
+        { to: "/addApartment", label: "Add Apartment", icon: MdAddHome },
+        { to: "/manageApartments", label: "Manage Apartments", icon: MdHomeWork },
+        { to: "/makeAdmin", label: "Make Admin", icon: MdAdminPanelSettings },
+    ];
+    const userLinks = [
+        { to: "/bookings", label: "My Apartments", icon: MdApartment },
+        { to: "/payment", label: "Payment", icon: MdPayment },
+        { to: "/reviewAdding", label: "Give a Review", icon: MdRateReview },
+    ];
+
+    const links = admin ? adminLinks : userLinks;
 
     const linkClasses = ({ isActive }) =>
         `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200
@@ -71,81 +78,18 @@ export default function Sidebar() {
                     {!isCollapsed && "Dashboard Overview"}
                 </NavLink>
 
-                {admin ? (
-                    <>
-                        <NavLink
-                            to="/manageAllBookings"
-                            className={linkClasses}
-                            data-tooltip-id="sidebar-tooltip"
-                            data-tooltip-content="Manage All Bookings"
-                        >
-                            <MdBookOnline className="text-lg flex-shrink-0" />
-                            {!isCollapsed && "Manage All Bookings"}
-                        </NavLink>
-
-                        <NavLink
-                            to="/addApartment"
-                            className={linkClasses}
-                            data-tooltip-id="sidebar-tooltip"
-                            data-tooltip-content="Add Apartment"
-                        >
-                            <MdAddHome className="text-lg flex-shrink-0" />
-                            {!isCollapsed && "Add Apartment"}
-                        </NavLink>
-
-                        <NavLink
-                            to="/manageApartments"
-                            className={linkClasses}
-                            data-tooltip-id="sidebar-tooltip"
-                            data-tooltip-content="Manage Apartments"
-                        >
-                            <MdHomeWork className="text-lg flex-shrink-0" />
-                            {!isCollapsed && "Manage Apartments"}
-                        </NavLink>
-
-                        <NavLink
-                            to="/makeAdmin"
-                            className={linkClasses}
-                            data-tooltip-id="sidebar-tooltip"
-                            data-tooltip-content="Make Admin"
-                        >
-                            <MdAdminPanelSettings className="text-lg flex-shrink-0" />
-                            {!isCollapsed && "Make Admin"}
-                        </NavLink>
-                    </>
-                ) : (
-                    <>
-                        <NavLink
-                            to="/bookings"
-                            className={linkClasses}
-                            data-tooltip-id="sidebar-tooltip"
-                            data-tooltip-content="My Apartments"
-                        >
-                            <MdApartment className="text-lg flex-shrink-0" />
-                            {!isCollapsed && "My Apartments"}
-                        </NavLink>
-
-                        <NavLink
-                            to="/reviewAdding"
-                            className={linkClasses}
-                            data-tooltip-id="sidebar-tooltip"
-                            data-tooltip-content="Add Review"
-                        >
-                            <MdRateReview className="text-lg flex-shrink-0" />
-                            {!isCollapsed && "Add Review"}
-                        </NavLink>
-
-                        <NavLink
-                            to="/payment"
-                            className={linkClasses}
-                            data-tooltip-id="sidebar-tooltip"
-                            data-tooltip-content="Payment"
-                        >
-                            <MdPayment className="text-lg flex-shrink-0" />
-                            {!isCollapsed && "Payment"}
-                        </NavLink>
-                    </>
-                )}
+                {links.map(({ to, label, icon: Icon }) => (
+                    <NavLink
+                        key={to}
+                        to={to}
+                        className={linkClasses}
+                        data-tooltip-id="sidebar-tooltip"
+                        data-tooltip-content={label}
+                    >
+                        <Icon className="text-lg flex-shrink-0" />
+                        {!isCollapsed && label}
+                    </NavLink>
+                ))}
             </nav>
 
             {/* Logout */}
