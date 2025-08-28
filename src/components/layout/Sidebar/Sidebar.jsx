@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Tooltip } from "react-tooltip";
 import {
     MdAddHome,
     MdAdminPanelSettings,
@@ -59,46 +60,87 @@ export default function Sidebar() {
 
             {/* Menu */}
             <nav className="flex-1 p-4 space-y-2">
-                <NavLink to="/dashboard" end className={linkClasses}>
+                <NavLink
+                    to="/dashboard"
+                    end
+                    className={linkClasses}
+                    data-tooltip-id="sidebar-tooltip"
+                    data-tooltip-content="Dashboard Overview"
+                >
                     <MdDashboard className="text-lg flex-shrink-0" />
                     {!isCollapsed && "Dashboard Overview"}
                 </NavLink>
 
                 {admin ? (
                     <>
-                        <NavLink to="/manageAllBookings" className={linkClasses}>
+                        <NavLink
+                            to="/manageAllBookings"
+                            className={linkClasses}
+                            data-tooltip-id="sidebar-tooltip"
+                            data-tooltip-content="Manage All Bookings"
+                        >
                             <MdBookOnline className="text-lg flex-shrink-0" />
                             {!isCollapsed && "Manage All Bookings"}
                         </NavLink>
 
-                        <NavLink to="/addApartment" className={linkClasses}>
+                        <NavLink
+                            to="/addApartment"
+                            className={linkClasses}
+                            data-tooltip-id="sidebar-tooltip"
+                            data-tooltip-content="Add Apartment"
+                        >
                             <MdAddHome className="text-lg flex-shrink-0" />
                             {!isCollapsed && "Add Apartment"}
                         </NavLink>
 
-                        <NavLink to="/manageApartments" className={linkClasses}>
+                        <NavLink
+                            to="/manageApartments"
+                            className={linkClasses}
+                            data-tooltip-id="sidebar-tooltip"
+                            data-tooltip-content="Manage Apartments"
+                        >
                             <MdHomeWork className="text-lg flex-shrink-0" />
                             {!isCollapsed && "Manage Apartments"}
                         </NavLink>
 
-                        <NavLink to="/makeAdmin" className={linkClasses}>
+                        <NavLink
+                            to="/makeAdmin"
+                            className={linkClasses}
+                            data-tooltip-id="sidebar-tooltip"
+                            data-tooltip-content="Make Admin"
+                        >
                             <MdAdminPanelSettings className="text-lg flex-shrink-0" />
                             {!isCollapsed && "Make Admin"}
                         </NavLink>
                     </>
                 ) : (
                     <>
-                        <NavLink to="/bookings" className={linkClasses}>
+                        <NavLink
+                            to="/bookings"
+                            className={linkClasses}
+                            data-tooltip-id="sidebar-tooltip"
+                            data-tooltip-content="My Apartments"
+                        >
                             <MdApartment className="text-lg flex-shrink-0" />
                             {!isCollapsed && "My Apartments"}
                         </NavLink>
 
-                        <NavLink to="/reviewAdding" className={linkClasses}>
+                        <NavLink
+                            to="/reviewAdding"
+                            className={linkClasses}
+                            data-tooltip-id="sidebar-tooltip"
+                            data-tooltip-content="Add Review"
+                        >
                             <MdRateReview className="text-lg flex-shrink-0" />
                             {!isCollapsed && "Add Review"}
                         </NavLink>
 
-                        <NavLink to="/payment" className={linkClasses}>
+                        <NavLink
+                            to="/payment"
+                            className={linkClasses}
+                            data-tooltip-id="sidebar-tooltip"
+                            data-tooltip-content="Payment"
+                        >
                             <MdPayment className="text-lg flex-shrink-0" />
                             {!isCollapsed && "Payment"}
                         </NavLink>
@@ -112,6 +154,8 @@ export default function Sidebar() {
                     onClick={() => {
                         // logout logic
                     }}
+                    data-tooltip-id="sidebar-tooltip"
+                    data-tooltip-content="Logout"
                     className={`w-full flex items-center gap-2 px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600 ${
                         isCollapsed ? "justify-center" : "justify-start"
                     }`}
@@ -120,6 +164,9 @@ export default function Sidebar() {
                     {!isCollapsed && "Logout"}
                 </button>
             </div>
+
+            {/* Global Tooltip */}
+            {isCollapsed && <Tooltip id="sidebar-tooltip" place="right" />}
         </aside>
     );
 }
