@@ -1,11 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import useAuth from "../../../hooks/useAuth";
 
 const UserProfile = ({ onClose, userPhoto }) => {
     const { user, admin, logout } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = () => {
         logout();
@@ -20,6 +20,20 @@ const UserProfile = ({ onClose, userPhoto }) => {
     const toggleOpen = (e) => {
         if (e.target.id === "profile") onClose();
     };
+
+    const dashboardRoutes = [
+        "/dashboard",
+        "/booking",
+        "/bookings",
+        "/reviewAdding",
+        "/payment",
+        "/manageAllBookings",
+        "/manageApartments",
+        "/addApartment",
+        "/makeAdmin",
+    ];
+
+    const isDashboardPage = dashboardRoutes.includes(location.pathname);
 
     return (
         <div id="profile" onClick={toggleOpen} className="fixed inset-0">
@@ -37,15 +51,7 @@ const UserProfile = ({ onClose, userPhoto }) => {
                 </div>
 
                 {/* Dashboard link */}
-                {![
-                    "/dashboard",
-                    "/manageAllBookings",
-                    "/addApartment",
-                    "/manageApartments",
-                    "/makeAdmin",
-                    "/payment",
-                    "/bookings",
-                ].includes(window.location.pathname) && (
+                {!isDashboardPage && (
                     <div className="mt-3">
                         <button
                             type="button"
