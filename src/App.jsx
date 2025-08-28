@@ -5,6 +5,7 @@ import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout
 import "./App.css";
 import PrivateRoute from "./Pages/auth/PrivateRoute/PrivateRoute";
 import AuthProvider from "./contexts/AuthProvider";
+import { SidebarProvider } from "./contexts/SidebarContext";
 
 // Public pages
 import Home from "./Pages/Home/Home/Home";
@@ -28,41 +29,43 @@ import Payment from "./Pages/Dashboard/Payment/Payment";
 function App() {
     return (
         <div className="App">
-            <AuthProvider>
-                <Router>
-                    <Routes>
-                        {/* Public layout */}
-                        <Route element={<PublicLayout />}>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/home" element={<Home />} />
-                            <Route path="/apartments" element={<Apartments />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/booking/:houseId" element={<Booking />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Route>
+            <SidebarProvider>
+                <AuthProvider>
+                    <Router>
+                        <Routes>
+                            {/* Public layout */}
+                            <Route element={<PublicLayout />}>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/home" element={<Home />} />
+                                <Route path="/apartments" element={<Apartments />} />
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/register" element={<Register />} />
+                                <Route path="/booking/:houseId" element={<Booking />} />
+                                <Route path="*" element={<NotFound />} />
+                            </Route>
 
-                        {/* Dashboard layout (protected) */}
-                        <Route
-                            element={
-                                <PrivateRoute>
-                                    <DashboardLayout />
-                                </PrivateRoute>
-                            }
-                        >
-                            <Route path="/dashboard" element={<Dashboard />} />
-                            <Route path="/booking/:houseId/bookingForm" element={<BookingForm />} />
-                            <Route path="/bookings" element={<MyApartments />} />
-                            <Route path="/reviewAdding" element={<ReviewAdding />} />
-                            <Route path="/payment" element={<Payment />} />
-                            <Route path="/manageAllBookings" element={<ManageAllBookings />} />
-                            <Route path="/manageApartments" element={<ApartmentManaging />} />
-                            <Route path="/addApartment" element={<AddApartment />} />
-                            <Route path="/makeAdmin" element={<MakeAdmin />} />
-                        </Route>
-                    </Routes>
-                </Router>
-            </AuthProvider>
+                            {/* Dashboard layout (protected) */}
+                            <Route
+                                element={
+                                    <PrivateRoute>
+                                        <DashboardLayout />
+                                    </PrivateRoute>
+                                }
+                            >
+                                <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/booking/:houseId/bookingForm" element={<BookingForm />} />
+                                <Route path="/bookings" element={<MyApartments />} />
+                                <Route path="/reviewAdding" element={<ReviewAdding />} />
+                                <Route path="/payment" element={<Payment />} />
+                                <Route path="/manageAllBookings" element={<ManageAllBookings />} />
+                                <Route path="/manageApartments" element={<ApartmentManaging />} />
+                                <Route path="/addApartment" element={<AddApartment />} />
+                                <Route path="/makeAdmin" element={<MakeAdmin />} />
+                            </Route>
+                        </Routes>
+                    </Router>
+                </AuthProvider>
+            </SidebarProvider>
         </div>
     );
 }
