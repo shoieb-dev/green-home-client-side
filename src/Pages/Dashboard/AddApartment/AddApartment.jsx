@@ -1,32 +1,93 @@
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
 
 const AddApartment = () => {
+    const { mode, id } = useParams();
+    const isEditMode = mode === "edit";
+    const navigate = useNavigate();
+    const { axiosInstance } = useAxiosInstance();
+    const [editData, setEditData] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const defaultFormValues = {
+        name: "",
+        address: "",
+        bed: "",
+        bath: "",
+        area: "",
+        price: "",
+        heading: "",
+        description: "",
+        image: "",
+    };
+
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: defaultFormValues,
+    });
+
+    useEffect(() => {
+        if (isEditMode && editData) {
+            reset({
+                name: editData.name || "",
+                address: editData.address || "",
+                bed: editData.bed || "",
+                bath: editData.bath || "",
+                area: editData.area || "",
+                price: editData.price || "",
+                heading: editData.heading || "",
+                description: editData.description || "",
+                image: editData.img1 || "",
+            });
+        }
+    }, [editData, isEditMode, reset]);
+
+    useEffect(() => {
+        if (isEditMode) {
+            axiosInstance
+                .get(`${API_ENDPOINTS.houses}/${id}`)
+                .then((res) => setEditData(res?.data))
+                .catch(console.error);
+        } else {
+            reset(defaultFormValues);
+        }
+    }, [axiosInstance, id, mode, reset, isEditMode]);
 
     const onSubmit = async (data) => {
+        setLoading(true);
+        setError("");
+        setSuccess("");
+        // return;
         try {
-            const res = await axios.post(API_ENDPOINTS.houses, data);
-            if (res.data.insertedId) {
-                alert("House Added Successfully ✅");
+            const res = isEditMode
+                ? await axiosInstance.put(`${API_ENDPOINTS.houses}/${id}`, data)
+                : await axiosInstance.post(API_ENDPOINTS.houses, data);
+            if (res.data.insertedId || res.data.modifiedCount > 0) {
+                setSuccess(`House ${isEditMode ? "Updated" : "Added"} Successfully ✅`);
                 reset();
+                navigate("/manageApartments");
             }
         } catch (error) {
-            alert("Something went wrong ❌");
-            console.error(error);
+            setError(error.response?.data?.message || "An error occurred. Please try again later.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="bg-gray-100 flex items-center justify-center p-6">
             <div className="w-full bg-white rounded-2xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-700 pb-6">Add New Apartment</h2>
+                <h2 className="text-2xl font-bold text-gray-700 pb-6">{isEditMode ? "Edit" : "Add New"} Apartment</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
                     {/* Name */}
@@ -55,7 +116,7 @@ const AddApartment = () => {
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Bed</label>
                         <input
-                            {...register("bed", { required: "Bed is required" })}
+                            {...register("bed", { required: "Bed is required", min: 0, valueAsNumber: true })}
                             type="number"
                             className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                         />
@@ -66,7 +127,7 @@ const AddApartment = () => {
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Bath</label>
                         <input
-                            {...register("bath", { required: "Bath is required" })}
+                            {...register("bath", { required: "Bath is required", valueAsNumber: true, min: 0 })}
                             type="number"
                             className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                         />
@@ -77,7 +138,7 @@ const AddApartment = () => {
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Area (sq ft)</label>
                         <input
-                            {...register("area", { required: "Area is required" })}
+                            {...register("area", { required: "Area is required", min: 0, valueAsNumber: true })}
                             type="number"
                             className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                         />
@@ -88,7 +149,7 @@ const AddApartment = () => {
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Price</label>
                         <input
-                            {...register("price", { required: "Price is required" })}
+                            {...register("price", { required: "Price is required", min: 0, valueAsNumber: true })}
                             type="number"
                             className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                         />
@@ -135,8 +196,18 @@ const AddApartment = () => {
                         <button
                             type="submit"
                             className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700"
+                            disabled={loading}
                         >
-                            Add Apartment
+                            {loading ? (
+                                <span className="flex items-center">
+                                    <Spinner animation="border" size="sm" className="mr-2" />
+                                    {isEditMode ? "Updating..." : "Adding..."}
+                                </span>
+                            ) : isEditMode ? (
+                                "Update Apartment"
+                            ) : (
+                                "Add Apartment"
+                            )}
                         </button>
                     </div>
                 </form>
