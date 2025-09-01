@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
 import "./ManageApartments.css";
 
 const ManageApartments = () => {
+    const navigate = useNavigate();
     const { axiosInstance } = useAxiosInstance();
     const [apartments, setApartments] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -17,6 +19,10 @@ const ManageApartments = () => {
             .then((res) => setApartments(res?.data))
             .catch(console.error);
     }, [axiosInstance]);
+
+    const handleEdit = (id) => {
+        navigate(`/apartment-form/edit/${id}`);
+    };
 
     const handleOpenModal = (id) => {
         setModalData({
@@ -69,7 +75,13 @@ const ManageApartments = () => {
                                     <td className="border px-4 py-2">{item.address}</td>
                                     <td className="border px-4 py-2">{item.area} sft</td>
                                     <td className="border px-4 py-2">${item.price}</td>
-                                    <td className="border px-4 py-2 space-x-2">
+                                    <td className="border py-2 flex justify-center gap-2">
+                                        <button
+                                            onClick={() => handleEdit(item._id)}
+                                            className="bg-green-500 text-white px-3 py-1 rounded"
+                                        >
+                                            Edit
+                                        </button>
                                         <button
                                             onClick={() => {
                                                 handleOpenModal(item._id);
