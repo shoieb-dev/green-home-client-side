@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import useAuth from "../../../hooks/useAuth";
 
@@ -6,6 +6,7 @@ const UserProfile = ({ onClose, userPhoto }) => {
     const { user, admin, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const { mode, id } = useParams();
 
     const handleLogout = () => {
         logout();
@@ -29,7 +30,8 @@ const UserProfile = ({ onClose, userPhoto }) => {
         "/payment",
         "/manageAllBookings",
         "/manageApartments",
-        "/addApartment",
+        "/apartment-form",
+        `/apartment-form/${mode}/${id}`,
         "/makeAdmin",
     ];
 

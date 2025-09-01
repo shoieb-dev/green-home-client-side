@@ -40,7 +40,7 @@ export default function Sidebar() {
 
     const adminLinks = [
         { to: "/manageAllBookings", label: "Manage All Bookings", icon: MdBookOnline },
-        { to: "/addApartment", label: "Add Apartment", icon: MdAddHome },
+        { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
         { to: "/manageApartments", label: "Manage Apartments", icon: MdHomeWork },
         { to: "/makeAdmin", label: "Make Admin", icon: MdAdminPanelSettings },
     ];

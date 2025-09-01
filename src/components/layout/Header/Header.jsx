@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import { useSidebar } from "../../../contexts/SidebarContext";
@@ -16,6 +16,7 @@ const Header = () => {
     const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
     const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
     const [isOpen, setIsOpen] = useState(false);
+    const { mode, id } = useParams();
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
@@ -46,7 +47,8 @@ const Header = () => {
         "/payment",
         "/manageAllBookings",
         "/manageApartments",
-        "/addApartment",
+        "/apartment-form",
+        `/apartment-form/${mode}/${id}`,
         "/makeAdmin",
     ];
 

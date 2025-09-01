@@ -60,7 +60,7 @@ function App() {
                                 <Route path="/payment" element={<Payment />} />
                                 <Route path="/manageAllBookings" element={<ManageAllBookings />} />
                                 <Route path="/manageApartments" element={<ManageApartments />} />
-                                <Route path="/addApartment" element={<AddApartment />} />
+                                <Route path="/apartment-form/:mode/:id" element={<AddApartment />} />
                                 <Route path="/makeAdmin" element={<MakeAdmin />} />
                             </Route>
                         </Routes>
