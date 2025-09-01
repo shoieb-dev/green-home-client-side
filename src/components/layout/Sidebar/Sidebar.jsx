@@ -13,13 +13,19 @@ import {
     MdPayment,
     MdRateReview,
 } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
 
 export default function Sidebar() {
-    const { admin } = useAuth();
+    const { admin, logout } = useAuth();
     const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -95,9 +101,7 @@ export default function Sidebar() {
             {/* Logout */}
             <div className="p-4 border-t border-gray-400">
                 <button
-                    onClick={() => {
-                        // logout logic
-                    }}
+                    onClick={handleLogout}
                     data-tooltip-id="sidebar-tooltip"
                     data-tooltip-content="Logout"
                     className={`w-full flex items-center gap-2 px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600 ${
