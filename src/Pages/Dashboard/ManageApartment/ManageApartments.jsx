@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
-import "./ApartmentManaging.css";
+import "./ManageApartments.css";
 
-const ApartmentManaging = () => {
+const ManageApartments = () => {
     const { axiosInstance } = useAxiosInstance();
     const [apartments, setApartments] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -96,4 +96,4 @@ const ApartmentManaging = () => {
     );
 };
 
-export default ApartmentManaging;
+export default ManageApartments;

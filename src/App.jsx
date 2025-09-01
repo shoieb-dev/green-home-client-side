@@ -20,7 +20,7 @@ import NotFound from "./Pages/NotFound/NotFound";
 import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
 import BookingForm from "./Pages/Booking/Booking/BookingForm";
 import AddApartment from "./Pages/Dashboard/AddApartment/AddApartment";
-import ApartmentManaging from "./Pages/Dashboard/ApartmentManaging/ApartmentManaging";
+import ManageApartments from "./Pages/Dashboard/ManageApartments/ManageApartments";
 import MakeAdmin from "./Pages/Dashboard/MakeAdmin/MakeAdmin";
 import ManageAllBookings from "./Pages/Dashboard/ManageAllBookings/ManageAllBookings";
 import ReviewAdding from "./Pages/Dashboard/ReviewAdding/ReviewAdding";
@@ -59,7 +59,7 @@ function App() {
                                 <Route path="/reviewAdding" element={<ReviewAdding />} />
                                 <Route path="/payment" element={<Payment />} />
                                 <Route path="/manageAllBookings" element={<ManageAllBookings />} />
-                                <Route path="/manageApartments" element={<ApartmentManaging />} />
+                                <Route path="/manageApartments" element={<ManageApartments />} />
                                 <Route path="/addApartment" element={<AddApartment />} />
                                 <Route path="/makeAdmin" element={<MakeAdmin />} />
                             </Route>
