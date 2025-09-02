@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
@@ -12,13 +13,14 @@ const ReviewAdding = () => {
     const { register, handleSubmit, reset } = useForm();
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
-    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
 
     const onSubmit = async (data) => {
+        setLoading(true);
         try {
             if (!rating || rating < 1) {
-                setMessage("⚠️ Please select a rating before submitting.");
+                toast.error("Please select a rating before submitting.");
                 return;
             }
 
@@ -34,15 +36,17 @@ const ReviewAdding = () => {
             const res = await axiosInstance.post(API_ENDPOINTS.reviews, reviewData);
 
             if (res.data?.insertedId) {
-                setMessage("✅ Review added successfully!");
+                toast.success("Review added successfully!");
                 reset();
                 setRating(0);
             } else {
-                setMessage("❌ Failed to add review. Please try again.");
+                toast.error("Failed to add review. Please try again.");
             }
         } catch (error) {
             console.error("Error adding review:", error);
-            setMessage("❌ Something went wrong. Please try again.");
+            toast.error("Something went wrong.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -50,8 +54,6 @@ const ReviewAdding = () => {
         <div className="container mt-30">
             <div className="p-4 shadow rounded bg-white mx-auto" style={{ maxWidth: "600px" }}>
                 <h2 className="text-center mb-4">Add a Review</h2>
-
-                {message && <Alert variant={message.includes("✅") ? "success" : "danger"}>{message}</Alert>}
 
                 <Form className="text-start" onSubmit={handleSubmit(onSubmit)}>
                     {/* Name */}
@@ -106,11 +108,25 @@ const ReviewAdding = () => {
                     </Form.Group>
 
                     {/* Submit button */}
-                    <Button variant="success" type="submit" className="w-100">
-                        Submit Review
-                    </Button>
+                    <div className="md:col-span-2 flex justify-end">
+                        <button
+                            type="submit"
+                            className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <span className="flex items-center">
+                                    <Spinner animation="border" size="sm" className="mr-2" />
+                                    Submitting Review
+                                </span>
+                            ) : (
+                                "Submit Review"
+                            )}
+                        </button>
+                    </div>
                 </Form>
             </div>
+            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };

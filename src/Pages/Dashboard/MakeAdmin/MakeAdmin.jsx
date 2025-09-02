@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Alert, Button, Form, Spinner } from "react-bootstrap";
-import { API_ENDPOINTS } from "../../../services/api";
+import { useState } from "react";
+import { Alert, Form, Spinner } from "react-bootstrap";
+import toast, { Toaster } from "react-hot-toast";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
+import { API_ENDPOINTS } from "../../../services/api";
 
 const MakeAdmin = () => {
     const [email, setEmail] = useState("");
@@ -20,12 +21,14 @@ const MakeAdmin = () => {
             .put(`${API_ENDPOINTS.users}/make-admin`, { email })
             .then(({ data }) => {
                 if (data.success) {
-                    setSuccess(data.message);
+                    toast.success(data.message);
                 } else {
-                    setError(data.message || "Failed to make admin. Try again.");
+                    toast.error(data.message || "Failed to make admin. Try again.");
                 }
             })
-            .catch((error) => setError(error.response?.data?.message || "An error occurred. Please try again later."))
+            .catch((error) =>
+                toast.error(error.response?.data?.message || "An error occurred. Please try again later.")
+            )
             .finally(() => setLoading(false));
     };
 
@@ -49,11 +52,23 @@ const MakeAdmin = () => {
                     {success && <Alert variant="success">{success}</Alert>}
                     {error && <Alert variant="danger">{error}</Alert>}
 
-                    <Button type="submit" variant="success" disabled={loading} aria-label="Make Admin" className="mt-4">
-                        {loading ? <Spinner animation="border" size="sm" /> : "Make Admin"}
-                    </Button>
+                    <button
+                        type="submit"
+                        className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <span className="flex items-center">
+                                <Spinner animation="border" size="sm" className="mr-2" />
+                                Making Admin
+                            </span>
+                        ) : (
+                            "Make Admin"
+                        )}
+                    </button>
                 </Form>
             </div>
+            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };

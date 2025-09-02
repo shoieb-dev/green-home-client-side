@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
+import toast, { Toaster } from "react-hot-toast";
 
 const ManageAllBookings = () => {
     const { axiosInstance } = useAxiosInstance();
@@ -20,24 +21,6 @@ const ManageAllBookings = () => {
             .catch(console.error);
     }, [axiosInstance]);
 
-    const handleStatusUpdate = (id, status) => {
-        axiosInstance
-            .patch(`${API_ENDPOINTS.bookings}/${id}`, { status })
-            .then(() => {
-                setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status } : b)));
-            })
-            .catch((err) => console.error("Status update failed:", err));
-    };
-
-    const handleDelete = (id) => {
-        axiosInstance
-            .delete(`${API_ENDPOINTS.bookings}/${id}`)
-            .then(() => {
-                setBookings((prev) => prev.filter((b) => b._id !== id));
-            })
-            .catch((err) => console.error("Delete failed:", err));
-    };
-
     const handleOpenModal = (actionType, bookingId) => {
         const isDelete = actionType === "delete";
 
@@ -54,21 +37,22 @@ const ManageAllBookings = () => {
                     .delete(`${API_ENDPOINTS.bookings}/${bookingId}`)
                     .then(() => {
                         setBookings((prev) => prev.filter((b) => b._id !== bookingId));
+                        toast.success("Booking deleted successfully.");
                     })
                     .catch((err) => console.error("Delete failed:", err));
             } else {
                 axiosInstance
                     .patch(`${API_ENDPOINTS.bookings}/${bookingId}`, { status: actionType })
                     .then(() => {
+                        toast.success(`Booking ${actionType} successfully.`);
                         setBookings((prev) =>
                             prev.map((b) => (b._id === bookingId ? { ...b, status: actionType } : b))
                         );
                     })
-                    .catch((err) => console.error("Status update failed:", err));
+                    .catch((error) => console.error("Status update failed:", error));
             }
             setShowModal(false);
         });
-
         setShowModal(true);
     };
 
@@ -157,6 +141,7 @@ const ManageAllBookings = () => {
                         </tbody>
                     </table>
                 </div>
+                <Toaster position="top-right" reverseOrder={false} />
             </div>
         </>
     );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
@@ -12,8 +13,6 @@ const AddApartment = () => {
     const { axiosInstance } = useAxiosInstance();
     const [editData, setEditData] = useState({});
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
 
     const defaultFormValues = {
         name: "",
@@ -65,20 +64,21 @@ const AddApartment = () => {
 
     const onSubmit = async (data) => {
         setLoading(true);
-        setError("");
-        setSuccess("");
         // return;
         try {
             const res = isEditMode
                 ? await axiosInstance.put(`${API_ENDPOINTS.houses}/${id}`, data)
                 : await axiosInstance.post(API_ENDPOINTS.houses, data);
+
             if (res.data.insertedId || res.data.modifiedCount > 0) {
-                setSuccess(`House ${isEditMode ? "Updated" : "Added"} Successfully ✅`);
+                toast.success(`House ${isEditMode ? "updated" : "added"} successfully!`);
                 reset();
-                navigate("/manageApartments");
+                setTimeout(() => {
+                    navigate("/manageApartments");
+                }, 3000);
             }
-        } catch (error) {
-            setError(error.response?.data?.message || "An error occurred. Please try again later.");
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Something went wrong!");
         } finally {
             setLoading(false);
         }
@@ -195,13 +195,13 @@ const AddApartment = () => {
                     <div className="md:col-span-2 flex justify-end">
                         <button
                             type="submit"
-                            className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700"
+                            className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={loading}
                         >
                             {loading ? (
                                 <span className="flex items-center">
                                     <Spinner animation="border" size="sm" className="mr-2" />
-                                    {isEditMode ? "Updating..." : "Adding..."}
+                                    {isEditMode ? "Updating Apartment" : "Adding Apartment"}
                                 </span>
                             ) : isEditMode ? (
                                 "Update Apartment"
@@ -212,6 +212,7 @@ const AddApartment = () => {
                     </div>
                 </form>
             </div>
+            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };
