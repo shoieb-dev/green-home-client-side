@@ -13,12 +13,13 @@ import {
     MdPayment,
     MdRateReview,
 } from "react-icons/md";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
 
 export default function Sidebar() {
     const { admin, logout } = useAuth();
+    const { pathname } = useLocation();
     const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
     const navigate = useNavigate();
 
@@ -52,10 +53,14 @@ export default function Sidebar() {
 
     const links = admin ? adminLinks : userLinks;
 
-    const linkClasses = ({ isActive }) =>
-        `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200
-    ${isActive ? "bg-green-700 font-semibold text-white" : "text-black"}
-    hover:bg-green-500 hover:text-white ${isCollapsed ? "justify-center" : "justify-start"}`;
+    const linkClasses = ({ isActive }, to) => {
+        const isManageApartmentsActive =
+            to === "/manageApartments" &&
+            (pathname.startsWith("/manageApartments") || pathname.startsWith("/apartment-form/edit/"));
+        return `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200 ${
+            isActive || isManageApartmentsActive ? "bg-green-700 font-semibold text-white" : "text-black"
+        } hover:bg-green-500 hover:text-white ${isCollapsed ? "justify-center" : "justify-start"}`;
+    };
 
     return (
         <aside
@@ -88,7 +93,7 @@ export default function Sidebar() {
                     <NavLink
                         key={to}
                         to={to}
-                        className={linkClasses}
+                        className={(props) => linkClasses(props, to)}
                         data-tooltip-id="sidebar-tooltip"
                         data-tooltip-content={label}
                     >
