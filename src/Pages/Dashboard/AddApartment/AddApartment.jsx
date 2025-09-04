@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
+import CloudinaryUpload from "../../../components/uploads/CloudinaryUpload";
 
 const AddApartment = () => {
     const { mode, id } = useParams();
@@ -23,13 +24,14 @@ const AddApartment = () => {
         price: "",
         heading: "",
         description: "",
-        image: "",
+        images: [],
     };
 
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         defaultValues: defaultFormValues,
@@ -46,7 +48,7 @@ const AddApartment = () => {
                 price: editData.price || "",
                 heading: editData.heading || "",
                 description: editData.description || "",
-                image: editData.img1 || "",
+                images: editData.images || [],
             });
         }
     }, [editData, isEditMode, reset]);
@@ -180,15 +182,17 @@ const AddApartment = () => {
                         )}
                     </div>
 
-                    {/* Image */}
+                    {/* Multi-Image Upload */}
                     <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
-                        <input
-                            {...register("image", { required: "Image URL is required" })}
-                            type="url"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Upload Images</label>
+                        <CloudinaryUpload
+                            onUploadSuccess={(urls) => {
+                                setValue("images", urls); // save array in form
+                            }}
+                            isEditMode={isEditMode}
+                            existingImages={editData.images || []}
                         />
-                        {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>}
+                        {errors.images && <p className="text-red-500 text-sm mt-1">{errors.images.message}</p>}
                     </div>
 
                     {/* Submit Button */}
