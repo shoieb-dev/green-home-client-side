@@ -1,0 +1,125 @@
+import { useEffect } from "react";
+import { Tooltip } from "react-tooltip";
+import {
+    MdAddHome,
+    MdAdminPanelSettings,
+    MdApartment,
+    MdBookOnline,
+    MdClose,
+    MdDashboard,
+    MdHomeWork,
+    MdLogout,
+    MdMenu,
+    MdPayment,
+    MdRateReview,
+} from "react-icons/md";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useSidebar } from "../../../contexts/SidebarContext";
+import useAuth from "../../../hooks/useAuth";
+
+export default function Sidebar() {
+    const { admin, logout } = useAuth();
+    const { pathname } = useLocation();
+    const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsCollapsed(window.innerWidth < 768);
+        };
+
+        handleResize(); // ✅ run on mount
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [setIsCollapsed]);
+
+    const adminLinks = [
+        { to: "/manageAllBookings", label: "Manage All Bookings", icon: MdBookOnline },
+        { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
+        { to: "/manageApartments", label: "Manage Apartments", icon: MdHomeWork },
+        { to: "/makeAdmin", label: "Make Admin", icon: MdAdminPanelSettings },
+    ];
+    const userLinks = [
+        { to: "/bookings", label: "My Apartments", icon: MdApartment },
+        { to: "/payment", label: "Payment", icon: MdPayment },
+        { to: "/reviewAdding", label: "Give a Review", icon: MdRateReview },
+    ];
+
+    const links = admin ? adminLinks : userLinks;
+
+    const linkClasses = ({ isActive }, to) => {
+        const isManageApartmentsActive =
+            to === "/manageApartments" &&
+            (pathname.startsWith("/manageApartments") || pathname.startsWith("/apartment-form/edit/"));
+        return `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200 ${
+            isActive || isManageApartmentsActive ? "bg-green-700 font-semibold text-white" : "text-black"
+        } hover:bg-green-500 hover:text-white ${isCollapsed ? "justify-center" : "justify-start"}`;
+    };
+
+    return (
+        <aside
+            className={`fixed top-0 left-0 h-screen bg-[#97c0db] text-black flex flex-col transition-all duration-300 ${
+                isCollapsed ? "w-20" : "w-72"
+            }`}
+        >
+            {/* Header with Brand + Toggle Button */}
+            <div className="flex items-center justify-between p-4">
+                {!isCollapsed && <span className="text-xl font-bold whitespace-nowrap">Green Home</span>}
+                <button onClick={toggleSidebar} className="p-2 rounded hover:bg-green-500 hover:text-white">
+                    {isCollapsed ? <MdMenu size={24} /> : <MdClose size={24} />}
+                </button>
+            </div>
+
+            {/* Menu */}
+            <nav className="flex-1 p-4 space-y-2">
+                <NavLink
+                    to="/dashboard"
+                    end
+                    className={linkClasses}
+                    data-tooltip-id="sidebar-tooltip"
+                    data-tooltip-content="Dashboard Overview"
+                >
+                    <MdDashboard className="text-lg flex-shrink-0" />
+                    {!isCollapsed && "Dashboard Overview"}
+                </NavLink>
+
+                {links.map(({ to, label, icon: Icon }) => (
+                    <NavLink
+                        key={to}
+                        to={to}
+                        className={(props) => linkClasses(props, to)}
+                        data-tooltip-id="sidebar-tooltip"
+                        data-tooltip-content={label}
+                    >
+                        <Icon className="text-lg flex-shrink-0" />
+                        {!isCollapsed && label}
+                    </NavLink>
+                ))}
+            </nav>
+
+            {/* Logout */}
+            <div className="p-4 border-t border-gray-400">
+                <button
+                    onClick={handleLogout}
+                    data-tooltip-id="sidebar-tooltip"
+                    data-tooltip-content="Logout"
+                    className={`w-full flex items-center gap-2 px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600 ${
+                        isCollapsed ? "justify-center" : "justify-start"
+                    }`}
+                >
+                    <MdLogout className="text-lg flex-shrink-0" />
+                    {!isCollapsed && "Logout"}
+                </button>
+            </div>
+
+            {/* Global Tooltip */}
+            {isCollapsed && <Tooltip id="sidebar-tooltip" place="right" />}
+        </aside>
+    );
+}

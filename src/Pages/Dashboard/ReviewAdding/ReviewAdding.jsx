@@ -1,0 +1,134 @@
+import { useState } from "react";
+import { Form, Spinner } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
+import { FaStar } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
+import { API_ENDPOINTS } from "../../../services/api";
+
+const ReviewAdding = () => {
+    const { user } = useAuth();
+    const { axiosInstance } = useAxiosInstance();
+    const { register, handleSubmit, reset } = useForm();
+    const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
+
+    const onSubmit = async (data) => {
+        setLoading(true);
+        try {
+            if (!rating || rating < 1) {
+                toast.error("Please select a rating before submitting.");
+                return;
+            }
+
+            const reviewData = {
+                name: user?.displayName || data.name,
+                email: user?.email,
+                img: userPhoto || data.img,
+                reviewtext: data.reviewtext,
+                rating,
+                createdAt: new Date().toISOString(),
+            };
+
+            const res = await axiosInstance.post(API_ENDPOINTS.reviews, reviewData);
+
+            if (res.data?.insertedId) {
+                toast.success("Review added successfully!");
+                reset();
+                setRating(0);
+            } else {
+                toast.error("Failed to add review. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error adding review:", error);
+            toast.error("Something went wrong.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="container mt-30">
+            <div className="p-4 shadow rounded bg-white mx-auto" style={{ maxWidth: "600px" }}>
+                <h2 className="text-center mb-4">Add a Review</h2>
+
+                <Form className="text-start" onSubmit={handleSubmit(onSubmit)}>
+                    {/* Name */}
+                    {!user?.displayName && (
+                        <Form.Group className="mb-3">
+                            <Form.Label className="ml-2">Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter your name"
+                                {...register("name", { required: true, maxLength: 40 })}
+                            />
+                        </Form.Group>
+                    )}
+
+                    {/* Review text */}
+                    <Form.Group className="mb-3">
+                        <Form.Label className="ml-2">Review</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={4}
+                            placeholder="Write your review here..."
+                            {...register("reviewtext", { required: true })}
+                        />
+                    </Form.Group>
+
+                    {/* Rating */}
+                    <Form.Group className="mb-4">
+                        <Form.Label className="ml-2">Rating</Form.Label>
+                        <div className="d-flex gap-2 ml-2">
+                            {[...Array(5)].map((star, index) => {
+                                const currentRating = index + 1;
+                                return (
+                                    <label key={index}>
+                                        <input
+                                            type="radio"
+                                            name="rating"
+                                            value={currentRating}
+                                            onClick={() => setRating(currentRating)}
+                                            className="d-none"
+                                        />
+                                        <FaStar
+                                            size={28}
+                                            className="cursor-pointer"
+                                            color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                                            onMouseEnter={() => setHover(currentRating)}
+                                            onMouseLeave={() => setHover(null)}
+                                        />
+                                    </label>
+                                );
+                            })}
+                        </div>
+                    </Form.Group>
+
+                    {/* Submit button */}
+                    <div className="md:col-span-2 flex justify-end">
+                        <button
+                            type="submit"
+                            className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <span className="flex items-center">
+                                    <Spinner animation="border" size="sm" className="mr-2" />
+                                    Submitting Review
+                                </span>
+                            ) : (
+                                "Submit Review"
+                            )}
+                        </button>
+                    </div>
+                </Form>
+            </div>
+            <Toaster position="top-right" reverseOrder={false} />
+        </div>
+    );
+};
+
+export default ReviewAdding;

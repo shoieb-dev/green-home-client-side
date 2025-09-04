@@ -1,0 +1,33 @@
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #1e293b; /* dark blue-gray */
+    color: white;
+    padding: 20px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+    transition: background 0.2s;
+}
+
+.sidebar nav a:hover {
+    background: #334155;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 20px;
+    background: #f1f5f9;
+}
