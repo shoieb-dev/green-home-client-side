@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Autoplay, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { API_ENDPOINTS } from "../../../services/api";
 
 const Booking = () => {
@@ -41,17 +45,41 @@ const Booking = () => {
 
                 <Row className="py-3 my-2 rounded-3">
                     <Col xs={1} md={6} lg={8} className="bg-light pt-2">
-                        <img
-                            className="w-100 pb-3 rounded-3"
-                            src={house.img1}
-                            alt=""
-                        />
+                        {house.images && house.images.length > 0 ? (
+                            <Swiper
+                                modules={[Autoplay, Pagination]}
+                                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                                grabCursor={true}
+                                loop={true}
+                                spaceBetween={10}
+                                slidesPerView={1}
+                                pagination={{ clickable: true }}
+                                className="pb-3 rounded-3"
+                            >
+                                {house.images.map((img, index) => (
+                                    <SwiperSlide key={index}>
+                                        <img
+                                            src={img}
+                                            alt={`House ${index + 1}`}
+                                            className="w-100 h-[500px] rounded-3"
+                                        />
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        ) : (
+                            <img className="w-100 pb-3 rounded-3" src="" alt="No image available" />
+                        )}
                     </Col>
+
                     <Col xs={1} md={6} lg={4}>
                         <h4 className="text-success">{house.heading}</h4>
-                        <p style={{ textAlign: "justify" }} className="">{house.description}</p>
+                        <p style={{ textAlign: "justify" }} className="">
+                            {house.description}
+                        </p>
                         <Link to={`/booking/${houseId}/bookingForm`}>
-                            <Button variant="outline-success" className="px-5 w-100 rounded-pill">Book Now</Button>
+                            <Button variant="outline-success" className="px-5 w-100 rounded-pill">
+                                Book Now
+                            </Button>
                         </Link>
                     </Col>
                 </Row>
