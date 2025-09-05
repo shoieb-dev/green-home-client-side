@@ -24,6 +24,7 @@ Thumbs.db
 # Firebase
 .firebaserc
 .firebase/
+*.cache
 
 # React Router (if dev plugin caches)
 /.react-router/
