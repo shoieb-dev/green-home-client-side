@@ -8,4 +8,5 @@ export const API_ENDPOINTS = {
     reviews: `${API_BASE_URL}/reviews`,
     users: `${API_BASE_URL}/users`,
     bookings: `${API_BASE_URL}/bookings`,
+    dashboardSummary: `${API_BASE_URL}/dashboard/summary`,
 };
