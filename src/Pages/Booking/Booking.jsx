@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { API_ENDPOINTS } from "../../../services/api";
+import { API_ENDPOINTS } from "../../services/api";
 
 const Booking = () => {
     const { houseId } = useParams();

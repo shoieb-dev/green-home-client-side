@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
-import "./ManageApartments.css";
 
 const ManageApartments = () => {
     const navigate = useNavigate();

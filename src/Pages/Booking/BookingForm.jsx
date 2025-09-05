@@ -3,9 +3,9 @@ import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
-import useAuth from "../../../hooks/useAuth";
-import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
-import { API_ENDPOINTS } from "../../../services/api";
+import useAuth from "../../hooks/useAuth";
+import { useAxiosInstance } from "../../hooks/useAxiosInstance";
+import { API_ENDPOINTS } from "../../services/api";
 
 const BookingForm = () => {
     const { user, admin } = useAuth();

@@ -13,13 +13,13 @@ import Home from "./Pages/Home/Home/Home";
 import Apartments from "./Pages/Apartments/Apartments/Apartments";
 import Login from "./Pages/auth/Login/Login";
 import Register from "./Pages/auth/Register/Register";
-import Booking from "./Pages/Booking/Booking/Booking";
+import Booking from "./Pages/Booking/Booking";
 import NotFound from "./Pages/NotFound/NotFound";
 import { Toaster } from "react-hot-toast";
 
 // Dashboard pages
 import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
-import BookingForm from "./Pages/Booking/Booking/BookingForm";
+import BookingForm from "./Pages/Booking/BookingForm";
 import AddApartment from "./Pages/Dashboard/AddApartment/AddApartment";
 import ManageApartments from "./Pages/Dashboard/ManageApartments/ManageApartments";
 import MakeAdmin from "./Pages/Dashboard/MakeAdmin/MakeAdmin";
