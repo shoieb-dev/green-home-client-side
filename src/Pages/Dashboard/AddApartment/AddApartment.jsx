@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import CloudinaryUpload from "../../../components/uploads/CloudinaryUpload";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
-import CloudinaryUpload from "../../../components/uploads/CloudinaryUpload";
 
 const AddApartment = () => {
     const { mode, id } = useParams();
@@ -31,7 +31,7 @@ const AddApartment = () => {
         register,
         handleSubmit,
         reset,
-        setValue,
+        control,
         formState: { errors },
     } = useForm({
         defaultValues: defaultFormValues,
@@ -58,7 +58,9 @@ const AddApartment = () => {
             axiosInstance
                 .get(`${API_ENDPOINTS.houses}/${id}`)
                 .then((res) => setEditData(res?.data))
-                .catch(console.error);
+                .catch((err) => {
+                    toast.error(err.response?.data?.message || "Something went wrong!");
+                });
         } else {
             reset(defaultFormValues);
         }
@@ -185,14 +187,28 @@ const AddApartment = () => {
                     {/* Multi-Image Upload */}
                     <div className="md:col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Upload Images</label>
-                        <CloudinaryUpload
-                            onUploadSuccess={(urls) => {
-                                setValue("images", urls); // save array in form
+                        <Controller
+                            name="images"
+                            control={control} // from useForm
+                            defaultValue={[]}
+                            rules={{
+                                validate: (value) =>
+                                    value && value.length > 0 ? true : "At least one image is required",
                             }}
-                            isEditMode={isEditMode}
-                            existingImages={editData.images || []}
+                            render={({ field, fieldState }) => (
+                                <div>
+                                    <CloudinaryUpload
+                                        onUploadSuccess={(urls) => field.onChange(urls)} // update RHF
+                                        isEditMode={isEditMode}
+                                        existingImages={editData.images || []}
+                                        error={fieldState.invalid}
+                                    />
+                                    {fieldState.error && (
+                                        <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
+                                    )}
+                                </div>
+                            )}
                         />
-                        {errors.images && <p className="text-red-500 text-sm mt-1">{errors.images.message}</p>}
                     </div>
 
                     {/* Submit Button */}
@@ -216,7 +232,6 @@ const AddApartment = () => {
                     </div>
                 </form>
             </div>
-            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };
