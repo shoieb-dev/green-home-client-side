@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
@@ -17,7 +18,9 @@ const ManageApartments = () => {
         axiosInstance
             .get(API_ENDPOINTS.houses)
             .then((res) => setApartments(res?.data))
-            .catch(console.error);
+            .catch((err) => {
+                toast.error(err.response?.data?.message || "Something went wrong!");
+            });
     }, [axiosInstance]);
 
     const handleEdit = (id) => {
@@ -34,9 +37,13 @@ const ManageApartments = () => {
             axiosInstance
                 .delete(`${API_ENDPOINTS.houses}/${id}`)
                 .then(() => {
+                    toast.success("Apartment deleted successfully");
                     setApartments((prev) => prev.filter((b) => b._id !== id));
                 })
-                .catch((err) => console.error("Delete failed:", err));
+                .catch((err) => {
+                    console.error("Delete failed:", err);
+                    toast.error("Failed to delete apartment. Please try again.");
+                });
 
             setShowModal(false);
         });

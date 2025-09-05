@@ -15,6 +15,7 @@ import Login from "./Pages/auth/Login/Login";
 import Register from "./Pages/auth/Register/Register";
 import Booking from "./Pages/Booking/Booking/Booking";
 import NotFound from "./Pages/NotFound/NotFound";
+import { Toaster } from "react-hot-toast";
 
 // Dashboard pages
 import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
@@ -65,6 +66,7 @@ function App() {
                             </Route>
                         </Routes>
                     </Router>
+                    <Toaster position="top-right" reverseOrder={false} />
                 </AuthProvider>
             </SidebarProvider>
         </div>

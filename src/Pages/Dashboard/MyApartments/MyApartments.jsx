@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
@@ -16,7 +17,9 @@ const MyApartments = () => {
             .then((res) =>
                 setApartments(res?.data.sort((a, b) => new Date(b.bookedAt).getTime() - new Date(a.bookedAt).getTime()))
             )
-            .catch(console.error);
+            .catch((err) => {
+                toast.error(err.response?.data?.message || "Something went wrong!");
+            });
     }, [axiosInstance]);
 
     const handleDelete = (id) => {

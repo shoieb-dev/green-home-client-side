@@ -1,9 +1,9 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
-import toast, { Toaster } from "react-hot-toast";
 
 const ManageAllBookings = () => {
     const { axiosInstance } = useAxiosInstance();
@@ -18,7 +18,9 @@ const ManageAllBookings = () => {
             .then((res) =>
                 setBookings(res?.data.sort((a, b) => new Date(b.bookedAt).getTime() - new Date(a.bookedAt).getTime()))
             )
-            .catch(console.error);
+            .catch((err) => {
+                toast.error(err.response?.data?.message || "Something went wrong!");
+            });
     }, [axiosInstance]);
 
     const handleOpenModal = (actionType, bookingId) => {
@@ -39,7 +41,10 @@ const ManageAllBookings = () => {
                         setBookings((prev) => prev.filter((b) => b._id !== bookingId));
                         toast.success("Booking deleted successfully.");
                     })
-                    .catch((err) => console.error("Delete failed:", err));
+                    .catch((err) => {
+                        console.error("Delete failed:", err);
+                        toast.error("Failed to delete booking. Please try again.");
+                    });
             } else {
                 axiosInstance
                     .patch(`${API_ENDPOINTS.bookings}/${bookingId}`, { status: actionType })
@@ -49,7 +54,10 @@ const ManageAllBookings = () => {
                             prev.map((b) => (b._id === bookingId ? { ...b, status: actionType } : b))
                         );
                     })
-                    .catch((error) => console.error("Status update failed:", error));
+                    .catch((error) => {
+                        console.error("Status update failed:", error);
+                        toast.error("Failed to update booking status. Please try again.");
+                    });
             }
             setShowModal(false);
         });
@@ -141,7 +149,6 @@ const ManageAllBookings = () => {
                         </tbody>
                     </table>
                 </div>
-                <Toaster position="top-right" reverseOrder={false} />
             </div>
         </>
     );

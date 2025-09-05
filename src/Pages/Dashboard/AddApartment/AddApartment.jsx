@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import CloudinaryUpload from "../../../components/uploads/CloudinaryUpload";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
-import CloudinaryUpload from "../../../components/uploads/CloudinaryUpload";
 
 const AddApartment = () => {
     const { mode, id } = useParams();
@@ -58,7 +58,9 @@ const AddApartment = () => {
             axiosInstance
                 .get(`${API_ENDPOINTS.houses}/${id}`)
                 .then((res) => setEditData(res?.data))
-                .catch(console.error);
+                .catch((err) => {
+                    toast.error(err.response?.data?.message || "Something went wrong!");
+                });
         } else {
             reset(defaultFormValues);
         }
@@ -230,7 +232,6 @@ const AddApartment = () => {
                     </div>
                 </form>
             </div>
-            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };
