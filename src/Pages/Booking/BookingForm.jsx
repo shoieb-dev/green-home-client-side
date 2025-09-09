@@ -38,6 +38,7 @@ const BookingForm = () => {
             ...data,
             house: house?.name || data.house,
             price: house?.price || data.price,
+            houseId: house?._id || houseId,
         };
         setLoading(true);
         try {
