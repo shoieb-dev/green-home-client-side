@@ -47,10 +47,10 @@ const useFirebase = () => {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(() => {
                     setAuthError("");
-                    const newUser = { email, displayName: name };
+                    const newUser = { email, displayName: name, photoURL: "" };
                     setUser(newUser);
 
-                    saveUser(email, name, "POST");
+                    saveUser(email, name, "", "POST");
 
                     // send name to firebase after creation
                     updateProfile(auth.currentUser, { displayName: name }).catch(console.error);
@@ -84,7 +84,8 @@ const useFirebase = () => {
             signInWithPopup(auth, googleProvider)
                 .then((result) => {
                     const user = result.user;
-                    saveUser(user.email, user.displayName, "PUT");
+                    const photoURL = result?.user?.photoURL ? result?.user?.photoURL.replace(/=s96-c/, "") : null;
+                    saveUser(user.email, user.displayName, photoURL, "PUT");
                     const destination = location?.state?.from || "/";
                     navigate(destination);
                     setAuthError("");
@@ -106,7 +107,7 @@ const useFirebase = () => {
 
     useEffect(() => {
         if (user.email) {
-            fetch(`${API_ENDPOINTS.users}/${user.email}`)
+            fetch(`${API_ENDPOINTS.users}/check/${user.email}`)
                 .then((res) => res.json())
                 .then((data) => setAdmin(data.admin))
                 .catch(console.error);
@@ -120,8 +121,8 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }, [auth]);
 
-    const saveUser = (email, displayName, method) => {
-        const user = { email, displayName };
+    const saveUser = (email, displayName, photoURL, method) => {
+        const user = { email, displayName, photoURL };
         fetch(API_ENDPOINTS.users, {
             method,
             headers: { "Content-Type": "application/json" },
