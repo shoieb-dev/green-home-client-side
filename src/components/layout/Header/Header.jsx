@@ -69,6 +69,7 @@ const Header = () => {
         "/apartment-form",
         `/apartment-form/${mode}/${id}`,
         "/makeAdmin",
+        "/profile",
     ];
 
     const isDashboardPage = dashboardRoutes.includes(location.pathname);
