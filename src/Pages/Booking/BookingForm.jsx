@@ -3,12 +3,14 @@ import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
+import { useSidebar } from "../../contexts/SidebarContext";
 import useAuth from "../../hooks/useAuth";
 import { useAxiosInstance } from "../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../services/api";
 
 const BookingForm = () => {
-    const { user, admin } = useAuth();
+    const { admin } = useAuth();
+    const { userData } = useSidebar();
     const { houseId } = useParams();
     const { axiosInstance } = useAxiosInstance();
     const navigate = useNavigate();
@@ -72,7 +74,7 @@ const BookingForm = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                         <input
                             {...register("name", { required: "Name is required", maxLength: 50 })}
-                            defaultValue={user?.displayName || ""}
+                            defaultValue={userData?.displayName || userData?.googleName || ""}
                             type="text"
                             className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                         />
@@ -90,7 +92,7 @@ const BookingForm = () => {
                                     message: "Invalid email format",
                                 },
                             })}
-                            defaultValue={user?.email || ""}
+                            defaultValue={userData?.email || userData?.googleEmail || ""}
                             type="email"
                             className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                         />
