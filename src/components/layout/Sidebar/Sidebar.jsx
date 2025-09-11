@@ -11,6 +11,7 @@ import {
     MdLogout,
     MdMenu,
     MdPayment,
+    MdPerson,
     MdRateReview,
 } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -44,11 +45,13 @@ export default function Sidebar() {
         { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
         { to: "/manageApartments", label: "Manage Apartments", icon: MdHomeWork },
         { to: "/makeAdmin", label: "Make Admin", icon: MdAdminPanelSettings },
+        { to: "/profile", label: "Profile", icon: MdPerson },
     ];
     const userLinks = [
         { to: "/bookings", label: "My Apartments", icon: MdApartment },
         { to: "/payment", label: "Payment", icon: MdPayment },
         { to: "/reviewAdding", label: "Give a Review", icon: MdRateReview },
+        { to: "/profile", label: "Profile", icon: MdPerson },
     ];
 
     const links = admin ? adminLinks : userLinks;
