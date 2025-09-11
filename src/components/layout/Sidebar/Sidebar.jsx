@@ -11,6 +11,7 @@ import {
     MdLogout,
     MdMenu,
     MdPayment,
+    MdPerson,
     MdRateReview,
 } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -20,11 +21,12 @@ import useAuth from "../../../hooks/useAuth";
 export default function Sidebar() {
     const { admin, logout } = useAuth();
     const { pathname } = useLocation();
-    const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
+    const { isCollapsed, setIsCollapsed, toggleSidebar, setUserData } = useSidebar();
     const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
+        setUserData({});
         navigate("/login");
     };
 
@@ -44,11 +46,13 @@ export default function Sidebar() {
         { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
         { to: "/manageApartments", label: "Manage Apartments", icon: MdHomeWork },
         { to: "/makeAdmin", label: "Make Admin", icon: MdAdminPanelSettings },
+        { to: "/profile", label: "Profile", icon: MdPerson },
     ];
     const userLinks = [
         { to: "/bookings", label: "My Apartments", icon: MdApartment },
         { to: "/payment", label: "Payment", icon: MdPayment },
         { to: "/reviewAdding", label: "Give a Review", icon: MdRateReview },
+        { to: "/profile", label: "Profile", icon: MdPerson },
     ];
 
     const links = admin ? adminLinks : userLinks;

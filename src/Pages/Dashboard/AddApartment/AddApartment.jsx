@@ -200,6 +200,8 @@ const AddApartment = () => {
                                     <CloudinaryUpload
                                         onUploadSuccess={(urls) => field.onChange(urls)} // update RHF
                                         isEditMode={isEditMode}
+                                        multiple={true}
+                                        folderName="apartment_images"
                                         existingImages={editData.images || []}
                                         error={fieldState.invalid}
                                     />

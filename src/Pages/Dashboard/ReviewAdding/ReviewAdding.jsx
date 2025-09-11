@@ -3,18 +3,17 @@ import { Form, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
-import useAuth from "../../../hooks/useAuth";
+import { useSidebar } from "../../../contexts/SidebarContext";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
 
 const ReviewAdding = () => {
-    const { user } = useAuth();
+    const { userData } = useSidebar();
     const { axiosInstance } = useAxiosInstance();
     const { register, handleSubmit, reset } = useForm();
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [loading, setLoading] = useState(false);
-    const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
 
     const onSubmit = async (data) => {
         setLoading(true);
@@ -25,12 +24,11 @@ const ReviewAdding = () => {
             }
 
             const reviewData = {
-                name: user?.displayName || data.name,
-                email: user?.email,
-                img: userPhoto || data.img,
+                name: data.name || userData?.displayName || userData?.googleName || "",
+                email: userData?.email || "",
+                img: userData?.photoURL || userData?.googlePhotoUrl || "",
                 reviewtext: data.reviewtext,
                 rating,
-                createdAt: new Date().toISOString(),
             };
 
             const res = await axiosInstance.post(API_ENDPOINTS.reviews, reviewData);
@@ -57,7 +55,7 @@ const ReviewAdding = () => {
 
                 <Form className="text-start" onSubmit={handleSubmit(onSubmit)}>
                     {/* Name */}
-                    {!user?.displayName && (
+                    {!userData?.displayName && !userData?.googleName && (
                         <Form.Group className="mb-3">
                             <Form.Label className="ml-2">Name</Form.Label>
                             <Form.Control

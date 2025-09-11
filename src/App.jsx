@@ -27,6 +27,7 @@ import ManageAllBookings from "./Pages/Dashboard/ManageAllBookings/ManageAllBook
 import ReviewAdding from "./Pages/Dashboard/ReviewAdding/ReviewAdding";
 import MyApartments from "./Pages/Dashboard/MyApartments/MyApartments";
 import Payment from "./Pages/Dashboard/Payment/Payment";
+import Profile from "./Pages/Dashboard/Profile/Profile";
 
 function App() {
     return (
@@ -63,6 +64,7 @@ function App() {
                                 <Route path="/manageApartments" element={<ManageApartments />} />
                                 <Route path="/apartment-form/:mode/:id" element={<AddApartment />} />
                                 <Route path="/makeAdmin" element={<MakeAdmin />} />
+                                <Route path="/profile" element={<Profile />} />
                             </Route>
                         </Routes>
                     </Router>
