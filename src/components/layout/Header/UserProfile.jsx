@@ -2,7 +2,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import useAuth from "../../../hooks/useAuth";
 
-const UserProfile = ({ onClose, userPhoto }) => {
+const UserProfile = ({ onClose, userPhoto, userData }) => {
     const { user, admin, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -33,6 +33,7 @@ const UserProfile = ({ onClose, userPhoto }) => {
         "/apartment-form",
         `/apartment-form/${mode}/${id}`,
         "/makeAdmin",
+        "/profile",
     ];
 
     const isDashboardPage = dashboardRoutes.includes(location.pathname);
@@ -46,9 +47,11 @@ const UserProfile = ({ onClose, userPhoto }) => {
                 <div className="flex gap-3 items-center mt-2 border-b border-gray-200 pb-2">
                     <img className="rounded-pill h-16 w-16" src={userPhoto || Avatar1} alt="user-profile" />
                     <div className="text-left">
-                        <p className="font-semibold text-xl mb-1">{user?.displayName || "N/A"}</p>
+                        <p className="font-semibold text-xl mb-1">
+                            {userData?.displayName || userData?.googleName || "N/A"}
+                        </p>
                         <p className="text-gray-500 text-sm mb-1">{admin ? "Admin" : "User"}</p>
-                        <p className="text-gray-500 text-sm font-semibold mb-1">{user?.email || "N/A"}</p>
+                        <p className="text-gray-500 text-sm font-semibold mb-1">{userData?.email || "N/A"}</p>
                     </div>
                 </div>
 

@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
+import { API_ENDPOINTS } from "../../../services/api";
 import "./Header.css";
 import UserProfile from "./UserProfile";
 
@@ -13,13 +16,28 @@ const Header = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
-    const userPhoto = user?.photoURL ? user.photoURL.replace(/=s96-c/, "") : null;
+    const { axiosInstance } = useAxiosInstance();
+    const { isCollapsed, setIsCollapsed, toggleSidebar, userData, setUserData } = useSidebar();
     const [isOpen, setIsOpen] = useState(false);
     const { mode, id } = useParams();
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
+
+    const fetchUserData = async () => {
+        try {
+            const { data } = await axiosInstance.get(`${API_ENDPOINTS.users}/${user.email}`);
+            setUserData(data?.data || {});
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Something went wrong!");
+        }
+    };
+
+    useEffect(() => {
+        if (user?.email) {
+            fetchUserData();
+        }
+    }, [user.email]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -102,10 +120,22 @@ const Header = () => {
                         {/* Auth Section */}
                         {user?.email ? (
                             <div className="d-flex align-items-center ml-5 cursor-pointer" onClick={toggleOpen}>
-                                <img className="rounded-full w-8 h-8" src={userPhoto || Avatar1} alt="user-profile" />
-                                <span className="ms-2 me-2 text-success fw-semibold">{user.displayName}</span>
+                                <img
+                                    className="rounded-full w-8 h-8"
+                                    src={userData?.photoURL || userData?.googlePhotoUrl || Avatar1}
+                                    alt="user-profile"
+                                />
+                                <span className="ms-2 me-2 text-success fw-semibold">
+                                    {userData?.displayName || userData?.googleName || ""}
+                                </span>
                                 <MdKeyboardArrowDown className="text-black text-14" />
-                                {isOpen && <UserProfile onClose={toggleOpen} userPhoto={userPhoto} />}
+                                {isOpen && (
+                                    <UserProfile
+                                        onClose={toggleOpen}
+                                        userPhoto={userData?.photoURL || userData?.googlePhotoUrl || ""}
+                                        userData={userData}
+                                    />
+                                )}
                             </div>
                         ) : (
                             <button
