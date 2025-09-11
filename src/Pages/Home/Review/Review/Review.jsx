@@ -11,7 +11,12 @@ const Review = ({ review }) => {
         // Review Cards
         <div className="p-3">
             <Card className="card h-100 bg-light">
-                <Card.Img variant="top" src={img || Avatar} className="w-25 rounded-circle mx-auto" />
+                <Card.Img
+                    variant="top"
+                    src={img || Avatar}
+                    style={{ width: "100px", height: "100px" }}
+                    className="rounded-circle mx-auto"
+                />
 
                 <Card.Body className="d-flex flex-column items-center">
                     <FontAwesomeIcon icon={faQuoteLeft} className="mb-2" />
