@@ -21,11 +21,12 @@ import useAuth from "../../../hooks/useAuth";
 export default function Sidebar() {
     const { admin, logout } = useAuth();
     const { pathname } = useLocation();
-    const { isCollapsed, setIsCollapsed, toggleSidebar } = useSidebar();
+    const { isCollapsed, setIsCollapsed, toggleSidebar, setUserData } = useSidebar();
     const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
+        setUserData({});
         navigate("/login");
     };
 

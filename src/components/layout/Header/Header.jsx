@@ -18,6 +18,7 @@ const Header = () => {
     const location = useLocation();
     const { axiosInstance } = useAxiosInstance();
     const { isCollapsed, setIsCollapsed, toggleSidebar, userData, setUserData } = useSidebar();
+    console.log("🚀 ~ Header ~ userData:", userData);
     const [isOpen, setIsOpen] = useState(false);
     const { mode, id } = useParams();
     const toggleOpen = () => {
@@ -129,13 +130,7 @@ const Header = () => {
                                     {userData?.displayName || userData?.googleName || ""}
                                 </span>
                                 <MdKeyboardArrowDown className="text-black text-14" />
-                                {isOpen && (
-                                    <UserProfile
-                                        onClose={toggleOpen}
-                                        userPhoto={userData?.photoURL || userData?.googlePhotoUrl || ""}
-                                        userData={userData}
-                                    />
-                                )}
+                                {isOpen && <UserProfile onClose={toggleOpen} />}
                             </div>
                         ) : (
                             <button
