@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Loader from "../../components/Loader/Loader";
 import { API_ENDPOINTS } from "../../services/api";
 
 const Booking = () => {
@@ -25,11 +26,7 @@ const Booking = () => {
     }, [houseId]);
 
     if (loading) {
-        return (
-            <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-                <Spinner animation="border" variant="success" />
-            </div>
-        );
+        return <Loader />;
     }
 
     return (

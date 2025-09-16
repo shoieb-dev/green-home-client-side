@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Alert, Container, Spinner } from "react-bootstrap";
+import { Alert, Container } from "react-bootstrap";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Loader from "../../../../components/Loader/Loader";
 import { API_ENDPOINTS } from "../../../../services/api";
 import Review from "../Review/Review";
 import "./Reviews.css";
@@ -35,11 +36,7 @@ const Reviews = () => {
     }, []);
 
     if (loading) {
-        return (
-            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "50vh" }}>
-                <Spinner animation="border" variant="warning" />
-            </div>
-        );
+        return <Loader />;
     }
 
     if (error) {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { FaBook, FaHome, FaStar, FaUsers } from "react-icons/fa";
+import Loader from "../../../components/Loader/Loader";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
@@ -27,7 +27,7 @@ const Dashboard = () => {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <Spinner animation="border" variant="primary" />
+                <Loader />
             </div>
         );
     }

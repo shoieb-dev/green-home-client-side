@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, Container, Row, Spinner } from "react-bootstrap";
 import { API_ENDPOINTS } from "../../../services/api";
 import Apartment from "../../Apartments/Apartment/Apartment";
+import Loader from "../../../components/Loader/Loader";
 
 const FeaturedApartments = () => {
     const [apartments, setApartments] = useState([]);
@@ -41,11 +42,9 @@ const FeaturedApartments = () => {
 
             <Container className="apartment-bg">
                 {loading ? (
-                    <div className="d-flex justify-content-center align-items-center" style={{ height: '100px' }}>
-                        <Spinner animation="border" variant="success" />
-                    </div>
+                    <Loader />
                 ) : error ? (
-                    <div className="d-flex justify-content-center align-items-center" style={{ height: '100px' }}>
+                    <div className="d-flex justify-content-center align-items-center" style={{ height: "100px" }}>
                         <Alert variant="danger" className="text-center">
                             {error}
                         </Alert>
