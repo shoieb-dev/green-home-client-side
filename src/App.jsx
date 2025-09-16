@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-tooltip/dist/react-tooltip.css";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PublicLayout from "./components/layout/PublicLayout/PublicLayout";
 import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout";
@@ -15,7 +16,8 @@ import Login from "./Pages/auth/Login/Login";
 import Register from "./Pages/auth/Register/Register";
 import Booking from "./Pages/Booking/Booking";
 import NotFound from "./Pages/NotFound/NotFound";
-import { Toaster } from "react-hot-toast";
+import VerifyEmail from "./Pages/auth/VerifyEmail/VerifyEmail";
+import CheckMail from "./Pages/auth/CheckMail/CheckMail";
 
 // Dashboard pages
 import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
@@ -43,6 +45,8 @@ function App() {
                                 <Route path="/apartments" element={<Apartments />} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/register" element={<Register />} />
+                                <Route path="/check-mail" element={<CheckMail />} />
+                                <Route path="/verify-email" element={<VerifyEmail />} />
                                 <Route path="/booking/:houseId" element={<Booking />} />
                                 <Route path="*" element={<NotFound />} />
                             </Route>
