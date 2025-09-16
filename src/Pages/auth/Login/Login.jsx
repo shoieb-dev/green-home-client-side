@@ -1,18 +1,13 @@
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import { Alert, Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import { useState } from "react";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import "./Login.css";
 
 const Login = () => {
-    const [loginData, setLoginData] = useState({});
+    const [loginData, setLoginData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const { user, loginUser, signInWithGoogle, isLoading, authError, setAuthError } = useAuth();
-
-    const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -35,83 +30,101 @@ const Login = () => {
     };
 
     return (
-        <main className="bg-login body">
-            <div className="p-5 bg-login2">
-                <div className="p-5 mx-auto w-50 text-start bg-light login-card">
-                    <Form onSubmit={handleLoginSubmit}>
-                        <h3 className="text-center mb-5">Login</h3>
+        <div
+            className="relative flex items-center justify-center min-h-screen py-30 bg-cover bg-center"
+            style={{ backgroundImage: "url('https://i.ibb.co/vsQh0F6/image.png')", backgroundAttachment: "fixed" }}
+        >
+            <div className="absolute inset-0 bg-black/60" />
 
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                onChange={handleOnChange}
-                                placeholder="Enter email"
-                                aria-label="Email"
-                                required
-                            />
-                        </Form.Group>
+            <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
+                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="logo" className="mx-auto h-12 mb-2" />
+                <p className="text-center text-gray-500 text-sm mb-2">Welcome back! Please log in.</p>
+                <h2 className="text-2xl font-semibold text-center py-4">Login</h2>
+                <p className="text-center text-gray-600 text-sm pb-6">
+                    Enter your email and password to access your account.
+                </p>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <InputGroup>
-                                <Form.Control
-                                    type={showPassword ? "text" : "password"}
-                                    name="password"
-                                    onChange={handleOnChange}
-                                    placeholder="Password"
-                                    aria-label="Password"
-                                    required
-                                />
-                                <Button
-                                    variant="outline-light"
-                                    className="bg-white text-secondary"
-                                    onClick={togglePasswordVisibility}
-                                    aria-label="Toggle password visibility"
-                                >
-                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                                </Button>
-                            </InputGroup>
-                        </Form.Group>
+                <form onSubmit={handleLoginSubmit} className="space-y-4 text-left">
+                    {/* Email */}
+                    <div>
+                        <label className="text-gray-600 mb-1">Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            onChange={handleOnChange}
+                            placeholder="Enter email"
+                            required
+                            aria-label="Email"
+                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
 
-                        <div className="d-flex justify-content-between">
-                            <div className="fw-bold">
-                                {isLoading && <Spinner animation="grow" variant="success" />}
-                                {user?.email && <Alert variant="success">Login successful!</Alert>}
-                                {authError && <Alert variant="danger">{authError}</Alert>}
-                            </div>
-                        </div>
+                    {/* Password */}
+                    <div className="relative">
+                        <label className="text-gray-600 mb-1">Password</label>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            onChange={handleOnChange}
+                            placeholder="Password"
+                            required
+                            aria-label="Password"
+                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                        />
+                        <span
+                            className="absolute bottom-3 right-3 cursor-pointer text-gray-500"
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label="Toggle password visibility"
+                        >
+                            {showPassword ? <IoMdEyeOff size={18} /> : <IoMdEye size={18} />}
+                        </span>
+                    </div>
 
-                        <div className="d-flex">
-                            <Button
-                                variant="dark"
-                                type="submit"
-                                className="w-50 btn-outline-success rounded-pill fw-bold text-white mt-4 mx-1"
-                            >
-                                Login
-                            </Button>
-                            <Button
-                                onClick={handleGoogleSignIn}
-                                variant="light"
-                                type="button"
-                                className="w-50 btn-outline-success rounded-pill fw-bold mt-4 mx-1"
-                            >
-                                <FontAwesomeIcon icon={faGoogle} /> Continue with Google
-                            </Button>
-                        </div>
-                    </Form>
+                    {/* Error & Success messages */}
+                    <div className="min-h-[1.25rem]">
+                        {user?.email && <p className="text-green-600 text-sm">Login successful!</p>}
+                        {authError && <p className="text-red-600 text-sm">{authError}</p>}
+                    </div>
 
-                    <Button
-                        onClick={() => setAuthError("")}
-                        as={Link}
-                        to="/register"
-                        variant="white"
-                        className="fw-bold mt-4 w-100 mx-auto"
+                    {/* Login button */}
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded transition disabled:bg-gray-400"
                     >
-                        Don't have an account?
-                    </Button>
+                        {isLoading ? "Logging in..." : "Login"}
+                    </button>
+                </form>
+
+                {/* Divider */}
+                <div className="flex items-center my-6">
+                    <div className="flex-grow border-t border-gray-300"></div>
+                    <span className="px-3 text-gray-500 text-sm">OR</span>
+                    <div className="flex-grow border-t border-gray-300"></div>
                 </div>
+
+                {/* Google Sign-in */}
+                <button
+                    onClick={handleGoogleSignIn}
+                    type="button"
+                    className="w-full py-2 px-4 border-2 border-gray-300 rounded flex items-center justify-center gap-2 text-gray-700 hover:bg-green-700 hover:text-white transition"
+                >
+                    <FcGoogle size={20} /> Continue with Google
+                </button>
+
+                {/* Register redirect */}
+                <p className="text-center mt-5 text-sm text-gray-600">
+                    Don’t have an account?{" "}
+                    <Link
+                        to="/register"
+                        onClick={() => setAuthError("")}
+                        className="text-green-600 font-medium hover:underline"
+                    >
+                        Sign up
+                    </Link>
+                </p>
             </div>
-        </main>
+        </div>
     );
 };
 
