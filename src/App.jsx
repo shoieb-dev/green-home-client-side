@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PublicLayout from "./components/layout/PublicLayout/PublicLayout";
 import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout";
 import "./App.css";
+import PublicRoute from "./Pages/auth/PublicRoute/PublicRoute";
 import PrivateRoute from "./Pages/auth/PrivateRoute/PrivateRoute";
 import AuthProvider from "./contexts/AuthProvider";
 import { SidebarProvider } from "./contexts/SidebarContext";
@@ -40,13 +41,42 @@ function App() {
                         <Routes>
                             {/* Public layout */}
                             <Route element={<PublicLayout />}>
+                                <Route
+                                    path="/login"
+                                    element={
+                                        <PublicRoute>
+                                            <Login />
+                                        </PublicRoute>
+                                    }
+                                />
+                                <Route
+                                    path="/register"
+                                    element={
+                                        <PublicRoute>
+                                            <Register />
+                                        </PublicRoute>
+                                    }
+                                />
+                                <Route
+                                    path="/check-mail"
+                                    element={
+                                        <PublicRoute>
+                                            <CheckMail />
+                                        </PublicRoute>
+                                    }
+                                />
+                                <Route
+                                    path="/verify-email"
+                                    element={
+                                        <PublicRoute>
+                                            <VerifyEmail />
+                                        </PublicRoute>
+                                    }
+                                />
+
                                 <Route path="/" element={<Home />} />
                                 <Route path="/home" element={<Home />} />
                                 <Route path="/apartments" element={<Apartments />} />
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/register" element={<Register />} />
-                                <Route path="/check-mail" element={<CheckMail />} />
-                                <Route path="/verify-email" element={<VerifyEmail />} />
                                 <Route path="/booking/:houseId" element={<Booking />} />
                                 <Route path="*" element={<NotFound />} />
                             </Route>
