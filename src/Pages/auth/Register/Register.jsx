@@ -1,116 +1,143 @@
-import React, { useState } from "react";
-import { Alert, Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import { useState } from "react";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
-    const [registerData, setRegisterData] = useState({ name: "", email: "", password: "", password2: "" });
-    const [showPassword, setShowPassword] = useState(false);
-    const [showPassword2, setShowPassword2] = useState(false);
     const navigate = useNavigate();
-    const { user, registerUser, isLoading, authError, setAuthError } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const { registerUser, isLoading, authError, setAuthError } = useAuth();
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
 
-    const handleOnChange = (e) => {
+    // Handle input change
+    const handleChange = (e) => {
         setAuthError("");
         const { name, value } = e.target;
-        setRegisterData((prevState) => ({ ...prevState, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleRegisterSubmit = (e) => {
+    // Submit form
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const { password, password2 } = registerData;
+        const { name, email, password, confirmPassword } = formData;
 
-        if (password !== password2) {
+        if (password !== confirmPassword) {
             setAuthError("Passwords do not match.");
             return;
         }
-        registerUser(registerData.email, registerData.password, registerData.name, navigate);
+        registerUser(email, password, name, navigate, setAuthError);
     };
 
     return (
-        <div className="bg-login body">
-            <div className="p-5 bg-login2">
-                <div className="p-5 mx-auto w-50 text-start bg-light login-card">
-                    <Form onSubmit={handleRegisterSubmit}>
-                        <h3 className="text-center mb-5">Sign Up</h3>
+        <div
+            className="relative flex items-center justify-center min-h-screen py-30 bg-cover bg-center"
+            style={{ backgroundImage: "url('https://i.ibb.co/vsQh0F6/image.png')", backgroundAttachment: "fixed" }}
+        >
+            {/* Overlay for readability */}
+            <div className="absolute inset-0 bg-black/60" />
 
-                        <Form.Group className="mb-3" controlId="formBasicName">
-                            <Form.Control
-                                type="text"
-                                name="name"
-                                onChange={handleOnChange}
-                                placeholder="Enter name"
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                onChange={handleOnChange}
-                                placeholder="Enter email"
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <InputGroup>
-                                <Form.Control
-                                    type={showPassword ? "text" : "password"}
-                                    name="password"
-                                    onChange={handleOnChange}
-                                    placeholder="Password"
-                                    required
-                                />
-                                <Button
-                                    variant="outline-light"
-                                    className="bg-white text-secondary"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                                </Button>
-                            </InputGroup>
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formBasicPassword2">
-                            <InputGroup>
-                                <Form.Control
-                                    type={showPassword2 ? "text" : "password"}
-                                    name="password2"
-                                    onChange={handleOnChange}
-                                    placeholder="Retype Password"
-                                    required
-                                />
-                                <Button
-                                    variant="outline-light"
-                                    className="bg-white text-secondary"
-                                    onClick={() => setShowPassword2(!showPassword2)}
-                                >
-                                    <FontAwesomeIcon icon={showPassword2 ? faEyeSlash : faEye} />
-                                </Button>
-                            </InputGroup>
-                        </Form.Group>
-
-                        <div className="text-center">
-                            {isLoading && <Spinner animation="grow" variant="success" />}
-                            {user?.email && <Alert variant="success">User Created Successfully!</Alert>}
-                            {authError && <Alert variant="danger">{authError}</Alert>}
-                        </div>
-
-                        <div className="d-flex justify-content-center mt-4">
-                            <Button variant="dark" type="submit" className="w-75 btn-outline-success rounded-pill fw-bold text-white">
-                                Sign Up
-                            </Button>
-                        </div>
-                    </Form>
-
-                    <Button as={Link} to="/login" variant="white" type="button" className="fw-bold mt-4 w-100">
-                        Already have an account?
-                    </Button>
+            <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
+                {/* Logo / Branding */}
+                <div className="text-center mb-6">
+                    <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="Green Home Logo" className="mx-auto h-12" />
+                    <h2 className="text-3xl font-bold text-green-700 mt-3">Create Account</h2>
+                    <p className="text-gray-500 text-sm">Join Green Home and find your perfect property</p>
                 </div>
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4 text-left">
+                    <div>
+                        <label className="block text-gray-600 text-sm mb-1">Full Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            onChange={handleChange}
+                            placeholder="Enter your name"
+                            required
+                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-600 text-sm mb-1">Email Address</label>
+                        <input
+                            type="email"
+                            name="email"
+                            onChange={handleChange}
+                            placeholder="Enter your email"
+                            required
+                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <label className="block text-gray-600 text-sm mb-1">Password</label>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            onChange={handleChange}
+                            placeholder="Enter password"
+                            required
+                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                        />
+                        <span
+                            className="absolute bottom-3 right-3 cursor-pointer text-gray-500"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <IoMdEyeOff size={18} /> : <IoMdEye size={18} />}
+                        </span>
+                    </div>
+
+                    <div className="relative">
+                        <label className="block text-gray-600 text-sm mb-1">Confirm Password</label>
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            name="confirmPassword"
+                            onChange={handleChange}
+                            placeholder="Re-enter password"
+                            required
+                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                        />
+                        <span
+                            className="absolute bottom-3 right-3 cursor-pointer text-gray-500"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        >
+                            {showConfirmPassword ? <IoMdEyeOff size={18} /> : <IoMdEye size={18} />}
+                        </span>
+                    </div>
+
+                    {/* Error message */}
+                    <div className="min-h-[1.25rem]">
+                        {authError && <p className="text-red-600 text-sm">{authError}</p>}
+                    </div>
+
+                    {/* Submit button */}
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded transition disabled:bg-gray-400"
+                    >
+                        {isLoading ? "Signing Up..." : "Sign Up"}
+                    </button>
+                </form>
+
+                {/* Login redirect */}
+                <p className="text-center mt-5 text-sm text-gray-600">
+                    Already have an account?{" "}
+                    <Link
+                        to="/login"
+                        onClick={() => setAuthError("")}
+                        className="text-green-600 font-medium hover:underline no-underline"
+                    >
+                        Login
+                    </Link>
+                </p>
             </div>
         </div>
     );

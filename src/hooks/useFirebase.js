@@ -1,16 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
 import {
-    getAuth,
-    signInWithPopup,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    updateProfile,
+    getAuth,
     GoogleAuthProvider,
-    signOut,
     onAuthStateChanged,
+    sendEmailVerification,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+    updateProfile,
 } from "firebase/auth";
-import { API_ENDPOINTS } from "../services/api";
+import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import initializeFirebase from "../Pages/auth/Firebase/firebase.init";
+import { API_ENDPOINTS } from "../services/api";
 
 initializeFirebase();
 
@@ -39,53 +41,83 @@ const useFirebase = () => {
             "auth/internal-error": "An internal error occurred. Please try again later.",
         };
         setAuthError(errorMessages[error.code] || error.message);
+        toast.error(errorMessages[error.code] || error.message);
     }, []);
 
+    // Register New User
     const registerUser = useCallback(
-        (email, password, name, navigate) => {
+        async (email, password, name, navigate) => {
             setIsLoading(true);
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    setAuthError("");
-                    const newUser = { email, displayName: name, photoURL: "" };
-                    setUser(newUser);
+            setAuthError("");
 
-                    saveUser(email, name, "", "POST");
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const newUser = userCredential.user;
 
-                    // send name to firebase after creation
-                    updateProfile(auth.currentUser, { displayName: name }).catch(console.error);
-                    navigate("/");
-                })
-                .catch(handleAuthError)
-                .finally(() => setIsLoading(false));
+                // ✅ update profile with displayName right after creation
+                await updateProfile(newUser, {
+                    displayName: name,
+                });
+
+                // ✅ Save user into DB with displayName
+                saveUser(email, name, "", "POST");
+
+                // Send verification email
+                await sendEmailVerification(newUser);
+
+                // Redirect to CheckMail page
+                navigate("/check-mail");
+            } catch (error) {
+                handleAuthError(error);
+            } finally {
+                setIsLoading(false);
+            }
         },
         [auth, handleAuthError]
     );
 
+    // Login User
     const loginUser = useCallback(
-        (email, password, location, navigate) => {
+        async (email, password, location, navigate) => {
             setIsLoading(true);
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    const destination = location?.state?.from || "/"; // If no `from`, redirect to home
-                    navigate(destination); // Redirect back to original page or default
-                    setAuthError("");
-                })
-                .catch(handleAuthError)
-                .finally(() => setIsLoading(false));
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const loggedInUser = userCredential.user;
+
+                if (!loggedInUser.emailVerified) {
+                    setAuthError("Please verify your email before logging in.");
+                    await signOut(auth); // prevent keeping them signed in
+                    return;
+                }
+
+                // Save verified user to DB (if not already saved)
+                const photoURL = loggedInUser.photoURL ? loggedInUser.photoURL.replace(/=s96-c/, "") : "";
+                saveUser(loggedInUser.email, loggedInUser.displayName, photoURL, "PUT");
+
+                setUser(loggedInUser);
+                const destination = location?.state?.from || "/";
+                navigate(destination);
+                setAuthError("");
+            } catch (err) {
+                handleAuthError(err);
+            } finally {
+                setIsLoading(false);
+            }
         },
         [auth, handleAuthError]
     );
 
+    // Sign in with Google
     const signInWithGoogle = useCallback(
         (location, navigate) => {
-            console.log("location", location);
             setIsLoading(true);
             signInWithPopup(auth, googleProvider)
                 .then((result) => {
                     const user = result.user;
                     const photoURL = result?.user?.photoURL ? result?.user?.photoURL.replace(/=s96-c/, "") : null;
                     saveUser(user.email, user.displayName, photoURL, "PUT");
+
+                    // Google users are always verified
                     const destination = location?.state?.from || "/";
                     navigate(destination);
                     setAuthError("");
@@ -96,10 +128,14 @@ const useFirebase = () => {
         [auth, handleAuthError]
     );
 
-    // observer user state
+    // Observer user state
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser || {});
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user && user.emailVerified) {
+                setUser(user);
+            } else {
+                setUser({});
+            }
             setIsLoading(false);
         });
         return () => unsubscribe();
@@ -132,6 +168,7 @@ const useFirebase = () => {
 
     return {
         user,
+        setUser,
         admin,
         isLoading,
         authError,
