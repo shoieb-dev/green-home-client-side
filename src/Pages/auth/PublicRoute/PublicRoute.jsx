@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
 import useAuth from "../../../hooks/useAuth";

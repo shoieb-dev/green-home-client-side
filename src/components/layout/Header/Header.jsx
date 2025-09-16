@@ -18,9 +18,9 @@ const Header = () => {
     const location = useLocation();
     const { axiosInstance } = useAxiosInstance();
     const { isCollapsed, setIsCollapsed, toggleSidebar, userData, setUserData } = useSidebar();
-    console.log("🚀 ~ Header ~ userData:", userData);
     const [isOpen, setIsOpen] = useState(false);
     const { mode, id } = useParams();
+
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
