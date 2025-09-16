@@ -1,7 +1,7 @@
 import moment from "moment";
-import { Spinner } from "react-bootstrap";
 import { FaBook, FaHome, FaStar, FaUsers } from "react-icons/fa";
 import { Bar, BarChart, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import Loader from "../../../components/Loader/Loader";
 
 const COLORS = ["#4ade80", "#facc15", "#f87171", "#60a5fa"];
 
@@ -9,7 +9,7 @@ const AdminDashboard = ({ data, loading }) => {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <Spinner animation="border" variant="primary" />
+                <Loader />
             </div>
         );
     }

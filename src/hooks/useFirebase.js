@@ -19,6 +19,7 @@ initializeFirebase();
 const useFirebase = () => {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [isCheckingUser, setIsCheckingUser] = useState(true);
     const [authError, setAuthError] = useState("");
     const [admin, setAdmin] = useState(false);
 
@@ -136,6 +137,7 @@ const useFirebase = () => {
             } else {
                 setUser({});
             }
+            setIsCheckingUser(false);
             setIsLoading(false);
         });
         return () => unsubscribe();
@@ -171,6 +173,7 @@ const useFirebase = () => {
         setUser,
         admin,
         isLoading,
+        isCheckingUser,
         authError,
         setAuthError,
         registerUser,

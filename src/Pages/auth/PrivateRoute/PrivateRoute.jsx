@@ -1,21 +1,17 @@
-import React from "react";
-import { Spinner } from "react-bootstrap";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
 import useAuth from "../../../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
-    const { user, isLoading } = useAuth();
+    const { user, isCheckingUser } = useAuth();
     const location = useLocation();
 
-    if (isLoading) {
-        return <Spinner animation="border" variant="danger" />;
+    if (isCheckingUser) {
+        return <Loader />;
     }
 
-    return user?.email ? (
-        children || <Outlet />
-    ) : (
-        <Navigate to="/login" state={{ from: location }} />
-    );
+    // Only allow verified users
+    return user?.email ? children || <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />;
 };
 
 export default PrivateRoute;

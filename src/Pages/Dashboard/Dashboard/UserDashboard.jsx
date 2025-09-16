@@ -1,17 +1,13 @@
 import moment from "moment";
-import { Spinner } from "react-bootstrap";
 import { FaBook, FaStar } from "react-icons/fa";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import Loader from "../../../components/Loader/Loader";
 
 const COLORS = ["#4ade80", "#facc15", "#f87171", "#60a5fa"];
 
 const UserDashboard = ({ data, loading }) => {
     if (loading) {
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <Spinner animation="border" variant="primary" />
-            </div>
-        );
+        return <Loader />;
     }
 
     // ====== USER DATA ======
