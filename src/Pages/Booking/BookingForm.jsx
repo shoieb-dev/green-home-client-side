@@ -31,7 +31,7 @@ const BookingForm = () => {
                 setHouse(response.data);
             })
             .catch((err) => {
-                toast.error("Failed to load house details. Please try again.");
+                toast.error(err.response?.data?.message || "Failed to load house details. Please try again.");
             });
     }, [houseId]);
 
@@ -57,7 +57,7 @@ const BookingForm = () => {
                 }, 2000);
             }
         } catch (err) {
-            toast.error("Failed to book the house. Please try again.");
+            toast.error(err?.response?.data?.message || "Failed to book the house. Please try again.");
         } finally {
             setLoading(false);
         }
