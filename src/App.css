@@ -21,3 +21,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #bfc9ca;
 }
+
+.brand {
+  font-family: "Righteous", cursive;
+  font-weight: bold;
+}
