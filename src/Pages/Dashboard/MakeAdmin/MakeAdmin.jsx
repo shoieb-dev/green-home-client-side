@@ -1,74 +1,62 @@
 import { useState } from "react";
-import { Alert, Form, Spinner } from "react-bootstrap";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
 
 const MakeAdmin = () => {
     const [email, setEmail] = useState("");
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const { axiosInstance } = useAxiosInstance();
 
-    const handleAdminSubmit = (e) => {
+    const handleAdminSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setSuccess(false);
-        setError("");
 
-        axiosInstance
-            .put(`${API_ENDPOINTS.users}/make-admin`, { email })
-            .then(({ data }) => {
-                if (data.success) {
-                    toast.success(data.message);
-                } else {
-                    toast.error(data.message || "Failed to make admin. Try again.");
-                }
-            })
-            .catch((error) =>
-                toast.error(error.response?.data?.message || "An error occurred. Please try again later.")
-            )
-            .finally(() => setLoading(false));
+        try {
+            const { data } = await axiosInstance.put(`${API_ENDPOINTS.users}/make-admin`, { email });
+            if (data.success) {
+                toast.success(data.message);
+                setEmail(""); // clear after success
+            } else {
+                toast.error(data.message || "Failed to make admin. Try again.");
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || "An error occurred. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="bg-gray-100 flex items-center justify-center p-6">
-            <div className="w-full flex flex-col items-center justify-center bg-white rounded-2xl shadow-lg p-20">
-                <h2 className="text-2xl font-bold text-gray-700 pb-6">Make an Admin</h2>
+        <div className="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+            <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
+                <h2 className="text-2xl font-bold text-gray-700 text-center pb-6">Make an Admin</h2>
 
-                <Form onSubmit={handleAdminSubmit} className="bg-light p-4 rounded-3 shadow w-50">
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className="fw-bold">Email address</Form.Label>
-                        <Form.Control
+                <form onSubmit={handleAdminSubmit} className="space-y-5 text-left">
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                            Email address
+                        </label>
+                        <input
+                            id="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter Email"
                             required
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                         />
-                    </Form.Group>
-
-                    {success && <Alert variant="success">{success}</Alert>}
-                    {error && <Alert variant="danger">{error}</Alert>}
+                    </div>
 
                     <button
                         type="submit"
-                        className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-green-600 text-white py-2 rounded-lg shadow hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={loading}
                     >
-                        {loading ? (
-                            <span className="flex items-center">
-                                <Spinner animation="border" size="sm" className="mr-2" />
-                                Making Admin
-                            </span>
-                        ) : (
-                            "Make Admin"
-                        )}
+                        {loading ? "Making Admin" : "Make Admin"}
                     </button>
-                </Form>
+                </form>
             </div>
-            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };

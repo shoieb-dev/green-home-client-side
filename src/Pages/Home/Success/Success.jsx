@@ -1,67 +1,37 @@
-import { faFutbol } from '@fortawesome/free-regular-svg-icons';
-import { faHome, faPaintRoller, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
-import './Success.css'
+import { faFutbol } from "@fortawesome/free-regular-svg-icons";
+import { faHome, faPaintRoller, faShieldAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const features = [
+    { icon: faHome, title: "Duplex Layout" },
+    { icon: faShieldAlt, title: "High-Level Security" },
+    { icon: faPaintRoller, title: "Royal Touch Paint" },
+    { icon: faFutbol, title: "Large Playground" },
+];
 
 const Success = () => {
     return (
         <div id="success" className="pt-5 success-bg">
-            <div className="py-5">
-                <h2>
-                    <div className="py-3">
-                        <span className="brand text-success px-2 rounded-3"> GREEN HOME</span>
-                        <span className="text-warning px-2 rounded-3">Properties </span>
-                    </div>
+            <div className="py-10  text-center text-2xl">
+                <h2 className="mb-4">
+                    <span className="brand text-green-600 px-2 rounded-md">GREEN HOME</span>
+                    <span className="text-yellow-500 px-2 font-semibold rounded-md">Properties</span>
                 </h2>
-                <h3>Features</h3>
+                <h3 className="font-semibold">Features</h3>
             </div>
-            <div className="pb-5">
-                <Container>
 
-                    <Row xs={1} md={2} lg={4}>
-                        <Col>
-                            <Card className="success-card p-3 h-100">
-                                <Card.Body>
-                                    <FontAwesomeIcon className="my-3" icon={faHome} size='4x' />
-                                    <Card.Title> Duplex Layout
-                                    </Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col>
-                            <Card className="success-card p-3 h-100">
-                                <Card.Body>
-                                    <FontAwesomeIcon className="my-3" icon={faShieldAlt} size='4x' />
-                                    <Card.Title> High-Level Security
-                                    </Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col>
-                            <Card className="success-card p-3 h-100">
-                                <Card.Body>
-                                    <FontAwesomeIcon className="my-3" icon={faPaintRoller} size='4x' />
-                                    <Card.Title> Royal Touch Paint
-                                    </Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col>
-                            <Card className="success-card p-3 h-100">
-                                <Card.Body>
-                                    <FontAwesomeIcon className="my-3" icon={faFutbol} size='4x' />
-                                    <Card.Title> Large Playground
-                                    </Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container>
+            <div className="pb-5 max-w-7xl overflow-hidden mx-auto px-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {features.map((feature, idx) => (
+                        <div
+                            key={idx}
+                            className="bg-slate-300 hover:bg-cyan-300/80 transition-colors rounded-lg shadow-md px-20 py-10 flex flex-col items-center text-center"
+                        >
+                            <FontAwesomeIcon icon={feature.icon} size="5x" className="text-gray-700 mb-4" />
+                            <h4 className="text-lg font-semibold">{feature.title}</h4>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

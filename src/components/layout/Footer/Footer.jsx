@@ -1,90 +1,87 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faYoutube, faLinkedin } from '@fortawesome/free-brands-svg-icons'
-import { faPhone, faEnvelopeOpen, faBuilding } from '@fortawesome/free-solid-svg-icons';
-import { Col, Container, Row } from 'react-bootstrap';
-import './Footer.css';
-import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
+import { FaFacebookF, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <div className="bg-dark text-white py-3">
-            <div className="text-start py-5">
-                <Container>
-                    <Row xs={1} md={2} lg={3} className="g-3">
-
-                        <Col>
-                            <div className="d-flex text-start py-3">
-                                <div>
-                                    <img
-                                        src="https://i.ibb.co/pz3fBBX/B-GREEN.png"
-                                        width="80"
-                                        height="50"
-                                        className="d-inline-block align-top me-2"
-                                        alt="logo"
-                                    />
-                                </div>
-                                <div>
-                                    <h4 className="brand text-success"> GREEN HOME </h4> <h6 className="text-warning">Properties</h6>
-                                </div>
-                            </div>
-
+        <footer className="bg-gray-900 text-white pt-10 pb-3">
+            <div className="max-w-7xl overflow-hidden mx-auto px-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                    {/* Brand + Social */}
+                    <div className="flex flex-col">
+                        <div className="flex items-center space-x-3 mb-4">
+                            <img
+                                src="https://i.ibb.co/pz3fBBX/B-GREEN.png"
+                                alt="logo"
+                                className="w-20 h-12 object-contain"
+                            />
                             <div>
-                                {/* social media icons  */}
-                                <div className="social-media py-4">
-                                    <a href="https://www.facebook.com/shoieb.ctg"
-                                        target="_blank" rel="noreferrer">
-                                        <FontAwesomeIcon className="me-4" icon={faFacebookF} size='2x' />
-                                    </a>
-                                    <a href="https://twitter.com/Shoieb5"
-                                        target="_blank" rel="noreferrer">
-                                        <FontAwesomeIcon className="mx-4" icon={faTwitter} size='2x' />
-                                    </a>
-                                    <a href="https://www.linkedin.com/in/shoieb-alam/" target="_blank" rel="noreferrer">
-                                        <FontAwesomeIcon className="mx-4" icon={faLinkedin} size='2x' />
-                                    </a>
-                                    <a href="https://www.youtube.com/channel/UCCIDe_dIDwvX1rBK-Yz30VA" target="_blank" rel="noreferrer">
-                                        <FontAwesomeIcon className="mx-4" icon={faYoutube} size='2x' />
-                                    </a>
-                                </div>
+                                <h4 className="text-green-500 brand text-lg">GREEN HOME</h4>
+                                <h6 className="text-yellow-400 text-sm">Properties</h6>
                             </div>
-                        </Col>
+                        </div>
 
-                        <Col>
-                            <div>
-                                <h4>Useful Links</h4>
-                            </div>
-                            <div className="mt-4">
-                                <Link as={HashLink} className="text-decoration-none text-white" to="/home#banner">Home</Link> <br />
-                                <Link as={HashLink} className="text-decoration-none text-white" to="/home#featured">Featured</Link> <br />
-                                <Link className="text-decoration-none text-white" to="/apartments">Apartments</Link> <br />
-                                <Link as={HashLink} className="text-decoration-none text-white" to="/home#reviews">Reviews</Link> <br />
-                            </div>
-                        </Col>
+                        <div className="flex space-x-10 mt-4">
+                            <a href="https://www.facebook.com/shoieb.ctg" target="_blank" rel="noreferrer">
+                                <FaFacebookF size={36} className="text-gray-100 hover:text-green-500 transition" />
+                            </a>
+                            <a href="https://twitter.com/Shoieb5" target="_blank" rel="noreferrer">
+                                <FaTwitter size={36} className="text-gray-100 hover:text-green-500 transition" />
+                            </a>
+                            <a href="https://www.linkedin.com/in/shoieb-alam/" target="_blank" rel="noreferrer">
+                                <FaLinkedin size={36} className="text-gray-100 hover:text-green-500 transition" />
+                            </a>
+                            <a
+                                href="https://www.youtube.com/channel/UCCIDe_dIDwvX1rBK-Yz30VA"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <FaYoutube size={36} className="text-gray-100 hover:text-green-500 transition" />
+                            </a>
+                        </div>
+                    </div>
 
-                        <Col>
-                            <div>
-                                <h4>Get In Touch</h4>
-                            </div>
-                            <div className="mt-4">
-                                <p>
-                                    <FontAwesomeIcon icon={faPhone} className="me-2" /> +88-031-656570
-                                </p>
-                                <p>
-                                    <FontAwesomeIcon icon={faEnvelopeOpen} className="me-2" /> support.ghp@gmail.com
-                                </p>
-                                <p>
-                                    <FontAwesomeIcon icon={faBuilding} className="me-2" /> Uttara, Dhaka-1230 Bangladesh
-                                </p>
-                            </div>
-                        </Col>
+                    {/* Useful Links */}
+                    <div>
+                        <h4 className="font-semibold text-lg mb-4">Useful Links</h4>
+                        <div className="flex flex-col space-y-2">
+                            <Link to="/home#banner" className="text-gray-100 hover:text-green-400 transition">
+                                Home
+                            </Link>
+                            <Link to="/home#featured" className="text-gray-100 hover:text-green-400 transition">
+                                Featured
+                            </Link>
+                            <Link to="/apartments" className="text-gray-100 hover:text-green-400 transition">
+                                Apartments
+                            </Link>
+                            <Link to="/home#reviews" className="text-gray-100 hover:text-green-400 transition">
+                                Reviews
+                            </Link>
+                        </div>
+                    </div>
 
-                    </Row>
-                </Container>
+                    {/* Contact Info */}
+                    <div>
+                        <h4 className="font-semibold text-lg mb-4">Get In Touch</h4>
+                        <div className="flex flex-col space-y-2">
+                            <p className="flex items-center space-x-2">
+                                <FiPhone /> <span>+88-031-656570</span>
+                            </p>
+                            <p className="flex items-center space-x-2">
+                                <FiMail /> <span>support.ghp@gmail.com</span>
+                            </p>
+                            <p className="flex items-center space-x-2">
+                                <FiMapPin /> <span>Uttara, Dhaka-1230 Bangladesh</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="text-center mt-16 text-sm text-gray-400">
+                    &copy; {new Date().getFullYear()}, All Rights Reserved.
+                </div>
             </div>
-            <small>Copyright © 2021, All Rights Reserved.</small>
-        </div>
+        </footer>
     );
 };
 

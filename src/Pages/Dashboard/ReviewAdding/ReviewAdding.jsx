@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Form, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
@@ -49,39 +48,46 @@ const ReviewAdding = () => {
     };
 
     return (
-        <div className="container mt-30">
-            <div className="p-4 shadow rounded bg-white mx-auto" style={{ maxWidth: "600px" }}>
-                <h2 className="text-center mb-4">Add a Review</h2>
+        <div className="flex justify-center items-center mt-20 px-4">
+            <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-lg">
+                <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Add a Review</h2>
 
-                <Form className="text-start" onSubmit={handleSubmit(onSubmit)}>
-                    {/* Name */}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-left">
+                    {/* Name (only if user has no displayName) */}
                     {!userData?.displayName && !userData?.googleName && (
-                        <Form.Group className="mb-3">
-                            <Form.Label className="ml-2">Name</Form.Label>
-                            <Form.Control
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                                Name
+                            </label>
+                            <input
+                                id="name"
                                 type="text"
                                 placeholder="Enter your name"
                                 {...register("name", { required: true, maxLength: 40 })}
+                                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                             />
-                        </Form.Group>
+                        </div>
                     )}
 
-                    {/* Review text */}
-                    <Form.Group className="mb-3">
-                        <Form.Label className="ml-2">Review</Form.Label>
-                        <Form.Control
-                            as="textarea"
+                    {/* Review Text */}
+                    <div>
+                        <label htmlFor="reviewtext" className="block text-sm font-semibold text-gray-700 mb-2">
+                            Review
+                        </label>
+                        <textarea
+                            id="reviewtext"
                             rows={4}
                             placeholder="Write your review here..."
                             {...register("reviewtext", { required: true })}
+                            className="w-full border border-gray-300 rounded-lg p-2 resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                         />
-                    </Form.Group>
+                    </div>
 
                     {/* Rating */}
-                    <Form.Group className="mb-4">
-                        <Form.Label className="ml-2">Rating</Form.Label>
-                        <div className="d-flex gap-2 ml-2">
-                            {[...Array(5)].map((star, index) => {
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Rating</label>
+                        <div className="flex gap-2">
+                            {[...Array(5)].map((_, index) => {
                                 const currentRating = index + 1;
                                 return (
                                     <label key={index}>
@@ -90,12 +96,12 @@ const ReviewAdding = () => {
                                             name="rating"
                                             value={currentRating}
                                             onClick={() => setRating(currentRating)}
-                                            className="d-none"
+                                            className="hidden"
                                         />
                                         <FaStar
                                             size={28}
-                                            className="cursor-pointer"
-                                            color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                                            className="cursor-pointer transition-transform transform hover:scale-110"
+                                            color={currentRating <= (hover || rating) ? "#facc15" : "#e4e5e9"}
                                             onMouseEnter={() => setHover(currentRating)}
                                             onMouseLeave={() => setHover(null)}
                                         />
@@ -103,28 +109,20 @@ const ReviewAdding = () => {
                                 );
                             })}
                         </div>
-                    </Form.Group>
+                    </div>
 
-                    {/* Submit button */}
-                    <div className="md:col-span-2 flex justify-end">
+                    {/* Submit Button */}
+                    <div className="flex justify-end">
                         <button
                             type="submit"
-                            className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={loading}
+                            className="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? (
-                                <span className="flex items-center">
-                                    <Spinner animation="border" size="sm" className="mr-2" />
-                                    Submitting Review
-                                </span>
-                            ) : (
-                                "Submit Review"
-                            )}
+                            {loading ? "Submitting Review" : "Submit Review"}
                         </button>
                     </div>
-                </Form>
+                </form>
             </div>
-            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };

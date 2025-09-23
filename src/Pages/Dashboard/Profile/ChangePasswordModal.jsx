@@ -51,7 +51,7 @@ const ChangePasswordModal = ({ show, onClose }) => {
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             role="dialog"
             aria-modal="true"
             aria-labelledby="change-password-title"
@@ -80,7 +80,7 @@ const ChangePasswordModal = ({ show, onClose }) => {
                                         message: "Password must be at least 6 characters",
                                     },
                                 })}
-                                className="w-full border p-2 rounded pr-10"
+                                className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                             />
                             <button
                                 type="button"
@@ -114,7 +114,7 @@ const ChangePasswordModal = ({ show, onClose }) => {
                                         message: "Password must be at least 6 characters",
                                     },
                                 })}
-                                className="w-full border p-2 rounded pr-10"
+                                className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                             />
                             <button
                                 type="button"
@@ -147,7 +147,7 @@ const ChangePasswordModal = ({ show, onClose }) => {
                                     required: "Confirm password is required",
                                     validate: (value) => value === password || "Passwords do not match",
                                 })}
-                                className="w-full border p-2 rounded pr-10"
+                                className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                             />
                             <button
                                 type="button"

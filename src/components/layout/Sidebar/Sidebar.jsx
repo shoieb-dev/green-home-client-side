@@ -68,7 +68,7 @@ export default function Sidebar() {
 
     return (
         <aside
-            className={`fixed top-0 left-0 h-screen bg-[#97c0db] text-black flex flex-col transition-all duration-300 ${
+            className={`fixed top-0 left-0 h-full bg-[#97c0db] text-black flex flex-col transition-all duration-300 ${
                 isCollapsed ? "w-20" : "w-72"
             }`}
         >

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
@@ -31,7 +30,7 @@ const BookingForm = () => {
                 setHouse(response.data);
             })
             .catch((err) => {
-                toast.error("Failed to load house details. Please try again.");
+                toast.error(err.response?.data?.message || "Failed to load house details. Please try again.");
             });
     }, [houseId]);
 
@@ -57,7 +56,7 @@ const BookingForm = () => {
                 }, 2000);
             }
         } catch (err) {
-            toast.error("Failed to book the house. Please try again.");
+            toast.error(err?.response?.data?.message || "Failed to book the house. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -146,14 +145,7 @@ const BookingForm = () => {
                             className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={loading}
                         >
-                            {loading ? (
-                                <span className="flex items-center">
-                                    <Spinner animation="border" size="sm" className="mr-2" />
-                                    Booking...
-                                </span>
-                            ) : (
-                                "Book"
-                            )}
+                            {loading ? "Booking..." : "Book"}
                         </button>
                     </div>
                 </form>

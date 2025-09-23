@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -220,16 +219,13 @@ const AddApartment = () => {
                             className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={loading}
                         >
-                            {loading ? (
-                                <span className="flex items-center">
-                                    <Spinner animation="border" size="sm" className="mr-2" />
-                                    {isEditMode ? "Updating Apartment" : "Adding Apartment"}
-                                </span>
-                            ) : isEditMode ? (
-                                "Update Apartment"
-                            ) : (
-                                "Add Apartment"
-                            )}
+                            {loading
+                                ? isEditMode
+                                    ? "Updating Apartment"
+                                    : "Adding Apartment"
+                                : isEditMode
+                                ? "Update Apartment"
+                                : "Add Apartment"}
                         </button>
                     </div>
                 </form>

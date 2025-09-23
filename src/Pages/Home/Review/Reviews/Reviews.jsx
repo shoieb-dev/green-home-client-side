@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Alert, Container } from "react-bootstrap";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
@@ -36,50 +35,52 @@ const Reviews = () => {
     }, []);
 
     if (loading) {
-        return <Loader />;
+        return (
+            <section id="reviews" className="review-bg py-12">
+                <Loader />
+            </section>
+        );
     }
 
     if (error) {
         return (
-            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "50vh" }}>
-                <Alert variant="danger" className="text-center">
+            <div className="flex items-center justify-center min-h-[50vh]">
+                <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg text-center">
                     Error: {error}
-                </Alert>
+                </div>
             </div>
         );
     }
 
     return (
-        <section id="reviews" className="review-bg py-5">
-            <Container className="py-5 text-center">
-                <h2 className="fw-bold text-white review-header">
-                    Happy <span className="text-warning">Clients</span> Say
+        <section id="reviews" className="review-bg py-12">
+            <div className="mx-auto text-center">
+                <h2 className="text-3xl font-bold text-white review-header">
+                    Happy <span className="text-yellow-400">Clients</span> Say
                 </h2>
-            </Container>
+            </div>
 
-            <Container className="review-bg2">
+            <div className="mx-auto mt-8 p-4 max-w-7xl overflow-hidden">
                 <Swiper
                     modules={[Autoplay, Navigation, Pagination, EffectCoverflow]}
                     effect="coverflow"
                     autoplay={{ delay: 3000, disableOnInteraction: false }}
-                    grabCursor={true}
-                    centeredSlides={true}
-                    loop={true}
-                    navigation={true}
+                    grabCursor
+                    centeredSlides
+                    className="bg-black/60 rounded-lg"
+                    loop
+                    navigation
                     pagination={{ clickable: true }}
                     breakpoints={{
                         0: {
-                            // mobile
                             slidesPerView: 1,
                             coverflowEffect: { rotate: 30, depth: 100 },
                         },
                         768: {
-                            // tablet
                             slidesPerView: 1.5,
                             coverflowEffect: { rotate: 40, depth: 120 },
                         },
                         1200: {
-                            // desktop
                             slidesPerView: 3,
                             coverflowEffect: { rotate: 50, depth: 120 },
                         },
@@ -98,7 +99,7 @@ const Reviews = () => {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </Container>
+            </div>
         </section>
     );
 };

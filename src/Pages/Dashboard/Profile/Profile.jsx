@@ -89,7 +89,7 @@ const Profile = () => {
                                 <label className="block text-sm font-medium mb-2">Name</label>
                                 <input
                                     {...register("displayName", { required: "Name is required" })}
-                                    className="w-full border p-2 rounded"
+                                    className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                                 />
                                 {errors.displayName && (
                                     <p className="text-red-500 text-sm">{errors.displayName.message}</p>
@@ -105,7 +105,7 @@ const Profile = () => {
                                         pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email" },
                                     })}
                                     disabled
-                                    className="w-full border p-2 rounded disabled:bg-gray-200"
+                                    className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition disabled:bg-gray-200"
                                 />
                                 {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                             </div>

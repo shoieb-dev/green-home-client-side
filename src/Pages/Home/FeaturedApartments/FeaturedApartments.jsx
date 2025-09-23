@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Container, Row, Spinner } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import { API_ENDPOINTS } from "../../../services/api";
 import Apartment from "../../Apartments/Apartment/Apartment";
 import Loader from "../../../components/Loader/Loader";
@@ -31,32 +30,36 @@ const FeaturedApartments = () => {
     }, []);
 
     return (
-        <div id="featured" className="py-5">
-            <div className="py-5">
-                <h5>Our Apartments</h5>
-                <h3 className="fw-bold">
-                    We've <span> Exclusive </span>
-                    <span className="brand text-success"> GREEN HOMES </span>
+        <div id="featured" className="py-12">
+            {/* Section Heading */}
+            <div className="text-center mb-12">
+                <h5 className="text-lg font-semibold text-gray-500 mb-3">Our Apartments</h5>
+                <h3 className="text-2xl md:text-3xl font-bold">
+                    We've <span className="text-gray-700">Exclusive</span>{" "}
+                    <span className="text-green-600 brand">GREEN HOMES</span>
                 </h3>
             </div>
 
-            <Container className="apartment-bg">
+            {/* Content */}
+            <div className="max-w-7xl mx-auto px-4 bg-sky-300 rounded-2xl">
                 {loading ? (
-                    <Loader />
+                    <div className="flex justify-center items-center py-12">
+                        <Loader />
+                    </div>
                 ) : error ? (
-                    <div className="d-flex justify-content-center align-items-center" style={{ height: "100px" }}>
-                        <Alert variant="danger" className="text-center">
+                    <div className="flex justify-center items-center h-24">
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow">
                             {error}
-                        </Alert>
+                        </div>
                     </div>
                 ) : (
-                    <Row xs={1} md={2} lg={3}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {apartments.map((apartment) => (
                             <Apartment key={apartment._id} apartment={apartment} />
                         ))}
-                    </Row>
+                    </div>
                 )}
-            </Container>
+            </div>
         </div>
     );
 };
