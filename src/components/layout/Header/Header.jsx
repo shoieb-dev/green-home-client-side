@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
-import "./Header.css";
 import UserProfile from "./UserProfile";
 
 const Header = () => {
@@ -18,45 +17,40 @@ const Header = () => {
     const location = useLocation();
     const { axiosInstance } = useAxiosInstance();
     const { isCollapsed, setIsCollapsed, toggleSidebar, userData, setUserData } = useSidebar();
-    const [isOpen, setIsOpen] = useState(false);
+    const [desktopOpen, setDesktopOpen] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const { mode, id } = useParams();
+    const desktopRef = useRef(null);
 
-    const toggleOpen = () => {
-        setIsOpen(!isOpen);
-    };
-
+    // fetch user data
     const fetchUserData = async () => {
         try {
             const { data } = await axiosInstance.get(`${API_ENDPOINTS.users}/${user.email}`);
             setUserData(data?.data || {});
         } catch (err) {
-            toast.error(err.response?.data?.message || "Something went wrong!");
+            toast.error(err?.response?.data?.message || "Something went wrong!");
         }
     };
 
     useEffect(() => {
-        if (user?.email) {
-            fetchUserData();
-        }
+        if (user?.email) fetchUserData();
     }, [user.email]);
 
+    // collapse sidebar on resize
     useEffect(() => {
-        const handleResize = () => {
-            const screenWidth = window.innerWidth;
-            if (screenWidth < 768) {
-                setIsCollapsed(true);
-            } else {
-                setIsCollapsed(false);
-            }
-        };
-
+        const handleResize = () => setIsCollapsed(window.innerWidth < 768);
+        handleResize();
         window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [setIsCollapsed]);
 
-        // Cleanup
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    // navigation links
+    const navLinks = [
+        { to: "/home#banner", label: "Home" },
+        { to: "/home#featured", label: "Featured" },
+        { to: "/home#reviews", label: "Reviews" },
+        { to: "/apartments", label: "Explore" },
+    ];
 
     const dashboardRoutes = [
         "/dashboard",
@@ -71,81 +65,190 @@ const Header = () => {
         "/makeAdmin",
         "/profile",
     ];
-
     const isDashboardPage = dashboardRoutes.includes(location.pathname);
 
+    // animation variants
+    const dropdownVariants = {
+        hidden: { opacity: 0, scale: 0.8, rotate: -5, x: 20, y: -20, originX: 1, originY: 0 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            x: 0,
+            y: 0,
+            originX: 1,
+            originY: 0,
+            transition: { type: "spring", stiffness: 300, damping: 25 },
+        },
+        exit: {
+            opacity: 0,
+            scale: 0.8,
+            rotate: -5,
+            x: 20,
+            y: -20,
+            originX: 1,
+            originY: 0,
+            transition: { duration: 0.2 },
+        },
+    };
+
     return (
-        <Navbar collapseOnSelect expand="lg" variant="light" className="header" fixed="top">
-            <Container fluid className="mx-2">
+        <header className="fixed top-0 left-0 w-full bg-[#97c0db] shadow-md z-50">
+            <div className="flex items-center justify-between px-4 md:px-6 py-2">
                 {/* Brand / Logo */}
                 <div
                     onClick={isDashboardPage ? toggleSidebar : () => navigate("/")}
-                    className="navbar-brand d-flex text-start align-items-center cursor-pointer"
+                    className="flex items-center cursor-pointer select-none"
                 >
                     {isCollapsed ? (
-                        <div className="bg-light ps-1 pt-1 mb-3.5 rounded">
-                            <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="50" height="50" alt="logo" />
+                        <div className="bg-gray-100 p-1 rounded">
+                            <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="60" height="50" alt="logo" />
                         </div>
                     ) : (
-                        <>
-                            <div className="bg-light ps-2 pt-1 rounded-start">
-                                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="80" height="50" alt="logo" />
+                        <div className="flex items-center">
+                            <div className="bg-gray-100 px-2 py-1 rounded-l">
+                                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="60" height="50" alt="logo" />
                             </div>
-                            <div className="bg-success px-3 rounded-end">
-                                <span className="brand text-white">GREEN HOME</span>
-                                <h6 className="m-0">
-                                    <span className="text-warning">Properties</span>
-                                </h6>
+                            <div className="bg-green-700 px-3 rounded-r text-white">
+                                <span className="font-semibold brand">GREEN HOME</span>
+                                <h6 className="text-yellow-400 m-0 text-sm">Properties</h6>
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
 
-                {/* Mobile Toggle */}
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    {/* Public Navigation */}
-                    <Nav className="ms-auto fw-bold align-items-center">
-                        <Nav.Link as={HashLink} to="/home#banner">
-                            Home
-                        </Nav.Link>
-                        <Nav.Link as={HashLink} to="/home#featured">
-                            Featured
-                        </Nav.Link>
-                        <Nav.Link as={HashLink} to="/home#reviews">
-                            Reviews
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/apartments">
-                            Explore
-                        </Nav.Link>
+                {/* Desktop nav */}
+                <nav className="hidden md:flex items-center space-x-6 font-semibold">
+                    {navLinks.map((link) => (
+                        <HashLink key={link.to} to={link.to} smooth className="hover:text-green-600 transition">
+                            {link.label}
+                        </HashLink>
+                    ))}
 
-                        {/* Auth Section */}
-                        {user?.email ? (
-                            <div className="d-flex align-items-center ml-5 cursor-pointer" onClick={toggleOpen}>
+                    {user?.email ? (
+                        <div className="relative" ref={desktopRef}>
+                            <button
+                                className="flex items-center cursor-pointer"
+                                onClick={() => setDesktopOpen((s) => !s)}
+                            >
                                 <img
                                     className="rounded-full w-8 h-8"
                                     src={userData?.photoURL || userData?.googlePhotoUrl || Avatar1}
                                     alt="user-profile"
                                 />
-                                <span className="ms-2 me-2 text-success fw-semibold">
+                                <span className="ml-2 mr-1 text-green-600 font-medium">
                                     {userData?.displayName || userData?.googleName || ""}
                                 </span>
-                                <MdKeyboardArrowDown className="text-black text-14" />
-                                {isOpen && <UserProfile onClose={toggleOpen} />}
-                            </div>
-                        ) : (
-                            <button
-                                onClick={() => navigate("/login")}
-                                className="btn btn-success btn-outline-warning text-white rounded-pill px-3"
-                            >
-                                Login
+                                <ChevronDown size={16} />
                             </button>
-                        )}
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-            {/* </div> */}
-        </Navbar>
+
+                            <AnimatePresence>
+                                {desktopOpen && (
+                                    <motion.div
+                                        variants={dropdownVariants}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                    >
+                                        <UserProfile onClose={() => setDesktopOpen(false)} />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => navigate("/login")}
+                            className="bg-green-600 border border-yellow-400 text-white rounded-md px-4 py-1 hover:bg-yellow-400 hover:text-black transition"
+                        >
+                            Login
+                        </button>
+                    )}
+                </nav>
+
+                {/* Mobile hamburger */}
+                <button
+                    onClick={() => {
+                        setMobileOpen((s) => !s);
+                        setDesktopOpen(false); // close desktop dropdown when mobile opens
+                    }}
+                    className="md:hidden p-2 text-gray-700"
+                >
+                    {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+                </button>
+            </div>
+
+            {/* Mobile dropdown */}
+            <AnimatePresence>
+                {mobileOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.28, ease: "easeInOut" }}
+                        className="md:hidden bg-[#97c0db] shadow-md border-t border-gray-200"
+                    >
+                        <div className="flex flex-col space-y-4 px-4 py-4 font-semibold">
+                            {navLinks.map((link) => (
+                                <HashLink
+                                    key={link.to}
+                                    to={link.to}
+                                    smooth
+                                    onClick={() => setMobileOpen(false)}
+                                    className="hover:text-green-600 transition"
+                                >
+                                    {link.label}
+                                </HashLink>
+                            ))}
+
+                            {user?.email ? (
+                                <div className="relative flex flex-col items-center">
+                                    <button
+                                        className="flex items-center cursor-pointer"
+                                        onClick={() => setDesktopOpen((s) => !s)}
+                                    >
+                                        <img
+                                            className="rounded-full w-8 h-8"
+                                            src={userData?.photoURL || userData?.googlePhotoUrl || Avatar1}
+                                            alt="user-profile"
+                                        />
+                                        <span className="ml-2 mr-1 text-green-600 font-medium">
+                                            {userData?.displayName || userData?.googleName || ""}
+                                        </span>
+                                        <ChevronDown size={16} />
+                                    </button>
+
+                                    <AnimatePresence>
+                                        {desktopOpen && (
+                                            <motion.div
+                                                variants={dropdownVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                exit="exit"
+                                                className="absolute top-full right-0 bg-white shadow-lg rounded-md border border-gray-200"
+                                            >
+                                                <UserProfile
+                                                    onClose={() => {
+                                                        setDesktopOpen(false);
+                                                        setMobileOpen(false);
+                                                    }}
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={() => setMobileOpen(false) || navigate("/login")}
+                                    className="bg-green-600 border border-yellow-400 text-white rounded-lg px-4 py-1 hover:bg-yellow-400 transition"
+                                >
+                                    Login
+                                </button>
+                            )}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </header>
     );
 };
 
