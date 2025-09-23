@@ -1,9 +1,6 @@
-import { faBath, faBed, faThLarge, faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import { Button, Card, Spinner } from "react-bootstrap";
+import { Bath, Bed, Grid2x2, MapPinned } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Apartment.css";
 
 const Apartment = ({ apartment }) => {
     const { _id, name, price, area, images, bed, bath, address } = apartment;
@@ -11,64 +8,53 @@ const Apartment = ({ apartment }) => {
 
     return (
         <div className="p-3">
-            <Card className="card h-100">
-                <div style={{ position: "relative", height: "200px" }}>
+            <div className="bg-white rounded-2xl p-2 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+                <div className="relative h-52 w-full">
                     {isLoading && (
-                        <div
-                            className="d-flex justify-content-center align-items-center"
-                            style={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: "100%",
-                                height: "100%",
-                                backgroundColor: "#f5f5f5",
-                            }}
-                        >
-                            <Spinner animation="border" variant="success" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-2xl">
+                            <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     )}
-                    <Card.Img
-                        variant="top"
+                    <img
                         src={images[0]}
-                        className="h-100"
+                        alt={name}
                         onLoad={() => setIsLoading(false)}
                         onError={() => setIsLoading(false)}
-                        style={{
-                            display: isLoading ? "none" : "block",
-                        }}
+                        className={`h-full w-full object-cover rounded-2xl transition-opacity duration-300 ${
+                            isLoading ? "opacity-0" : "opacity-100"
+                        }`}
                     />
                 </div>
-                <Card.Body>
-                    <Card.Title className="text-start">{name}</Card.Title>
-                    <Card.Text>
-                        <div className="d-flex justify-content-around">
-                            <span>
-                                <FontAwesomeIcon icon={faBed} /> {bed} Bed
-                            </span>
-                            <span className="ps-3">
-                                <FontAwesomeIcon icon={faBath} /> {bath} Bath
-                            </span>
-                            <span className="ps-3">
-                                <FontAwesomeIcon icon={faThLarge} /> {area} sft
-                            </span>
+
+                <div className="p-4">
+                    <h4 className="text-lg font-semibold text-gray-800 text-left">{name}</h4>
+
+                    <div className="flex justify-between mt-3 text-gray-600 text-sm">
+                        <span className="flex items-center gap-1">
+                            <Bed size={16} /> {bed} Bed
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <Bath size={16} /> {bath} Bath
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <Grid2x2 size={16} /> {area} sft
+                        </span>
+                    </div>
+
+                    <div className="flex justify-between items-center py-3">
+                        <div className="text-gray-600 font-bold text-base flex items-center gap-1">
+                            <MapPinned size={18} className="mr-1 text-green-600" /> {address}
                         </div>
-                        <div className="d-flex justify-content-between py-3">
-                            <div style={{ fontSize: "20px", fontWeight: "bolder" }} className="text-secondary">
-                                <FontAwesomeIcon icon={faMapMarkedAlt} /> {address}
-                            </div>
-                            <div style={{ fontSize: "20px", fontWeight: "bolder" }} className="text-danger">
-                                USD: ${price}
-                            </div>
-                        </div>
-                        <Link to={`/booking/${_id}`}>
-                            <Button variant="outline-success" className="px-5 rounded-pill">
-                                Book Now
-                            </Button>
-                        </Link>
-                    </Card.Text>
-                </Card.Body>
-            </Card>
+                        <div className="text-red-600 font-bold text-lg">USD: ${price}</div>
+                    </div>
+
+                    <Link to={`/booking/${_id}`}>
+                        <button className="w-full px-5 py-2 rounded-full border border-green-500 text-green-600 hover:bg-green-500 hover:text-white transition-all duration-300">
+                            Book Now
+                        </button>
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 };

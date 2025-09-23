@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row } from 'react-bootstrap';
-import { API_ENDPOINTS } from '../../../services/api';
-import Apartment from '../Apartment/Apartment';
-import './Apartments.css';
+import React, { useEffect, useState } from "react";
+import { API_ENDPOINTS } from "../../../services/api";
+import Apartment from "../Apartment/Apartment";
 
 const Apartments = () => {
     const [apartments, setApartments] = useState([]);
@@ -14,24 +12,21 @@ const Apartments = () => {
     }, []);
 
     return (
-        <div className="py-5">
-            <div className="py-5">
-                <h3 className="fw-bold">
+        <div className="py-10 mt-10">
+            <div className="py-5 text-center">
+                <h3 className="font-bold text-2xl md:text-3xl leading-snug">
                     Exclusive <br />
-                    <span className="brand text-success"> GREEN HOMES </span>
+                    <span className="text-green-600 brand">GREEN HOMES</span>
                 </h3>
             </div>
 
-            <Container className="apartment-bg">
-                <Row xs={1} md={2} lg={3}>
+            <div className="max-w-7xl overflow-hidden mx-auto p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-sky-300 rounded-2xl">
                     {apartments.map((apartment) => (
-                        <Apartment
-                            key={apartment._id}
-                            apartment={apartment}
-                        ></Apartment>
+                        <Apartment key={apartment._id} apartment={apartment} />
                     ))}
-                </Row>
-            </Container>
+                </div>
+            </div>
         </div>
     );
 };

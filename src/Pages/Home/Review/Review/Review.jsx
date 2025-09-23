@@ -1,44 +1,38 @@
-import React from "react";
-import { Card } from "react-bootstrap";
 import { faQuoteLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Avatar from "../../../../assets/images/avatar1.png";
 
 const Review = ({ review }) => {
-    const { name, reviewtext, img } = review;
+    const { name, reviewtext, img, rating = 0 } = review;
 
     return (
-        // Review Cards
         <div className="p-3">
-            <Card className="card h-100 bg-light">
-                <Card.Img
-                    variant="top"
-                    src={img || Avatar}
-                    style={{ width: "100px", height: "100px" }}
-                    className="rounded-circle mx-auto"
-                />
+            <div className="bg-gray-100 rounded-2xl shadow-md h-full flex flex-col items-center p-6 text-center">
+                {/* Avatar */}
+                <img src={img || Avatar} alt={name} className="w-24 h-24 rounded-full object-cover mb-4" />
 
-                <Card.Body className="d-flex flex-column items-center">
-                    <FontAwesomeIcon icon={faQuoteLeft} className="mb-2" />
-                    <div className="flex-grow-1 d-flex align-items-center justify-content-center">
-                        <Card.Text className="px-3">{reviewtext}</Card.Text>
-                    </div>
+                {/* Quote Icon */}
+                <FontAwesomeIcon icon={faQuoteLeft} className="text-gray-400 text-xl mb-3" />
 
-                    <div className="mt-auto py-3">
-                        <div className="d-flex justify-content-center py-2">
-                            {[...Array(5)].map((_, index) => (
-                                <FontAwesomeIcon
-                                    key={index}
-                                    icon={faStar}
-                                    className={index < (review.rating || 0) ? "text-warning" : "text-muted"}
-                                />
-                            ))}
-                        </div>
-                        <Card.Title className="mt-2">{name}</Card.Title>
+                {/* Review Text */}
+                <p className="flex-grow text-gray-700 italic">{reviewtext}</p>
+
+                {/* Rating & Name */}
+                <div className="mt-auto pt-4">
+                    <div className="flex justify-center space-x-1">
+                        {[...Array(5)].map((_, index) => (
+                            <FontAwesomeIcon
+                                key={index}
+                                icon={faStar}
+                                className={index < rating ? "text-yellow-400" : "text-gray-300"}
+                            />
+                        ))}
                     </div>
-                </Card.Body>
-            </Card>
+                    <h4 className="mt-3 font-semibold text-lg">{name}</h4>
+                </div>
+            </div>
         </div>
     );
 };
+
 export default Review;

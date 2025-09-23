@@ -1,74 +1,112 @@
-import React, { useState } from "react";
-import { Carousel, Spinner } from "react-bootstrap";
-import "./Banner.css";
+import { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/pagination";
+// import "./Banner.css";
+
+import banner1Webp from "../../../assets/images/banner1.webp";
+import banner1Jpg from "../../../assets/images/banner1.jpg";
+
+import banner2Webp from "../../../assets/images/banner2.webp";
+import banner2Jpg from "../../../assets/images/banner2.jpg";
+
+import banner3Webp from "../../../assets/images/banner3.webp";
+import banner3Jpg from "../../../assets/images/banner3.jpg";
 
 const slides = [
-    {
-        src: "https://i.ibb.co/rmB3JSQ/image.png",
-        alt: "First slide",
-        caption: "IT'S GOOD TO <br /> TOUCH THE GREEN",
-    },
-    {
-        src: "https://i.ibb.co/Pr252nz/image.png",
-        alt: "Second slide",
-        caption: "CHOOSE YOUR HOME <br /> IN NATURE",
-    },
-    {
-        src: "https://i.ibb.co/xqL8X1M/image.png",
-        alt: "Third slide",
-        caption: "BE GREEN <br /> BE HAPPY",
-    },
+  {
+    srcWebp: banner1Webp,
+    srcJpg: banner1Jpg,
+    alt: "Touch the green nature",
+    caption: ["IT'S GOOD TO", "TOUCH THE GREEN"],
+  },
+  {
+    srcWebp: banner2Webp,
+    srcJpg: banner2Jpg,
+    alt: "Choose your home in nature",
+    caption: ["CHOOSE YOUR HOME", "IN NATURE"],
+  },
+  {
+    srcWebp: banner3Webp,
+    srcJpg: banner3Jpg,
+    alt: "Be green be happy",
+    caption: ["BE GREEN", "BE HAPPY"],
+  },
 ];
 
 const Banner = () => {
-    const [loadedImages, setLoadedImages] = useState(Array(slides.length).fill(false));
+  const [loaded, setLoaded] = useState(Array(slides.length).fill(false));
 
-    const handleImageLoad = (index) => {
-        const updatedLoadedImages = [...loadedImages];
-        updatedLoadedImages[index] = true;
-        setLoadedImages(updatedLoadedImages);
-    };
+  // Preload all images on component mount
+  useEffect(() => {
+    const imagePromises = slides.map((slide, index) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          setLoaded((prevLoaded) => {
+            const newLoaded = [...prevLoaded];
+            newLoaded[index] = true;
+            return newLoaded;
+          });
+          resolve();
+        };
+        img.src = slide.srcJpg; // Preload the jpg version
+      });
+    });
 
-    return (
-        <div id="banner">
-            <Carousel fade interval={3000}>
-                {slides.map((slide, index) => (
-                    <Carousel.Item key={index}>
-                        <div style={{ position: "relative", height: "600px", width: "100%" }}>
-                            {/* Loader */}
-                            {!loadedImages[index] && (
-                                <div className="spinner-container">
-                                    <Spinner
-                                        animation="border"
-                                        variant="success"
-                                        style={{ height: "100px", width: "100px" }}
-                                    />
-                                </div>
-                            )}
+    Promise.all(imagePromises);
+  }, []);
 
-                            {/* Image */}
-                            <img
-                                className="d-block w-100"
-                                src={slide.src}
-                                alt={slide.alt}
-                                style={{ height: "600px", display: loadedImages[index] ? "block" : "none" }}
-                                onLoad={() => handleImageLoad(index)}
-                            />
-                        </div>
+  return (
+    <div id="banner" className="w-full relative">
+      <Swiper
+        modules={[EffectFade, Pagination, Autoplay]}
+        effect="fade"
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        loop
+        pagination={{ clickable: true }}
+        className="w-full h-screen"
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <div className="relative w-full h-screen">
+              {/* Loader */}
+              {!loaded[index] && (
+                <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%]"></div>
+              )}
 
-                        {/* Caption */}
-                        <Carousel.Caption>
-                            <h1
-                                className="banner-text"
-                                style={{ display: loadedImages[index] ? "block" : "none" }}
-                                dangerouslySetInnerHTML={{ __html: slide.caption }}
-                            />
-                        </Carousel.Caption>
-                    </Carousel.Item>
+              {/* Responsive Image with WebP fallback */}
+              <picture>
+                <source srcSet={slide.srcWebp} type="image/webp" />
+                <img
+                  src={slide.srcJpg}
+                  alt={slide.alt}
+                  className={`w-full h-screen transition-opacity duration-700 ${
+                    loaded[index] ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </picture>
+
+              {/* Caption */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+                {slide.caption.map((line, i) => (
+                  <h1
+                    key={i}
+                    className="font-handwritten relative text-green-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-widest uppercase"
+                  >
+                    <span className="absolute inset-0 blur-xl bg-green-500/30 rounded-lg"></span>
+                    <span className="relative drop-shadow-[1px_10px_5px_rgba(0,0,0,0.9)]">{line}</span>
+                  </h1>
                 ))}
-            </Carousel>
-        </div>
-    );
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
 };
 
 export default Banner;
