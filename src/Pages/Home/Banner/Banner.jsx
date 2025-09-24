@@ -94,7 +94,7 @@ const Banner = () => {
                 {slide.caption.map((line, i) => (
                   <h1
                     key={i}
-                    className="font-handwritten relative text-green-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-widest uppercase"
+                    className="font-handwritten relative text-green-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-widest uppercase"
                   >
                     <span className="absolute inset-0 blur-xl bg-green-500/30 rounded-lg"></span>
                     <span className="relative drop-shadow-[1px_10px_5px_rgba(0,0,0,0.9)]">{line}</span>
