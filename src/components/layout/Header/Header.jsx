@@ -156,7 +156,7 @@ const Header = () => {
                     ) : (
                         <button
                             onClick={() => navigate("/login")}
-                            className="bg-green-600 border border-yellow-400 text-white rounded-md px-4 py-1 hover:bg-yellow-400 hover:text-black transition"
+                            className="bg-green-600 border border-yellow-400 text-white rounded-full px-4 py-1.5 hover:bg-yellow-400 hover:text-black transition"
                         >
                             Login
                         </button>
@@ -237,7 +237,7 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => setMobileOpen(false) || navigate("/login")}
-                                    className="bg-green-600 border border-yellow-400 text-white rounded-lg px-4 py-1 hover:bg-yellow-400 transition"
+                                    className="bg-green-600 border border-yellow-400 text-white rounded-full px-4 py-1.5 hover:bg-yellow-400 transition"
                                 >
                                     Login
                                 </button>
