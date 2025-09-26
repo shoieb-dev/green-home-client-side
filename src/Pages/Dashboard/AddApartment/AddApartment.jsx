@@ -99,7 +99,7 @@ const AddApartment = () => {
                         <input
                             {...register("name", { required: "Name is required", maxLength: 50 })}
                             type="text"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                     </div>
@@ -110,7 +110,7 @@ const AddApartment = () => {
                         <input
                             {...register("address", { required: "Address is required" })}
                             type="text"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
                     </div>
@@ -121,7 +121,7 @@ const AddApartment = () => {
                         <input
                             {...register("bed", { required: "Bed is required", min: 0, valueAsNumber: true })}
                             type="number"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.bed && <p className="text-red-500 text-sm mt-1">{errors.bed.message}</p>}
                     </div>
@@ -132,7 +132,7 @@ const AddApartment = () => {
                         <input
                             {...register("bath", { required: "Bath is required", valueAsNumber: true, min: 0 })}
                             type="number"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.bath && <p className="text-red-500 text-sm mt-1">{errors.bath.message}</p>}
                     </div>
@@ -143,7 +143,7 @@ const AddApartment = () => {
                         <input
                             {...register("area", { required: "Area is required", min: 0, valueAsNumber: true })}
                             type="number"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.area && <p className="text-red-500 text-sm mt-1">{errors.area.message}</p>}
                     </div>
@@ -154,7 +154,7 @@ const AddApartment = () => {
                         <input
                             {...register("price", { required: "Price is required", min: 0, valueAsNumber: true })}
                             type="number"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>}
                     </div>
@@ -165,7 +165,7 @@ const AddApartment = () => {
                         <input
                             {...register("heading", { required: "Heading is required" })}
                             type="text"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.heading && <p className="text-red-500 text-sm mt-1">{errors.heading.message}</p>}
                     </div>
@@ -176,7 +176,7 @@ const AddApartment = () => {
                         <textarea
                             {...register("description", { required: "Description is required" })}
                             rows="4"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         ></textarea>
                         {errors.description && (
                             <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>

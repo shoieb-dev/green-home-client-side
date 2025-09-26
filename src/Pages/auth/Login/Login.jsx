@@ -47,7 +47,7 @@ const Login = () => {
                 <form onSubmit={handleLoginSubmit} className="space-y-4 text-left">
                     {/* Email */}
                     <div>
-                        <label className="text-gray-600 mb-1">Email</label>
+                        <label className="text-gray-600 mb-2">Email</label>
                         <input
                             type="email"
                             name="email"
@@ -55,13 +55,13 @@ const Login = () => {
                             placeholder="Enter email"
                             required
                             aria-label="Email"
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                     </div>
 
                     {/* Password */}
                     <div className="relative">
-                        <label className="text-gray-600 mb-1">Password</label>
+                        <label className="text-gray-600 mb-2">Password</label>
                         <input
                             type={showPassword ? "text" : "password"}
                             name="password"
@@ -69,7 +69,7 @@ const Login = () => {
                             placeholder="Password"
                             required
                             aria-label="Password"
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         <span
                             className="absolute bottom-3 right-3 cursor-pointer text-gray-500"

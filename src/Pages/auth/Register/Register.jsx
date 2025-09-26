@@ -60,7 +60,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Enter your name"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                     </div>
 
@@ -72,7 +72,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Enter your email"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                     </div>
 
@@ -84,7 +84,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Enter password"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         <span
                             className="absolute bottom-3 right-3 cursor-pointer text-gray-500"
@@ -102,7 +102,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Re-enter password"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         <span
                             className="absolute bottom-3 right-3 cursor-pointer text-gray-500"
