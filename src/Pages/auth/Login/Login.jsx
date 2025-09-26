@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import logoImage from "../../../assets/images/B-GREEN.png";
 import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
@@ -37,7 +38,7 @@ const Login = () => {
             <div className="absolute inset-0 bg-black/60" />
 
             <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
-                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="logo" className="mx-auto h-12" />
+                <img src={logoImage} alt="logo" className="mx-auto h-12" />
                 <p className="text-center text-gray-500 text-sm mt-3">Welcome back! Please log in.</p>
                 <h2 className="text-2xl font-bold text-green-700 py-4">Login</h2>
                 <p className="text-center text-gray-600 text-sm pb-6">

@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Avatar1 from "../../../assets/images/avatar1.png";
+import logoImage from "../../../assets/images/B-GREEN.png";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
@@ -102,12 +103,12 @@ const Header = () => {
                 >
                     {isCollapsed ? (
                         <div className="bg-gray-100 p-1 rounded">
-                            <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="40" height="50" alt="logo" />
+                            <img src={logoImage} width="40" height="50" alt="logo" />
                         </div>
                     ) : (
                         <div className="flex items-center">
                             <div className="bg-gray-100 px-2 py-1 rounded-l">
-                                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="60" height="50" alt="logo" />
+                                <img src={logoImage} width="60" height="50" alt="logo" />
                             </div>
                             <div className="bg-green-700 px-3 rounded-r text-white">
                                 <span className="font-semibold brand">GREEN HOME</span>

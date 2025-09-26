@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import logoImage from "../../../assets/images/B-GREEN.png";
 import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
@@ -45,7 +46,7 @@ const Register = () => {
             <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
                 {/* Logo / Branding */}
                 <div className="text-center mb-6">
-                    <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="Green Home Logo" className="mx-auto h-12" />
+                    <img src={logoImage} alt="Green Home Logo" className="mx-auto h-12" />
                     <h2 className="text-2xl font-bold text-green-700 py-4">Create Account</h2>
                     <p className="text-gray-500 text-sm">Join Green Home and find your perfect property</p>
                 </div>
