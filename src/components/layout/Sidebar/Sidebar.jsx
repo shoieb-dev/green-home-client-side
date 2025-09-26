@@ -63,7 +63,7 @@ export default function Sidebar() {
             (pathname.startsWith("/manageApartments") || pathname.startsWith("/apartment-form/edit/"));
         return `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200 ${
             isActive || isManageApartmentsActive ? "bg-green-700 font-semibold text-white" : "text-black"
-        } hover:bg-green-500 hover:text-white ${isCollapsed ? "justify-center" : "justify-start"}`;
+        } hover:bg-green-700 hover:text-white ${isCollapsed ? "justify-center" : "justify-start"}`;
     };
 
     return (
