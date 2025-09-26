@@ -31,15 +31,15 @@ const Login = () => {
 
     return (
         <div
-            className="relative flex items-center justify-center min-h-screen py-30 bg-cover bg-center"
+            className="relative flex items-center justify-center min-h-screen py-30 px-10 sm:px-0 bg-cover bg-center"
             style={{ backgroundImage: "url('https://i.ibb.co/vsQh0F6/image.png')", backgroundAttachment: "fixed" }}
         >
             <div className="absolute inset-0 bg-black/60" />
 
             <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
-                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="logo" className="mx-auto h-12 mb-2" />
-                <p className="text-center text-gray-500 text-sm mb-2">Welcome back! Please log in.</p>
-                <h2 className="text-2xl font-semibold text-center py-4">Login</h2>
+                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="logo" className="mx-auto h-12" />
+                <p className="text-center text-gray-500 text-sm mt-3">Welcome back! Please log in.</p>
+                <h2 className="text-2xl font-bold text-green-700 py-4">Login</h2>
                 <p className="text-center text-gray-600 text-sm pb-6">
                     Enter your email and password to access your account.
                 </p>

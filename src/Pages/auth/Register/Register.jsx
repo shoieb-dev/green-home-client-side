@@ -36,7 +36,7 @@ const Register = () => {
 
     return (
         <div
-            className="relative flex items-center justify-center min-h-screen py-30 bg-cover bg-center"
+            className="relative flex items-center justify-center min-h-screen py-30 px-10 sm:px-0 bg-cover bg-center"
             style={{ backgroundImage: "url('https://i.ibb.co/vsQh0F6/image.png')", backgroundAttachment: "fixed" }}
         >
             {/* Overlay for readability */}
@@ -46,7 +46,7 @@ const Register = () => {
                 {/* Logo / Branding */}
                 <div className="text-center mb-6">
                     <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="Green Home Logo" className="mx-auto h-12" />
-                    <h2 className="text-3xl font-bold text-green-700 mt-3">Create Account</h2>
+                    <h2 className="text-2xl font-bold text-green-700 py-4">Create Account</h2>
                     <p className="text-gray-500 text-sm">Join Green Home and find your perfect property</p>
                 </div>
 
