@@ -40,25 +40,25 @@ const MyApartments = () => {
                 <table className="w-full table-auto border-collapse border border-gray-300">
                     <thead className="bg-green-700 text-white">
                         <tr>
-                            <th className="border px-4 py-2 text-left">House</th>
-                            <th className="border px-4 py-2 text-left">Price</th>
-                            <th className="border px-4 py-2 text-left">Phone</th>
-                            <th className="border px-4 py-2 text-left">Booked At</th>
-                            <th className="border px-4 py-2 text-left">Status</th>
-                            <th className="border px-4 py-2 text-center">Action</th>
+                            <th className="border px-4 py-2">House</th>
+                            <th className="border px-4 py-2">Price</th>
+                            <th className="border px-4 py-2">Phone</th>
+                            <th className="border px-4 py-2">Booked At</th>
+                            <th className="border px-4 py-2">Status</th>
+                            <th className="border px-4 py-2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {apartments.length > 0 ? (
                             apartments.map((apartment) => (
                                 <tr key={apartment._id} className="border-b hover:bg-gray-100 transition">
-                                    <td className="border px-4 py-2">{apartment.house}</td>
-                                    <td className="border px-4 py-2">${apartment.price}</td>
-                                    <td className="border px-4 py-2">{apartment.phone}</td>
-                                    <td className="border px-4 py-2">
+                                    <td className="border border-gray-200 px-4 py-2">{apartment.house}</td>
+                                    <td className="border border-gray-200 px-4 py-2">${apartment.price}</td>
+                                    <td className="border border-gray-200 px-4 py-2">{apartment.phone}</td>
+                                    <td className="border border-gray-200 px-4 py-2">
                                         {moment(apartment.bookedAt).format("DD-MM-YYYY")}
                                     </td>
-                                    <td className="border px-4 py-2">
+                                    <td className="border border-gray-200 px-4 py-2">
                                         <span
                                             className={`px-2 py-1 rounded font-semibold capitalize ${
                                                 apartment.status === "approved"
@@ -71,7 +71,7 @@ const MyApartments = () => {
                                             {apartment.status}
                                         </span>
                                     </td>
-                                    <td className="border px-4 py-2 text-center">
+                                    <td className="border border-gray-200 px-4 py-2 text-center">
                                         <button
                                             onClick={() => handleDelete(apartment._id)}
                                             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
