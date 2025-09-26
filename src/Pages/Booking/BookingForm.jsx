@@ -75,7 +75,7 @@ const BookingForm = () => {
                             {...register("name", { required: "Name is required", maxLength: 50 })}
                             defaultValue={userData?.displayName || userData?.googleName || ""}
                             type="text"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                     </div>
@@ -93,7 +93,7 @@ const BookingForm = () => {
                             })}
                             defaultValue={userData?.email || userData?.googleEmail || ""}
                             type="email"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                     </div>
@@ -105,7 +105,7 @@ const BookingForm = () => {
                             {...register("house", { required: "House Name is required", min: 0, valueAsNumber: true })}
                             defaultValue={house?.name || ""}
                             type="text"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.house && <p className="text-red-500 text-sm mt-1">{errors.house.message}</p>}
                     </div>
@@ -116,7 +116,7 @@ const BookingForm = () => {
                             {...register("price", { required: "Price is required", min: 0, valueAsNumber: true })}
                             defaultValue={house?.price || ""}
                             type="number"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>}
                     </div>
@@ -133,7 +133,7 @@ const BookingForm = () => {
                                 },
                             })}
                             type="number"
-                            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
                     </div>

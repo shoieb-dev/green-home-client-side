@@ -41,7 +41,7 @@ const FeaturedApartments = () => {
             </div>
 
             {/* Content */}
-            <div className="max-w-7xl mx-auto px-4 bg-sky-300 rounded-2xl">
+            <div className="max-w-7xl overflow-hidden mx-auto p-6">
                 {loading ? (
                     <div className="flex justify-center items-center py-12">
                         <Loader />
@@ -53,7 +53,7 @@ const FeaturedApartments = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-sky-300 rounded-2xl">
                         {apartments.map((apartment) => (
                             <Apartment key={apartment._id} apartment={apartment} />
                         ))}

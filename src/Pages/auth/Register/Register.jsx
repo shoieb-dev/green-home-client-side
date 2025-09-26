@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import logoImage from "../../../assets/images/B-GREEN.png";
 import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
@@ -36,7 +37,7 @@ const Register = () => {
 
     return (
         <div
-            className="relative flex items-center justify-center min-h-screen py-30 bg-cover bg-center"
+            className="relative flex items-center justify-center min-h-screen py-30 px-10 sm:px-0 bg-cover bg-center"
             style={{ backgroundImage: "url('https://i.ibb.co/vsQh0F6/image.png')", backgroundAttachment: "fixed" }}
         >
             {/* Overlay for readability */}
@@ -45,8 +46,8 @@ const Register = () => {
             <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
                 {/* Logo / Branding */}
                 <div className="text-center mb-6">
-                    <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="Green Home Logo" className="mx-auto h-12" />
-                    <h2 className="text-3xl font-bold text-green-700 mt-3">Create Account</h2>
+                    <img src={logoImage} alt="Green Home Logo" className="mx-auto h-12" />
+                    <h2 className="text-2xl font-bold text-green-700 py-4">Create Account</h2>
                     <p className="text-gray-500 text-sm">Join Green Home and find your perfect property</p>
                 </div>
 
@@ -60,7 +61,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Enter your name"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                     </div>
 
@@ -72,7 +73,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Enter your email"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                     </div>
 
@@ -84,7 +85,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Enter password"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         <span
                             className="absolute bottom-3 right-3 cursor-pointer text-gray-500"
@@ -102,7 +103,7 @@ const Register = () => {
                             onChange={handleChange}
                             placeholder="Re-enter password"
                             required
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         <span
                             className="absolute bottom-3 right-3 cursor-pointer text-gray-500"

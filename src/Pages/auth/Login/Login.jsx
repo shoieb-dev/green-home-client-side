@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import logoImage from "../../../assets/images/B-GREEN.png";
 import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
@@ -31,15 +32,15 @@ const Login = () => {
 
     return (
         <div
-            className="relative flex items-center justify-center min-h-screen py-30 bg-cover bg-center"
+            className="relative flex items-center justify-center min-h-screen py-30 px-10 sm:px-0 bg-cover bg-center"
             style={{ backgroundImage: "url('https://i.ibb.co/vsQh0F6/image.png')", backgroundAttachment: "fixed" }}
         >
             <div className="absolute inset-0 bg-black/60" />
 
             <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
-                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" alt="logo" className="mx-auto h-12 mb-2" />
-                <p className="text-center text-gray-500 text-sm mb-2">Welcome back! Please log in.</p>
-                <h2 className="text-2xl font-semibold text-center py-4">Login</h2>
+                <img src={logoImage} alt="logo" className="mx-auto h-12" />
+                <p className="text-center text-gray-500 text-sm mt-3">Welcome back! Please log in.</p>
+                <h2 className="text-2xl font-bold text-green-700 py-4">Login</h2>
                 <p className="text-center text-gray-600 text-sm pb-6">
                     Enter your email and password to access your account.
                 </p>
@@ -47,7 +48,7 @@ const Login = () => {
                 <form onSubmit={handleLoginSubmit} className="space-y-4 text-left">
                     {/* Email */}
                     <div>
-                        <label className="text-gray-600 mb-1">Email</label>
+                        <label className="text-gray-600 mb-2">Email</label>
                         <input
                             type="email"
                             name="email"
@@ -55,13 +56,13 @@ const Login = () => {
                             placeholder="Enter email"
                             required
                             aria-label="Email"
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                     </div>
 
                     {/* Password */}
                     <div className="relative">
-                        <label className="text-gray-600 mb-1">Password</label>
+                        <label className="text-gray-600 mb-2">Password</label>
                         <input
                             type={showPassword ? "text" : "password"}
                             name="password"
@@ -69,7 +70,7 @@ const Login = () => {
                             placeholder="Password"
                             required
                             aria-label="Password"
-                            className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded-lg p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition my-1"
                         />
                         <span
                             className="absolute bottom-3 right-3 cursor-pointer text-gray-500"

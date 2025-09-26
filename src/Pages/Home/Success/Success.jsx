@@ -11,13 +11,14 @@ const features = [
 
 const Success = () => {
     return (
-        <div id="success" className="pt-5 success-bg">
-            <div className="py-10  text-center text-2xl">
-                <h2 className="mb-4">
+        <div id="success" className="py-12">
+            <div className="text-center mb-12">
+                <h3 className="text-2xl md:text-3xl font-bold">
                     <span className="brand text-green-600 px-2 rounded-md">GREEN HOME</span>
                     <span className="text-yellow-500 px-2 font-semibold rounded-md">Properties</span>
-                </h2>
-                <h3 className="font-semibold">Features</h3>
+                    <br />
+                </h3>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-700 mt-5">Features</h3>
             </div>
 
             <div className="pb-5 max-w-7xl overflow-hidden mx-auto px-10">

@@ -1,6 +1,7 @@
 import { FaFacebookF, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import { FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import logoImage from "../../../assets/images/B-GREEN.png";
 
 const Footer = () => {
     return (
@@ -10,11 +11,7 @@ const Footer = () => {
                     {/* Brand + Social */}
                     <div className="flex flex-col">
                         <div className="flex items-center space-x-3 mb-4">
-                            <img
-                                src="https://i.ibb.co/pz3fBBX/B-GREEN.png"
-                                alt="logo"
-                                className="w-20 h-12 object-contain"
-                            />
+                            <img src={logoImage} alt="logo" className="w-20 h-12 object-contain" />
                             <div>
                                 <h4 className="text-green-500 brand text-lg">GREEN HOME</h4>
                                 <h6 className="text-yellow-400 text-sm">Properties</h6>

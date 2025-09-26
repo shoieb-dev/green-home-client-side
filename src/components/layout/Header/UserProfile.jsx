@@ -73,7 +73,7 @@ const UserProfile = ({ onClose }) => {
                         alt="user-profile"
                     />
                     <div className="text-left">
-                        <p className="font-semibold text-xl mb-1">
+                        <p className="font-semibold text-black text-xl mb-1">
                             {userData?.displayName || userData?.googleName || "N/A"}
                         </p>
                         <p className="text-gray-500 text-sm mb-1">{admin ? "Admin" : "User"}</p>

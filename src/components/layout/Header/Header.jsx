@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Avatar1 from "../../../assets/images/avatar1.png";
+import logoImage from "../../../assets/images/B-GREEN.png";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
@@ -93,7 +94,7 @@ const Header = () => {
     };
 
     return (
-        <header className="fixed top-0 left-0 w-full bg-[#97c0db] shadow-md z-50">
+        <header className="fixed top-0 left-0 w-full bg-black/30 backdrop-blur-md text-white z-50">
             <div className="flex items-center justify-between px-4 md:px-6 py-2">
                 {/* Brand / Logo */}
                 <div
@@ -102,12 +103,12 @@ const Header = () => {
                 >
                     {isCollapsed ? (
                         <div className="bg-gray-100 p-1 rounded">
-                            <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="60" height="50" alt="logo" />
+                            <img src={logoImage} width="40" height="50" alt="logo" />
                         </div>
                     ) : (
                         <div className="flex items-center">
                             <div className="bg-gray-100 px-2 py-1 rounded-l">
-                                <img src="https://i.ibb.co/pz3fBBX/B-GREEN.png" width="60" height="50" alt="logo" />
+                                <img src={logoImage} width="60" height="50" alt="logo" />
                             </div>
                             <div className="bg-green-700 px-3 rounded-r text-white">
                                 <span className="font-semibold brand">GREEN HOME</span>
@@ -128,7 +129,7 @@ const Header = () => {
                     {user?.email ? (
                         <div className="relative" ref={desktopRef}>
                             <button
-                                className="flex items-center cursor-pointer"
+                                className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-full font-medium shadow-sm hover:bg-white transition"
                                 onClick={() => setDesktopOpen((s) => !s)}
                             >
                                 <img
@@ -136,9 +137,7 @@ const Header = () => {
                                     src={userData?.photoURL || userData?.googlePhotoUrl || Avatar1}
                                     alt="user-profile"
                                 />
-                                <span className="ml-2 mr-1 text-green-600 font-medium">
-                                    {userData?.displayName || userData?.googleName || ""}
-                                </span>
+                                <span className="ml-2 px-2">{userData?.displayName || userData?.googleName || ""}</span>
                                 <ChevronDown size={16} />
                             </button>
 
@@ -158,7 +157,7 @@ const Header = () => {
                     ) : (
                         <button
                             onClick={() => navigate("/login")}
-                            className="bg-green-600 border border-yellow-400 text-white rounded-md px-4 py-1 hover:bg-yellow-400 hover:text-black transition"
+                            className="bg-green-600 border border-yellow-400 text-white rounded-full px-4 py-1.5 hover:bg-yellow-400 hover:text-black transition"
                         >
                             Login
                         </button>
@@ -185,7 +184,7 @@ const Header = () => {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.28, ease: "easeInOut" }}
-                        className="md:hidden bg-[#97c0db] shadow-md border-t border-gray-200"
+                        className="md:hidden bg-black/5 backdrop-blur-md shadow-md border-t border-gray-200"
                     >
                         <div className="flex flex-col space-y-4 px-4 py-4 font-semibold">
                             {navLinks.map((link) => (
@@ -203,7 +202,7 @@ const Header = () => {
                             {user?.email ? (
                                 <div className="relative flex flex-col items-center">
                                     <button
-                                        className="flex items-center cursor-pointer"
+                                        className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-full font-medium shadow-sm hover:bg-white transition"
                                         onClick={() => setDesktopOpen((s) => !s)}
                                     >
                                         <img
@@ -211,7 +210,7 @@ const Header = () => {
                                             src={userData?.photoURL || userData?.googlePhotoUrl || Avatar1}
                                             alt="user-profile"
                                         />
-                                        <span className="ml-2 mr-1 text-green-600 font-medium">
+                                        <span className="ml-2 px-2">
                                             {userData?.displayName || userData?.googleName || ""}
                                         </span>
                                         <ChevronDown size={16} />
@@ -239,7 +238,7 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => setMobileOpen(false) || navigate("/login")}
-                                    className="bg-green-600 border border-yellow-400 text-white rounded-lg px-4 py-1 hover:bg-yellow-400 transition"
+                                    className="bg-green-600 border border-yellow-400 text-white rounded-full px-4 py-1.5 hover:bg-yellow-400 transition"
                                 >
                                     Login
                                 </button>

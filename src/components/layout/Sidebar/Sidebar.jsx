@@ -63,14 +63,13 @@ export default function Sidebar() {
             (pathname.startsWith("/manageApartments") || pathname.startsWith("/apartment-form/edit/"));
         return `flex items-center gap-2 px-4 py-2 rounded no-underline transition-colors duration-200 ${
             isActive || isManageApartmentsActive ? "bg-green-700 font-semibold text-white" : "text-black"
-        } hover:bg-green-500 hover:text-white ${isCollapsed ? "justify-center" : "justify-start"}`;
+        } hover:bg-green-700 hover:text-white ${isCollapsed ? "justify-center" : "justify-start"}`;
     };
 
     return (
         <aside
-            className={`fixed top-0 left-0 h-full bg-[#97c0db] text-black flex flex-col transition-all duration-300 ${
-                isCollapsed ? "w-20" : "w-72"
-            }`}
+            className={`fixed top-0 left-0 h-full text-black flex flex-col transition-all duration-300 
+        bg-gradient-to-b from-green-600 via-green-400 to-lime-300 ${isCollapsed ? "w-20" : "w-72"}`}
         >
             {/* Header with Brand + Toggle Button */}
             <div className="flex items-center justify-between p-4">
