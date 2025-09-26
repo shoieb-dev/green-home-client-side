@@ -35,33 +35,33 @@ const AdminDashboard = ({ data, loading }) => {
 
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {[
                     {
                         label: "Total Houses",
                         value: totals.totalHouses,
-                        color: "bg-blue-500",
+                        color: "bg-emerald-500",
                         icon: <FaHome size={24} />,
                         description: "Number of apartments listed",
                     },
                     {
                         label: "Total Bookings",
                         value: totals.totalBookings,
-                        color: "bg-green-500",
+                        color: "bg-lime-500",
                         icon: <FaBook size={24} />,
                         description: "Apartments booked by users",
                     },
                     {
                         label: "Total Users",
                         value: totals.totalUsers,
-                        color: "bg-yellow-500",
+                        color: "bg-amber-500",
                         icon: <FaUsers size={24} />,
                         description: "Registered users",
                     },
                     {
                         label: "Total Reviews",
                         value: totals.totalReviews,
-                        color: "bg-red-500",
+                        color: "bg-rose-500",
                         icon: <FaStar size={24} />,
                         description: "Reviews submitted by users",
                     },
@@ -70,7 +70,7 @@ const AdminDashboard = ({ data, loading }) => {
                         key={stat.label}
                         className={`p-6 rounded-lg shadow-lg text-white ${stat.color} flex flex-col justify-between`}
                     >
-                        <div className="flex items-center gap-3 mb-4">
+                        <div className="flex items-center justify-center gap-3 mb-4">
                             {stat.icon}
                             <h2 className="text-xl font-semibold">{stat.label}</h2>
                         </div>
@@ -114,7 +114,45 @@ const AdminDashboard = ({ data, loading }) => {
             {/* Recent Bookings */}
             <div className="mb-8">
                 <h2 className="text-2xl font-bold pb-4">Recent Bookings</h2>
-                <div className="overflow-x-auto">
+
+                {/* Card layout for small screens */}
+                <div className="sm:hidden space-y-4">
+                    {recentBookings.map((booking) => (
+                        <div key={booking._id} className="bg-white shadow rounded-lg p-4">
+                            <p>
+                                <strong>Name:</strong> {booking.name}
+                            </p>
+                            <p>
+                                <strong>Email:</strong> {booking.email}
+                            </p>
+                            <p>
+                                <strong>House:</strong> {booking.house}
+                            </p>
+                            <p>
+                                <strong>Price:</strong> ${booking.price}
+                            </p>
+                            <p>
+                                <strong>Phone:</strong> {booking.phone}
+                            </p>
+                            <p>
+                                <strong>Booked At:</strong> {moment(booking.bookedAt).format("DD-MM-YYYY")}
+                            </p>
+                            <p>
+                                <strong>Status:</strong>{" "}
+                                <span
+                                    className={`capitalize ${
+                                        booking.status === "approved" ? "text-green-600" : "text-yellow-600"
+                                    }`}
+                                >
+                                    {booking.status}
+                                </span>
+                            </p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Table layout for tablets and larger */}
+                <div className="hidden sm:block overflow-x-auto">
                     <table className="min-w-full bg-white shadow rounded-lg overflow-hidden text-left">
                         <thead className="bg-gray-200">
                             <tr>
@@ -154,9 +192,28 @@ const AdminDashboard = ({ data, loading }) => {
             </div>
 
             {/* Recent Users */}
-            <div>
+            <div className="mb-2">
                 <h2 className="text-2xl font-bold pb-4">Recent Users</h2>
-                <div className="overflow-x-auto">
+
+                {/* Card layout for small screens */}
+                <div className="sm:hidden space-y-4">
+                    {recentUsers.map((user) => (
+                        <div key={user._id} className="bg-white shadow rounded-lg p-4">
+                            <p>
+                                <strong>Name:</strong> {user.displayName}
+                            </p>
+                            <p>
+                                <strong>Email:</strong> {user.email}
+                            </p>
+                            <p>
+                                <strong>Role:</strong> {user.role || "User"}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Table layout for tablets and larger */}
+                <div className="hidden sm:block overflow-x-auto">
                     <table className="min-w-full bg-white shadow rounded-lg overflow-hidden text-left">
                         <thead className="bg-gray-200">
                             <tr>
@@ -170,7 +227,7 @@ const AdminDashboard = ({ data, loading }) => {
                                 <tr key={user._id} className="border border-gray-200 hover:bg-gray-100 transition">
                                     <td className="px-4 py-2">{user.displayName}</td>
                                     <td className="px-4 py-2">{user.email}</td>
-                                    <td className="px-4 py-2 capitalize">{user.role || "user"}</td>
+                                    <td className="px-4 py-2 capitalize">{user.role || "User"}</td>
                                 </tr>
                             ))}
                         </tbody>
