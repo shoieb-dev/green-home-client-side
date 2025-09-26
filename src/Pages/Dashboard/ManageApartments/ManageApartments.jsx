@@ -62,46 +62,46 @@ const ManageApartments = () => {
             <div className="p-6 bg-white shadow-md rounded-lg">
                 <h2 className="text-2xl font-semibold mb-4">Manage Apartments</h2>
                 <div className="overflow-x-auto">
-                    <table className="w-full table-auto border-collapse border border-gray-300">
+                    <table className="w-full table-auto border-collapse">
                         <thead className="bg-green-700 text-white">
                             <tr>
-                                {/* <th className="border px-4 py-2">#</th> */}
-                                <th className="border px-4 py-2">Name</th>
-                                <th className="border px-4 py-2">Address</th>
-                                <th className="border px-4 py-2">Area</th>
-                                <th className="border px-4 py-2">Price</th>
-                                <th className="border px-4 py-2">Actions</th>
+                                <th className="px-4 py-2 border border-white">Name</th>
+                                <th className="px-4 py-2 border border-white">Address</th>
+                                <th className="px-4 py-2 border border-white">Area</th>
+                                <th className="px-4 py-2 border border-white">Price</th>
+                                <th className="px-4 py-2 border border-white">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {apartments.map((item, index) => (
-                                <tr key={index} className="border-b hover:bg-gray-100 transition text-center">
-                                    {/* <td className="border px-4 py-2">{index + 1}</td> */}
-                                    <td className="border px-8 py-2 text-left">{item.name}</td>
-                                    <td className="border px-4 py-2">{item.address}</td>
-                                    <td className="border px-4 py-2">{item.area} sft</td>
-                                    <td className="border px-4 py-2">${item.price}</td>
-                                    <td className="border py-2 flex justify-center gap-2">
-                                        <button
-                                            onClick={() => handleEdit(item._id)}
-                                            className="bg-green-500 text-white px-3 py-1 rounded"
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => {
-                                                handleOpenModal(item._id);
-                                            }}
-                                            className="bg-red-500 text-white px-3 py-1 rounded"
-                                        >
-                                            Delete
-                                        </button>
+                                <tr key={index} className="hover:bg-gray-100 transition text-center">
+                                    <td className="px-6 py-2 border border-gray-200 text-left text-gray-800">
+                                        {item.name}
+                                    </td>
+                                    <td className="px-4 py-2 border border-gray-200">{item.address}</td>
+                                    <td className="px-4 py-2 border border-gray-200">{item.area} sft</td>
+                                    <td className="px-4 py-2 border border-gray-200">${item.price}</td>
+                                    <td className="px-4 py-2 border border-gray-200">
+                                        <div className="flex justify-center gap-2">
+                                            <button
+                                                onClick={() => handleEdit(item._id)}
+                                                className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                onClick={() => handleOpenModal(item._id)}
+                                                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                             {apartments.length === 0 && (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-6 text-gray-500">
+                                    <td colSpan="5" className="text-center py-6 text-gray-500 border border-gray-200">
                                         No apartment found.
                                     </td>
                                 </tr>
