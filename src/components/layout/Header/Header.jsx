@@ -128,7 +128,7 @@ const Header = () => {
                     {user?.email ? (
                         <div className="relative" ref={desktopRef}>
                             <button
-                                className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-md font-medium shadow-sm hover:bg-white transition"
+                                className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-full font-medium shadow-sm hover:bg-white transition"
                                 onClick={() => setDesktopOpen((s) => !s)}
                             >
                                 <img
@@ -201,7 +201,7 @@ const Header = () => {
                             {user?.email ? (
                                 <div className="relative flex flex-col items-center">
                                     <button
-                                        className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-md font-medium shadow-sm hover:bg-white transition"
+                                        className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-full font-medium shadow-sm hover:bg-white transition"
                                         onClick={() => setDesktopOpen((s) => !s)}
                                     >
                                         <img
