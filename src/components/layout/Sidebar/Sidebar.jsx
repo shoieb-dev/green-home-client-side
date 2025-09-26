@@ -68,9 +68,8 @@ export default function Sidebar() {
 
     return (
         <aside
-            className={`fixed top-0 left-0 h-full bg-[#97c0db] text-black flex flex-col transition-all duration-300 ${
-                isCollapsed ? "w-20" : "w-72"
-            }`}
+            className={`fixed top-0 left-0 h-full text-black flex flex-col transition-all duration-300 
+        bg-gradient-to-b from-green-600 via-green-400 to-lime-300 ${isCollapsed ? "w-20" : "w-72"}`}
         >
             {/* Header with Brand + Toggle Button */}
             <div className="flex items-center justify-between p-4">
