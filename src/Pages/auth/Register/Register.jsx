@@ -22,7 +22,7 @@ const Register = () => {
         // Simple strength check
         if (value.length < 6) {
             setStrength("weak");
-        } else if (value.match(/[A-Z]/) && value.match(/[0-9]/)) {
+        } else if (/[A-Z]/.test(value) && /[0-9]/.test(value) && /[^A-Za-z0-9]/.test(value)) {
             setStrength("strong");
         } else {
             setStrength("medium");
@@ -133,7 +133,7 @@ const Register = () => {
                             <div className="h-1 bg-gray-200 rounded-full mt-1">
                                 <div className={`h-2 rounded-full transition-all ${getStrengthColor()}`}></div>
                             </div>
-                            <div className="flex justify-between items-center">
+                            <div className="flex justify-between items-center mt-1">
                                 <div className="flex items-center">
                                     {errors.password && (
                                         <p className="text-red-500 text-sm">{errors.password.message}</p>
