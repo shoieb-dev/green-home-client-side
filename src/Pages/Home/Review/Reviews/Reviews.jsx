@@ -5,6 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import ReviewBg from "../../../../assets/images/reviewBg.jpg";
 import Loader from "../../../../components/Loader/Loader";
 import { API_ENDPOINTS } from "../../../../services/api";
 import Review from "../Review/Review";
@@ -36,7 +37,11 @@ const Reviews = () => {
 
     if (loading) {
         return (
-            <section id="reviews" className="review-bg py-12">
+            <section
+                id="reviews"
+                className="bg-cover bg-center py-12"
+                style={{ backgroundImage: `url(${ReviewBg})`, backgroundAttachment: "fixed" }}
+            >
                 <Loader />
             </section>
         );
@@ -53,9 +58,13 @@ const Reviews = () => {
     }
 
     return (
-        <section id="reviews" className="review-bg py-12">
+        <section
+            id="reviews"
+            className="bg-cover bg-center py-12"
+            style={{ backgroundImage: `url(${ReviewBg})`, backgroundAttachment: "fixed" }}
+        >
             <div className="mx-auto text-center">
-                <h2 className="text-3xl font-bold text-white review-header">
+                <h2 className="text-3xl font-bold text-white drop-shadow-[1px_10px_5px_rgba(0,0,0,0.9)]">
                     Happy <span className="text-yellow-400">Clients</span> Say
                 </h2>
             </div>
