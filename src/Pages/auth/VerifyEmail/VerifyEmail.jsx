@@ -56,7 +56,7 @@ const VerifyEmail = () => {
     }, [auth, location, navigate]);
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-lime-200 to-white px-4">
             <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center">
                 <h2 className="text-2xl font-semibold mb-4">Verify Your Email</h2>
 

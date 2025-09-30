@@ -2,32 +2,32 @@ import { useEffect, useState } from "react";
 import { API_ENDPOINTS } from "../../../services/api";
 import Apartment from "../../Apartments/Apartment/Apartment";
 import Loader from "../../../components/Loader/Loader";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
+import toast from "react-hot-toast";
 
 const FeaturedApartments = () => {
+    const { axiosInstance } = useAxiosInstance();
     const [apartments, setApartments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const response = await fetch(API_ENDPOINTS.houses);
-
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch data: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                setApartments(data.slice(0, 6));
+                const response = await axiosInstance.get(API_ENDPOINTS.houses);
+                setApartments(response.data.slice(0, 6));
             } catch (error) {
-                setError(error.message);
+                console.error(error);
+                setError(error.response?.data?.message || error.message);
+                toast.error("Failed to load apartments. Please try again.");
             } finally {
                 setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [axiosInstance]);
 
     return (
         <div id="featured" className="py-12">

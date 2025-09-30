@@ -1,27 +1,36 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Loader from "../../components/Loader/Loader";
+import { useAxiosInstance } from "../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../services/api";
 
 const Booking = () => {
     const { houseId } = useParams();
+    const { axiosInstance } = useAxiosInstance();
     const [house, setHouse] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!houseId) return;
+
         setLoading(true);
-        fetch(`${API_ENDPOINTS.houses}/${houseId}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setHouse(data);
-                setLoading(false);
+
+        axiosInstance
+            .get(`${API_ENDPOINTS.houses}/${houseId}`)
+            .then((res) => {
+                setHouse(res.data);
             })
-            .catch(() => setLoading(false));
-    }, [houseId]);
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.response?.data?.message || "Failed to load house details. Please try again.");
+            })
+            .finally(() => setLoading(false));
+    }, [houseId, axiosInstance]);
 
     if (loading) {
         return <Loader />;

@@ -62,13 +62,7 @@ const CheckMail = () => {
     };
 
     return (
-        <div
-            className="relative flex items-center justify-center min-h-screen py-30 bg-cover bg-center"
-            style={{ backgroundImage: "url('https://i.ibb.co/vsQh0F6/image.png')", backgroundAttachment: "fixed" }}
-        >
-            {/* Overlay for readability */}
-            <div className="absolute inset-0 bg-black/60" />
-
+        <div className="relative flex items-center justify-center bg-gradient-to-r from-lime-200 to-white  min-h-screen py-30 bg-cover bg-center">
             <div className="relative bg-white/95 shadow-green-500/30 shadow-xl rounded-3xl border-2 border-solid border-[#51e76a] p-8 w-full max-w-md">
                 {/* Icon */}
                 <div className="flex justify-center mb-4">
