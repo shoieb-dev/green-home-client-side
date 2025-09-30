@@ -1,4 +1,3 @@
-import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -22,13 +21,21 @@ const MyApartments = () => {
             });
     }, [axiosInstance]);
 
-    const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this booking?")) {
-            axios.delete(`${API_ENDPOINTS.bookings}/${id}`).then((res) => {
-                if (res.data.deletedCount > 0) {
-                    setApartments(apartments.filter((apt) => apt._id !== id));
-                }
-            });
+    const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this booking?")) return;
+
+        try {
+            const res = await axiosInstance.delete(`${API_ENDPOINTS.bookings}/${id}`);
+
+            if (res.data.deletedCount > 0) {
+                setApartments(apartments.filter((apt) => apt._id !== id));
+                toast.success("Booking deleted successfully.");
+            } else {
+                toast.warning("No booking was deleted.");
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error(err.response?.data?.message || "Failed to delete booking.");
         }
     };
 

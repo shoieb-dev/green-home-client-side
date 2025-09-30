@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import initializeFirebase from "../Pages/auth/Firebase/firebase.init";
 import { API_ENDPOINTS } from "../services/api";
+import { useAxiosInstance } from "./useAxiosInstance";
 
 initializeFirebase();
 
@@ -22,6 +23,7 @@ const useFirebase = () => {
     const [isCheckingUser, setIsCheckingUser] = useState(true);
     const [authError, setAuthError] = useState("");
     const [admin, setAdmin] = useState(false);
+    const { axiosInstance } = useAxiosInstance();
 
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
@@ -144,13 +146,18 @@ const useFirebase = () => {
     }, [auth]);
 
     useEffect(() => {
-        if (user.email) {
-            fetch(`${API_ENDPOINTS.users}/check/${user.email}`)
-                .then((res) => res.json())
-                .then((data) => setAdmin(data.admin))
-                .catch(console.error);
-        }
-    }, [user.email]);
+        if (!user?.email) return;
+
+        axiosInstance
+            .get(`${API_ENDPOINTS.users}/check/${user.email}`)
+            .then((res) => {
+                setAdmin(res.data.admin);
+            })
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.response?.data?.message || "Failed to check admin role. Please try again.");
+            });
+    }, [user?.email, axiosInstance]);
 
     const logout = useCallback(() => {
         setIsLoading(true);
@@ -159,13 +166,21 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }, [auth]);
 
-    const saveUser = (email, displayName, photoURL, method) => {
-        const user = { email, displayName, photoURL };
-        fetch(API_ENDPOINTS.users, {
-            method,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user),
-        }).catch(console.error);
+    // Save user to DB
+    const saveUser = async (email, displayName, photoURL, method) => {
+        try {
+            const user = { email, displayName, photoURL };
+            const response = await axiosInstance({
+                url: API_ENDPOINTS.users,
+                method,
+                data: user,
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            toast.error(error.response?.data?.message || "Failed to save user.");
+        }
     };
 
     return {

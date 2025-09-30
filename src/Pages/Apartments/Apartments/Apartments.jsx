@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
 import Apartment from "../Apartment/Apartment";
 
 const Apartments = () => {
+    const { axiosInstance } = useAxiosInstance();
     const [apartments, setApartments] = useState([]);
 
     useEffect(() => {
-        fetch(API_ENDPOINTS.houses)
-            .then((res) => res.json())
-            .then((data) => setApartments(data));
-    }, []);
+        axiosInstance
+            .get(API_ENDPOINTS.houses)
+            .then((res) => {
+                setApartments(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.response?.data?.message || "Failed to load apartments. Please try again.");
+            });
+    }, [axiosInstance]);
 
     return (
         <div className="py-10 mt-10">
