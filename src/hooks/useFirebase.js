@@ -98,7 +98,7 @@ const useFirebase = () => {
                 saveUser(loggedInUser.email, loggedInUser.displayName, photoURL, "PUT");
 
                 setUser(loggedInUser);
-                const destination = location?.state?.from || "/";
+                const destination = location?.state?.from || "/dashboard";
                 navigate(destination);
                 setAuthError("");
             } catch (err) {
@@ -121,7 +121,7 @@ const useFirebase = () => {
                     saveUser(user.email, user.displayName, photoURL, "PUT");
 
                     // Google users are always verified
-                    const destination = location?.state?.from || "/";
+                    const destination = location?.state?.from || "/dashboard";
                     navigate(destination);
                     setAuthError("");
                 })
