@@ -146,7 +146,7 @@ const CloudinaryUpload = ({ onUploadSuccess, isEditMode, multiple, folderName, e
         >
             {/* Single image mode */}
             {!multiple && images?.length > 0 ? (
-                <div className="relative w-32 h-32 mx-auto group">
+                <div className="relative w-fit h-32 mx-auto group">
                     <img src={images[0].url} alt="preview" className="w-full h-full object-cover rounded-full" />
                     {/* ❌ Remove button */}
                     <button
