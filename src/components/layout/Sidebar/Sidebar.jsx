@@ -12,6 +12,7 @@ import {
     MdMenu,
     MdPayment,
     MdRateReview,
+    MdReviews,
 } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
@@ -43,8 +44,9 @@ export default function Sidebar() {
 
     const adminLinks = [
         { to: "/manageAllBookings", label: "Manage All Bookings", icon: MdBookOnline },
-        { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
         { to: "/manageApartments", label: "Manage Apartments", icon: MdHomeWork },
+        { to: "/manageReviews", label: "Manage Reviews", icon: MdReviews },
+        { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
         { to: "/makeAdmin", label: "Make Admin", icon: MdAdminPanelSettings },
         { to: "/userList", label: "User List", icon: FaUsers },
         { to: "/profile", label: "Profile", icon: FaUserCog },
