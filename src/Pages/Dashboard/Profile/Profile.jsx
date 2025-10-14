@@ -79,11 +79,11 @@ const Profile = () => {
     return (
         <div className="bg-gray-100 flex items-center justify-center p-6">
             {/* Profile Info */}
-            <div className="w-full bg-white rounded-2xl shadow-lg p-8">
-                <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
+            <div className="w-full bg-white rounded-2xl shadow-lg p-4 sm:p-6 md:p-8">
+                <h2 className="text-lg sm:text-xl font-semibold mb-4">Profile Information</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
-                    <div className="flex justify-center gap-4">
-                        <div className="w-3/4 flex flex-col gap-4">
+                    <div className="flex flex-col lg:flex-row justify-center gap-4">
+                        <div className="w-full lg:w-3/4 flex flex-col gap-4 justify-around">
                             {/* Name */}
                             <div>
                                 <label className="block text-sm font-medium mb-2">Name</label>
@@ -92,12 +92,12 @@ const Profile = () => {
                                     className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                                 />
                                 {errors.displayName && (
-                                    <p className="text-red-500 text-sm">{errors.displayName.message}</p>
+                                    <p className="text-red-500 text-sm mt-1">{errors.displayName.message}</p>
                                 )}
                             </div>
 
                             {/* Email */}
-                            <div className="mt-4">
+                            <div>
                                 <label className="block text-sm font-medium mb-2">Email</label>
                                 <input
                                     {...register("email", {
@@ -107,10 +107,11 @@ const Profile = () => {
                                     disabled
                                     className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition disabled:bg-gray-200"
                                 />
-                                {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+                                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                             </div>
                         </div>
-                        <div className="w-1/4">
+
+                        <div className="w-full lg:w-1/4">
                             <label className="block text-sm font-medium mb-2">Profile Picture</label>
                             <Controller
                                 name="images"
@@ -128,9 +129,9 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-between items-center pt-4 ">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-4">
                         <p
-                            className="text-base font-bold text-green-500 cursor-pointer hover:text-green-700 transition"
+                            className="text-sm sm:text-base font-bold text-green-500 cursor-pointer hover:text-green-700 transition"
                             onClick={() => setShowPasswordModal(true)}
                         >
                             Change Password
@@ -138,7 +139,7 @@ const Profile = () => {
 
                         <button
                             type="submit"
-                            className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? "Updating..." : "Update Profile"}
