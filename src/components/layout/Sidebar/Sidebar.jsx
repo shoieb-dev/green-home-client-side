@@ -53,8 +53,8 @@ export default function Sidebar() {
     ];
     const userLinks = [
         { to: "/bookings", label: "My Apartments", icon: MdApartment },
+        { to: "/my-reviews", label: "My Reviews", icon: MdRateReview },
         { to: "/payment", label: "Payment", icon: MdPayment },
-        { to: "/reviewAdding", label: "Give a Review", icon: MdRateReview },
         { to: "/profile", label: "Profile", icon: FaUserCog },
     ];
 
