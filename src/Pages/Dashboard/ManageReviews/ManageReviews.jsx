@@ -75,7 +75,7 @@ const ReviewList = () => {
                         <tbody>
                             {reviewData.map((item, index) => (
                                 <tr key={index} className="hover:bg-gray-100 transition text-center">
-                                    <td className="px-4 py-2 border border-gray-200">{item.name}</td>
+                                    <td className="px-4 py-2 border border-gray-200">{item.user?.displayName}</td>
                                     <td className="px-4 py-2 border border-gray-200 text-left">
                                         {item.reviewtext?.length > 50
                                             ? item.reviewtext.slice(0, 50) + "..."

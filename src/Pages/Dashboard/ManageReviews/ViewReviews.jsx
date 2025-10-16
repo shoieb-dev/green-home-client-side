@@ -36,7 +36,7 @@ const ViewReviews = () => {
     useEffect(() => {
         if (id && viewData) {
             reset({
-                name: viewData.name || "",
+                name: viewData.user?.displayName || "",
                 email: viewData.email || "",
                 rating: viewData.rating || "",
                 reviewtext: viewData.reviewtext || "",
