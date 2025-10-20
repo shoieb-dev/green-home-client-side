@@ -4,7 +4,7 @@ import { Bar, BarChart, Cell, Legend, Pie, PieChart, ResponsiveContainer, Toolti
 
 // Constants
 const CHART_COLORS = ["#4ade80", "#facc15", "#f87171", "#60a5fa"];
-const CHART_HEIGHT = 250;
+const CHART_HEIGHT = 300;
 
 const STATUS_COLORS = {
     approved: "text-green-600",
