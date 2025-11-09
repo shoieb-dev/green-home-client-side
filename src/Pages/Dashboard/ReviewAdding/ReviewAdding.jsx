@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import { useAxiosInstance } from "../../../hooks/useAxiosInstance";
 import { API_ENDPOINTS } from "../../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const ReviewAdding = () => {
+    const navigate = useNavigate();
     const { userData } = useSidebar();
     const { axiosInstance } = useAxiosInstance();
     const { register, handleSubmit, reset } = useForm();
@@ -19,29 +21,33 @@ const ReviewAdding = () => {
         try {
             if (!rating || rating < 1) {
                 toast.error("Please select a rating before submitting.");
+                setLoading(false);
                 return;
             }
 
             const reviewData = {
-                name: data.name || userData?.displayName || userData?.googleName || "",
                 email: userData?.email || "",
-                img: userData?.photoURL || userData?.googlePhotoUrl || "",
                 reviewtext: data.reviewtext,
                 rating,
             };
 
             const res = await axiosInstance.post(API_ENDPOINTS.reviews, reviewData);
 
-            if (res.data?.insertedId) {
-                toast.success("Review added successfully!");
+            // Check for success flag instead of insertedId
+            if (res.data?.success) {
+                toast.success(res.data.message || "Review added successfully!");
                 reset();
                 setRating(0);
+
+                setTimeout(() => {
+                    navigate("/my-reviews");
+                }, 3000);
             } else {
-                toast.error("Failed to add review. Please try again.");
+                toast.error(res.data?.message || "Failed to add review. Please try again.");
             }
         } catch (error) {
             console.error("Error adding review:", error);
-            toast.error("Something went wrong.");
+            toast.error(error.response?.data?.message || "Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -53,22 +59,6 @@ const ReviewAdding = () => {
                 <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Add a Review</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-left">
-                    {/* Name (only if user has no displayName) */}
-                    {!userData?.displayName && !userData?.googleName && (
-                        <div>
-                            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                                Name
-                            </label>
-                            <input
-                                id="name"
-                                type="text"
-                                placeholder="Enter your name"
-                                {...register("name", { required: true, maxLength: 40 })}
-                                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
-                            />
-                        </div>
-                    )}
-
                     {/* Review Text */}
                     <div>
                         <label htmlFor="reviewtext" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -123,6 +113,7 @@ const ReviewAdding = () => {
                     </div>
                 </form>
             </div>
+            <Toaster position="top-right" reverseOrder={false} />
         </div>
     );
 };

@@ -26,9 +26,14 @@ import AddApartment from "./Pages/Dashboard/AddApartment/AddApartment";
 import ManageApartments from "./Pages/Dashboard/ManageApartments/ManageApartments";
 import MakeAdmin from "./Pages/Dashboard/MakeAdmin/MakeAdmin";
 import ManageAllBookings from "./Pages/Dashboard/ManageAllBookings/ManageAllBookings";
+import ManageReviews from "./Pages/Dashboard/ManageReviews/ManageReviews";
+import ViewReviews from "./Pages/Dashboard/ManageReviews/ViewReviews";
+import MyReviews from "./Pages/Dashboard/MyReviews/MyReviews";
+import EditReviews from "./Pages/Dashboard/MyReviews/EditReviews";
 import ReviewAdding from "./Pages/Dashboard/ReviewAdding/ReviewAdding";
 import MyApartments from "./Pages/Dashboard/MyApartments/MyApartments";
 import Payment from "./Pages/Dashboard/Payment/Payment";
+import UserList from "./Pages/Dashboard/UserList/UserList";
 import Profile from "./Pages/Dashboard/Profile/Profile";
 
 function App() {
@@ -91,12 +96,17 @@ function App() {
                                 <Route path="/dashboard" element={<Dashboard />} />
                                 <Route path="/booking/:houseId/bookingForm" element={<BookingForm />} />
                                 <Route path="/bookings" element={<MyApartments />} />
-                                <Route path="/reviewAdding" element={<ReviewAdding />} />
+                                <Route path="/add-review" element={<ReviewAdding />} />
                                 <Route path="/payment" element={<Payment />} />
                                 <Route path="/manageAllBookings" element={<ManageAllBookings />} />
                                 <Route path="/manageApartments" element={<ManageApartments />} />
+                                <Route path="/my-reviews" element={<MyReviews />} />
+                                <Route path="/my-reviews/edit/:id" element={<EditReviews />} />
+                                <Route path="/manageReviews" element={<ManageReviews />} />
+                                <Route path="/manageReviews/view/:id" element={<ViewReviews />} />
                                 <Route path="/apartment-form/:mode/:id" element={<AddApartment />} />
                                 <Route path="/makeAdmin" element={<MakeAdmin />} />
+                                <Route path="/userList" element={<UserList />} />
                                 <Route path="/profile" element={<Profile />} />
                             </Route>
                         </Routes>

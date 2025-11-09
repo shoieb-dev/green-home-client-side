@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Tooltip } from "react-tooltip";
+import { FaUserCog, FaUsers } from "react-icons/fa";
 import {
     MdAddHome,
     MdAdminPanelSettings,
@@ -11,10 +11,11 @@ import {
     MdLogout,
     MdMenu,
     MdPayment,
-    MdPerson,
     MdRateReview,
+    MdReviews,
 } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import useAuth from "../../../hooks/useAuth";
 
@@ -43,16 +44,18 @@ export default function Sidebar() {
 
     const adminLinks = [
         { to: "/manageAllBookings", label: "Manage All Bookings", icon: MdBookOnline },
-        { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
         { to: "/manageApartments", label: "Manage Apartments", icon: MdHomeWork },
+        { to: "/manageReviews", label: "Manage Reviews", icon: MdReviews },
+        { to: "/apartment-form/create/new", label: "Add Apartment", icon: MdAddHome },
         { to: "/makeAdmin", label: "Make Admin", icon: MdAdminPanelSettings },
-        { to: "/profile", label: "Profile", icon: MdPerson },
+        { to: "/userList", label: "User List", icon: FaUsers },
+        { to: "/profile", label: "Profile", icon: FaUserCog },
     ];
     const userLinks = [
         { to: "/bookings", label: "My Apartments", icon: MdApartment },
+        { to: "/my-reviews", label: "My Reviews", icon: MdRateReview },
         { to: "/payment", label: "Payment", icon: MdPayment },
-        { to: "/reviewAdding", label: "Give a Review", icon: MdRateReview },
-        { to: "/profile", label: "Profile", icon: MdPerson },
+        { to: "/profile", label: "Profile", icon: FaUserCog },
     ];
 
     const links = admin ? adminLinks : userLinks;
