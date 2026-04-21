@@ -52,11 +52,8 @@ This platform provides a seamless experience for both property seekers and admin
 
 > <img width="1920" height="869" alt="image" src="https://github.com/user-attachments/assets/69e381e5-520b-4ed8-8720-1e322706cda8" />
 
-> <img width="1920" height="1079" alt="image" src="https://github.com/user-attachments/assets/8b769219-1535-4f13-b129-3b4bf7283183" />
-
 > <img width="1920" height="869" alt="image" src="https://github.com/user-attachments/assets/aedacc55-f1fd-4ea1-9a3c-42a257d9622c" />
 
-
-
+> <img width="1920" height="1079" alt="image" src="https://github.com/user-attachments/assets/8b769219-1535-4f13-b129-3b4bf7283183" />
 
 ---
