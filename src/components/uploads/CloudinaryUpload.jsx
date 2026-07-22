@@ -153,6 +153,7 @@ const CloudinaryUpload = ({ onUploadSuccess, isEditMode, multiple, folderName, e
                         onClick={() => removeImage(images[0])}
                         className="absolute top-2 right-2 bg-red-600 text-white rounded w-5 h-5 flex items-center justify-center text-lg font-bold opacity-5 group-hover:opacity-100 transition-opacity duration-200 z-20"
                         title="Remove image"
+                        aria-label="Remove image"
                     >
                         ×
                     </button>
@@ -215,8 +216,8 @@ const CloudinaryUpload = ({ onUploadSuccess, isEditMode, multiple, folderName, e
                                                         {img.status === "uploading"
                                                             ? `Uploading... ${img.progress}%`
                                                             : img.status === "error"
-                                                            ? "Failed"
-                                                            : "Pending"}
+                                                              ? "Failed"
+                                                              : "Pending"}
                                                     </div>
                                                 )}
 
@@ -225,6 +226,7 @@ const CloudinaryUpload = ({ onUploadSuccess, isEditMode, multiple, folderName, e
                                                     onClick={() => removeImage(img)}
                                                     className="absolute top-2 right-2 bg-red-600 text-white rounded w-7 h-7 flex items-center justify-center text-lg font-bold opacity-5 group-hover:opacity-100 transition-opacity duration-200 z-20"
                                                     title="Remove image"
+                                                    aria-label="Remove image"
                                                 >
                                                     ×
                                                 </button>
@@ -234,6 +236,7 @@ const CloudinaryUpload = ({ onUploadSuccess, isEditMode, multiple, folderName, e
                                                     <button
                                                         onClick={() => retryUpload(img)}
                                                         className="absolute inset-0 bg-black bg-opacity-40 text-white flex items-center justify-center text-sm font-semibold z-10"
+                                                        aria-label="Retry upload"
                                                     >
                                                         Retry
                                                     </button>

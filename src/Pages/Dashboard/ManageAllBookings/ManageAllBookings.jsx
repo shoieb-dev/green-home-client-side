@@ -43,7 +43,12 @@ const EmptyState = ({ searchQuery, onClear }) => (
             {searchQuery ? (
                 <>
                     No bookings match your search. Try different keywords or{" "}
-                    <button onClick={onClear} className="text-blue-600 hover:underline">
+                    <button
+                        type="button"
+                        aria-label="clear search"
+                        onClick={onClear}
+                        className="text-blue-600 hover:underline"
+                    >
                         clear search
                     </button>
                     .
@@ -99,6 +104,8 @@ const BookingCard = ({ booking, onAction, actionLoading }) => (
                 {booking.status === "pending" && (
                     <>
                         <button
+                            type="button"
+                            aria-label="Approve Booking"
                             onClick={() => onAction("approve", booking._id)}
                             disabled={actionLoading === booking._id}
                             className="flex-1 bg-green-500 hover:bg-green-600 disabled:bg-green-300 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
@@ -107,6 +114,8 @@ const BookingCard = ({ booking, onAction, actionLoading }) => (
                             {actionLoading === booking._id ? "..." : "Approve"}
                         </button>
                         <button
+                            type="button"
+                            aria-label="Reject Booking"
                             onClick={() => onAction("reject", booking._id)}
                             disabled={actionLoading === booking._id}
                             className="flex-1 bg-yellow-600 hover:bg-yellow-700 disabled:bg-yellow-300 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
@@ -118,6 +127,8 @@ const BookingCard = ({ booking, onAction, actionLoading }) => (
                 )}
                 {(booking.status === "approved" || booking.status === "rejected") && (
                     <button
+                        type="button"
+                        aria-label="Delete Booking"
                         onClick={() => onAction("delete", booking._id)}
                         disabled={actionLoading === booking._id}
                         className="w-full bg-red-500 hover:bg-red-600 disabled:bg-red-300 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
@@ -305,6 +316,8 @@ const ManageAllBookings = () => {
                     <p className="mt-1 text-sm text-gray-500">{error}</p>
                 </div>
                 <button
+                    type="button"
+                    aria-label="Retry fetching bookings"
                     onClick={fetchBookings}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                 >
@@ -357,6 +370,8 @@ const ManageAllBookings = () => {
                                 </p>
                             </div>
                             <button
+                                type="button"
+                                aria-label="Refresh bookings"
                                 onClick={fetchBookings}
                                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                             >
@@ -395,6 +410,8 @@ const ManageAllBookings = () => {
                             </select>
                             {(searchQuery || statusFilter !== "all") && (
                                 <button
+                                    type="button"
+                                    aria-label="Clear filters"
                                     onClick={handleClearFilters}
                                     className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                                 >
@@ -464,6 +481,8 @@ const ManageAllBookings = () => {
                                                         {booking.status === "pending" && (
                                                             <>
                                                                 <button
+                                                                    type="button"
+                                                                    aria-label="Approve"
                                                                     onClick={() =>
                                                                         handleOpenModal("approve", booking._id)
                                                                     }
@@ -473,6 +492,8 @@ const ManageAllBookings = () => {
                                                                     {actionLoading === booking._id ? "..." : "Approve"}
                                                                 </button>
                                                                 <button
+                                                                    type="button"
+                                                                    aria-label="Reject"
                                                                     onClick={() =>
                                                                         handleOpenModal("reject", booking._id)
                                                                     }
@@ -486,6 +507,8 @@ const ManageAllBookings = () => {
                                                         {(booking.status === "approved" ||
                                                             booking.status === "rejected") && (
                                                             <button
+                                                                type="button"
+                                                                aria-label="Delete"
                                                                 onClick={() => handleOpenModal("delete", booking._id)}
                                                                 disabled={actionLoading === booking._id}
                                                                 className="bg-red-500 hover:bg-red-600 disabled:bg-red-300 text-white px-3 py-1 rounded text-sm transition-colors"
@@ -513,6 +536,8 @@ const ManageAllBookings = () => {
                                     </div>
                                     <div className="flex gap-2">
                                         <button
+                                            type="button"
+                                            aria-label="Previous Page"
                                             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                                             disabled={currentPage === 1}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -522,6 +547,8 @@ const ManageAllBookings = () => {
                                         <div className="flex items-center gap-1">
                                             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                                 <button
+                                                    type="button"
+                                                    aria-label={`Go to page ${page}`}
                                                     key={page}
                                                     onClick={() => setCurrentPage(page)}
                                                     className={`px-3 py-2 rounded-lg transition-colors ${
@@ -535,6 +562,8 @@ const ManageAllBookings = () => {
                                             ))}
                                         </div>
                                         <button
+                                            type="button"
+                                            aria-label="Next Page"
                                             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                                             disabled={currentPage === totalPages}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"

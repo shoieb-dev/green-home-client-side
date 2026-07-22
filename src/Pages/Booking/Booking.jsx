@@ -84,7 +84,11 @@ const Booking = () => {
                     </div>
 
                     <Link to={`/booking/${houseId}/bookingForm`} className="mt-6">
-                        <button className="w-full px-6 py-3 text-lg font-medium border border-green-500 text-green-600 rounded-full hover:bg-green-500 hover:text-white transition">
+                        <button
+                            type="button"
+                            aria-label="Book Now"
+                            className="w-full px-6 py-3 text-lg font-medium border border-green-500 text-green-600 rounded-full hover:bg-green-500 hover:text-white transition"
+                        >
                             Book Now
                         </button>
                     </Link>

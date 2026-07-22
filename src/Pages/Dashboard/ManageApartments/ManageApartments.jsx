@@ -36,7 +36,12 @@ const EmptyState = ({ searchQuery, onClear, onAddNew }) => (
             {searchQuery ? (
                 <>
                     No apartments match your search. Try different keywords or{" "}
-                    <button onClick={onClear} className="text-blue-600 hover:underline">
+                    <button
+                        type="button"
+                        aria-label="clear search"
+                        onClick={onClear}
+                        className="text-blue-600 hover:underline"
+                    >
                         clear search
                     </button>
                     .
@@ -48,6 +53,8 @@ const EmptyState = ({ searchQuery, onClear, onAddNew }) => (
         {!searchQuery && (
             <div className="mt-6">
                 <button
+                    type="button"
+                    aria-label="Add new apartment"
                     onClick={onAddNew}
                     className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
@@ -109,6 +116,8 @@ const ApartmentCard = ({ apartment, onEdit, onDelete, onView, deleteLoading }) =
 
             <div className="flex gap-2 mt-4">
                 <button
+                    type="button"
+                    aria-label="View apartment"
                     onClick={() => onView(apartment._id)}
                     className="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
                 >
@@ -116,6 +125,8 @@ const ApartmentCard = ({ apartment, onEdit, onDelete, onView, deleteLoading }) =
                     View
                 </button>
                 <button
+                    type="button"
+                    aria-label="Edit apartment"
                     onClick={() => onEdit(apartment._id)}
                     className="flex-1 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
                 >
@@ -123,6 +134,8 @@ const ApartmentCard = ({ apartment, onEdit, onDelete, onView, deleteLoading }) =
                     Edit
                 </button>
                 <button
+                    type="button"
+                    aria-label="Delete apartment"
                     onClick={() => onDelete(apartment._id)}
                     disabled={deleteLoading === apartment._id}
                     className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-red-300 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
@@ -310,6 +323,8 @@ const ManageApartments = () => {
                     <p className="mt-1 text-sm text-gray-500">{error}</p>
                 </div>
                 <button
+                    type="button"
+                    aria-label="try again"
                     onClick={fetchApartments}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                 >
@@ -347,6 +362,8 @@ const ManageApartments = () => {
                             </div>
                             <div className="flex gap-2">
                                 <button
+                                    type="button"
+                                    aria-label="Refresh apartments"
                                     onClick={fetchApartments}
                                     className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                                 >
@@ -354,6 +371,8 @@ const ManageApartments = () => {
                                     <span>Refresh</span>
                                 </button>
                                 <button
+                                    type="button"
+                                    aria-label="Add new apartment"
                                     onClick={handleAddNew}
                                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                                 >
@@ -389,6 +408,8 @@ const ManageApartments = () => {
                             </select>
                             {searchQuery && (
                                 <button
+                                    type="button"
+                                    aria-label="Clear search"
                                     onClick={handleClearSearch}
                                     className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                                 >
@@ -455,6 +476,8 @@ const ManageApartments = () => {
                                                 <td className="px-4 py-3 text-center">
                                                     <div className="flex justify-center gap-2">
                                                         <button
+                                                            type="button"
+                                                            aria-label="View Details"
                                                             onClick={() => handleView(apartment._id)}
                                                             className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors flex items-center gap-1"
                                                             title="View Details"
@@ -463,6 +486,8 @@ const ManageApartments = () => {
                                                             View
                                                         </button>
                                                         <button
+                                                            type="button"
+                                                            aria-label="Edit Apartment"
                                                             onClick={() => handleEdit(apartment._id)}
                                                             className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors flex items-center gap-1"
                                                             title="Edit Apartment"
@@ -471,6 +496,8 @@ const ManageApartments = () => {
                                                             Edit
                                                         </button>
                                                         <button
+                                                            type="button"
+                                                            aria-label="Delete Apartment"
                                                             onClick={() => handleOpenModal(apartment._id)}
                                                             disabled={deleteLoading === apartment._id}
                                                             className="bg-red-500 hover:bg-red-600 disabled:bg-red-300 text-white px-3 py-1 rounded text-sm transition-colors flex items-center gap-1"
@@ -497,6 +524,8 @@ const ManageApartments = () => {
                                     </div>
                                     <div className="flex gap-2">
                                         <button
+                                            type="button"
+                                            aria-label="Previous Page"
                                             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                                             disabled={currentPage === 1}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -531,6 +560,8 @@ const ManageApartments = () => {
                                             })}
                                         </div>
                                         <button
+                                            type="button"
+                                            aria-label="Next Page"
                                             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                                             disabled={currentPage === totalPages}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"

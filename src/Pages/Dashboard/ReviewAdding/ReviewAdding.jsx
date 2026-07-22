@@ -105,6 +105,7 @@ const ReviewAdding = () => {
                     <div className="flex justify-end">
                         <button
                             type="submit"
+                            aria-label="Submit Review"
                             disabled={loading}
                             className="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                         >

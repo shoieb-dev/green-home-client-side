@@ -83,6 +83,8 @@ const UserProfile = ({ onClose }) => {
 
                 {!isDashboardPage && (
                     <button
+                        type="button"
+                        aria-label="Go to dashboard"
                         onClick={handleGoDashboard}
                         className="text-white bg-green-500 hover:bg-green-600 rounded w-full p-2 mt-3"
                     >
@@ -91,6 +93,8 @@ const UserProfile = ({ onClose }) => {
                 )}
 
                 <button
+                    type="button"
+                    aria-label="Logout"
                     onClick={handleLogout}
                     className="text-white bg-red-500 hover:bg-red-600 rounded w-full p-2 mt-2"
                 >

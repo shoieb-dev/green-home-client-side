@@ -97,6 +97,7 @@ const SectionHeader = ({ title, onRefresh }) => (
         <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
         {onRefresh && (
             <button
+                type="button"
                 onClick={onRefresh}
                 className="flex items-center gap-2 px-3 py-1.5 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
                 aria-label="Refresh data"
@@ -133,6 +134,8 @@ const UserDashboard = ({ data, onRefresh }) => {
                 <h1 className="text-3xl font-bold text-gray-800">My Dashboard</h1>
                 {onRefresh && (
                     <button
+                        type="button"
+                        aria-label="Refresh all data"
                         onClick={onRefresh}
                         className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
                         aria-label="Refresh all data"

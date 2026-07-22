@@ -105,6 +105,7 @@ const Login = () => {
                         {/* Login button */}
                         <button
                             type="submit"
+                            aria-label="Login"
                             disabled={isLoading}
                             className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded transition disabled:bg-gray-400"
                         >
@@ -123,6 +124,7 @@ const Login = () => {
                     <button
                         onClick={handleGoogleSignIn}
                         type="button"
+                        aria-label="Sign in with Google"
                         className="w-full py-2 px-4 border-2 border-gray-300 rounded flex items-center justify-center gap-2 text-gray-700 hover:bg-green-700 hover:text-white transition"
                     >
                         <FcGoogle size={20} /> Continue with Google

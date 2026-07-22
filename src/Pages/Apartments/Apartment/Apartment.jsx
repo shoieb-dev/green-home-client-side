@@ -49,7 +49,11 @@ const Apartment = ({ apartment }) => {
                     </div>
 
                     <Link to={`/booking/${_id}`}>
-                        <button className="w-full px-5 py-2 rounded-full border border-green-500 text-green-600 hover:bg-green-500 hover:text-white transition-all duration-300">
+                        <button
+                            type="button"
+                            aria-label="Book Now"
+                            className="w-full px-5 py-2 rounded-full border border-green-500 text-green-600 hover:bg-green-500 hover:text-white transition-all duration-300"
+                        >
                             Book Now
                         </button>
                     </Link>

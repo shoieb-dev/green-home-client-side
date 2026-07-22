@@ -50,6 +50,7 @@ const MakeAdmin = () => {
 
                     <button
                         type="submit"
+                        aria-label="Make Admin"
                         className="w-full bg-green-600 text-white py-2 rounded-lg shadow hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={loading}
                     >

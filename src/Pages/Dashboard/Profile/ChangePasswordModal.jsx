@@ -169,6 +169,7 @@ const ChangePasswordModal = ({ show, onClose }) => {
                     <div className="flex justify-end gap-3 pt-2">
                         <button
                             type="button"
+                            aria-label="Cancel Change Password"
                             onClick={() => {
                                 onClose();
                                 reset();
@@ -179,6 +180,7 @@ const ChangePasswordModal = ({ show, onClose }) => {
                         </button>
                         <button
                             type="submit"
+                            aria-label="Change Password"
                             disabled={!isValid || isSubmitting || loading}
                             className={`px-4 py-2 rounded text-white disabled:cursor-not-allowed bg-gray-400 hover:bg-gray-600 transition ${
                                 isValid ? "bg-green-600 hover:bg-green-700" : "bg-gray-400 cursor-not-allowed"

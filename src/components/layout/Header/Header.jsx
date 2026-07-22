@@ -129,6 +129,8 @@ const Header = () => {
                     {user?.email ? (
                         <div className="relative" ref={desktopRef}>
                             <button
+                                type="button"
+                                aria-label="user-menu"
                                 className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-full font-medium shadow-sm hover:bg-white transition"
                                 onClick={() => setDesktopOpen((s) => !s)}
                             >
@@ -156,6 +158,8 @@ const Header = () => {
                         </div>
                     ) : (
                         <button
+                            type="button"
+                            aria-label="login"
                             onClick={() => navigate("/login")}
                             className="bg-green-600 border border-yellow-400 text-white rounded-full px-4 py-1.5 hover:bg-yellow-400 hover:text-black transition"
                         >
@@ -170,6 +174,7 @@ const Header = () => {
                         setMobileOpen((s) => !s);
                         setDesktopOpen(false); // close desktop dropdown when mobile opens
                     }}
+                    aria-label="hamburger-menu"
                     className="md:hidden p-2 text-gray-700"
                 >
                     {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -202,6 +207,8 @@ const Header = () => {
                             {user?.email ? (
                                 <div className="relative flex flex-col items-center">
                                     <button
+                                        type="button"
+                                        aria-label="user-menu"
                                         className="flex items-center cursor-pointer bg-green-200 text-gray-800 ml-2 mr-1 px-2 py-1 rounded-full font-medium shadow-sm hover:bg-white transition"
                                         onClick={() => setDesktopOpen((s) => !s)}
                                     >
@@ -237,6 +244,8 @@ const Header = () => {
                                 </div>
                             ) : (
                                 <button
+                                    type="button"
+                                    aria-label="login"
                                     onClick={() => setMobileOpen(false) || navigate("/login")}
                                     className="bg-green-600 border border-yellow-400 text-white rounded-full px-4 py-1.5 hover:bg-yellow-400 transition"
                                 >

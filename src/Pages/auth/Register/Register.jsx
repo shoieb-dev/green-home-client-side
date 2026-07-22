@@ -146,8 +146,8 @@ const Register = () => {
                                                 strength === "weak"
                                                     ? "text-red-500"
                                                     : strength === "medium"
-                                                    ? "text-yellow-600"
-                                                    : "text-green-600"
+                                                      ? "text-yellow-600"
+                                                      : "text-green-600"
                                             }`}
                                         >
                                             {strength.charAt(0).toUpperCase() + strength.slice(1)}
@@ -193,6 +193,7 @@ const Register = () => {
                         {/* Submit button */}
                         <button
                             type="submit"
+                            aria-label="Sign Up"
                             disabled={isLoading}
                             className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded transition disabled:bg-gray-400"
                         >

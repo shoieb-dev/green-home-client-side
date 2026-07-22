@@ -100,6 +100,8 @@ const CheckMail = () => {
                 <p className="text-sm text-gray-500 mt-4">
                     Didn’t receive the email? <br /> Check your spam folder or{" "}
                     <button
+                        type="button"
+                        aria-label="Resend verification email"
                         onClick={handleResend}
                         disabled={isSending || cooldown > 0}
                         className={`inline font-semibold ${

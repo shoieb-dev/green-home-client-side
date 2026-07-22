@@ -51,7 +51,12 @@ const EmptyState = ({ searchQuery, onClear }) => (
             {searchQuery ? (
                 <>
                     No reviews match your search. Try different keywords or{" "}
-                    <button onClick={onClear} className="text-blue-600 hover:underline">
+                    <button
+                        type="button"
+                        aria-label="clear search"
+                        onClick={onClear}
+                        className="text-blue-600 hover:underline"
+                    >
                         clear search
                     </button>
                     .
@@ -109,6 +114,8 @@ const ReviewCard = ({ review, onView, onDelete, deleteLoading }) => (
             {/* Actions */}
             <div className="flex gap-2 pt-2">
                 <button
+                    type="button"
+                    aria-label="View Full Review"
                     onClick={() => onView(review._id)}
                     className="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
                 >
@@ -116,6 +123,8 @@ const ReviewCard = ({ review, onView, onDelete, deleteLoading }) => (
                     View Full
                 </button>
                 <button
+                    type="button"
+                    aria-label="Delete Review"
                     onClick={() => onDelete(review._id)}
                     disabled={deleteLoading === review._id}
                     className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-red-300 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
@@ -299,6 +308,8 @@ const ReviewList = () => {
                     <p className="mt-1 text-sm text-gray-500">{error}</p>
                 </div>
                 <button
+                    type="button"
+                    aria-label="try again"
                     onClick={fetchReviews}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                 >
@@ -334,6 +345,8 @@ const ReviewList = () => {
                                 </p>
                             </div>
                             <button
+                                type="button"
+                                aria-label="Refresh Reviews"
                                 onClick={fetchReviews}
                                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                             >
@@ -384,6 +397,8 @@ const ReviewList = () => {
                             </select>
                             {(searchQuery || ratingFilter !== "all") && (
                                 <button
+                                    type="button"
+                                    aria-label="Clear Filters"
                                     onClick={handleClearFilters}
                                     className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                                 >
@@ -469,6 +484,8 @@ const ReviewList = () => {
                                                 <td className="px-4 py-3 text-center">
                                                     <div className="flex justify-center gap-2">
                                                         <button
+                                                            type="button"
+                                                            aria-label="View Full Review"
                                                             onClick={() => handleView(review._id)}
                                                             className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors flex items-center gap-1"
                                                             title="View Full Review"
@@ -477,6 +494,8 @@ const ReviewList = () => {
                                                             View
                                                         </button>
                                                         <button
+                                                            type="button"
+                                                            aria-label="Delete Review"
                                                             onClick={() => handleOpenModal(review._id)}
                                                             disabled={deleteLoading === review._id}
                                                             className="bg-red-500 hover:bg-red-600 disabled:bg-red-300 text-white px-3 py-1 rounded text-sm transition-colors flex items-center gap-1"
@@ -503,6 +522,8 @@ const ReviewList = () => {
                                     </div>
                                     <div className="flex gap-2">
                                         <button
+                                            type="button"
+                                            aria-label="Previous Page"
                                             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                                             disabled={currentPage === 1}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -523,6 +544,8 @@ const ReviewList = () => {
                                                 }
                                                 return (
                                                     <button
+                                                        type="button"
+                                                        aria-label={`Go to page ${page}`}
                                                         key={page}
                                                         onClick={() => setCurrentPage(page)}
                                                         className={`px-3 py-2 rounded-lg transition-colors ${
@@ -537,6 +560,8 @@ const ReviewList = () => {
                                             })}
                                         </div>
                                         <button
+                                            type="button"
+                                            aria-label="Next Page"
                                             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                                             disabled={currentPage === totalPages}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"

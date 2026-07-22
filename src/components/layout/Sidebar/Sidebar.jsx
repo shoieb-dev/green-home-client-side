@@ -77,7 +77,14 @@ export default function Sidebar() {
             {/* Header with Brand + Toggle Button */}
             <div className="flex items-center justify-between p-4">
                 {!isCollapsed && <span className="text-xl font-bold whitespace-nowrap">Green Home</span>}
-                <button onClick={toggleSidebar} className="p-2 rounded hover:bg-green-500 hover:text-white">
+                <button
+                    type="button"
+                    data-tooltip-id="sidebar-tooltip"
+                    data-tooltip-content="Toggle Sidebar"
+                    aria-label="Toggle Sidebar"
+                    onClick={toggleSidebar}
+                    className="p-2 rounded hover:bg-green-500 hover:text-white"
+                >
                     {isCollapsed ? <MdMenu size={24} /> : <MdClose size={24} />}
                 </button>
             </div>
@@ -112,9 +119,11 @@ export default function Sidebar() {
             {/* Logout */}
             <div className="p-4 border-t border-gray-400">
                 <button
+                    type="button"
                     onClick={handleLogout}
                     data-tooltip-id="sidebar-tooltip"
                     data-tooltip-content="Logout"
+                    aria-label="Logout"
                     className={`w-full flex items-center gap-2 px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600 ${
                         isCollapsed ? "justify-center" : "justify-start"
                     }`}

@@ -153,6 +153,7 @@ const ViewReviews = () => {
                         <div className="md:col-span-2 gap-x-2 flex justify-end">
                             <button
                                 type="button"
+                                aria-label="Go Back"
                                 className="bg-green-600 text-white px-6 py-1 rounded shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                                 disabled={loading}
                                 onClick={() => navigate(-1)}
@@ -161,6 +162,7 @@ const ViewReviews = () => {
                             </button>
                             <button
                                 type="button"
+                                aria-label="Delete Review"
                                 onClick={() => handleOpenModal(id)}
                                 className="bg-white border border-red-500 text-red-500 px-2 py-1 rounded shadow hover:text-white hover:bg-red-600 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
                                 disabled={loading}

@@ -104,6 +104,8 @@ const MyReviews = () => {
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-semibold">My Reviews</h2>
                     <button
+                        type="button"
+                        aria-label="add review"
                         onClick={() => navigate("/add-review")}
                         className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded transition-colors"
                     >
@@ -115,6 +117,8 @@ const MyReviews = () => {
                     <div className="text-center py-12">
                         <p className="text-gray-500 mb-4">You haven't written any reviews yet</p>
                         <button
+                            type="button"
+                            aria-label="add review"
                             onClick={() => navigate("/add-review")}
                             className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition-colors"
                         >
@@ -161,6 +165,7 @@ const MyReviews = () => {
                                         <td className="px-4 py-2 border border-gray-200">
                                             <div className="flex justify-center gap-2">
                                                 <button
+                                                    type="button"
                                                     onClick={() => handleEdit(item._id)}
                                                     className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition-colors"
                                                     aria-label="Edit review"
@@ -168,6 +173,7 @@ const MyReviews = () => {
                                                     Edit
                                                 </button>
                                                 <button
+                                                    type="button"
                                                     onClick={() => handleOpenModal(item._id)}
                                                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-colors"
                                                     aria-label="Delete review"

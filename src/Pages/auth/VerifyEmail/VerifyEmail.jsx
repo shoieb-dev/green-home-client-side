@@ -70,6 +70,8 @@ const VerifyEmail = () => {
                     <>
                         <p className="mt-4 text-sm text-gray-500">Redirecting you to dashboard...</p>
                         <button
+                            type="button"
+                            aria-label="Go to Dashboard"
                             onClick={() => navigate("/dashboard")}
                             className="mt-6 w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md"
                         >
@@ -80,6 +82,8 @@ const VerifyEmail = () => {
 
                 {status === "error" && (
                     <button
+                        type="button"
+                        aria-label="Go to Login"
                         onClick={() => navigate("/login")}
                         className="mt-6 w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md"
                     >

@@ -87,8 +87,8 @@ const MyApartments = () => {
                                                 apartment.status === "approved"
                                                     ? "bg-green-100 text-green-700"
                                                     : apartment.status === "rejected"
-                                                    ? "bg-red-100 text-red-700"
-                                                    : "bg-yellow-100 text-yellow-700"
+                                                      ? "bg-red-100 text-red-700"
+                                                      : "bg-yellow-100 text-yellow-700"
                                             }`}
                                         >
                                             {apartment.status}
@@ -96,6 +96,8 @@ const MyApartments = () => {
                                     </td>
                                     <td className="border border-gray-200 px-4 py-2 text-center">
                                         <button
+                                            type="button"
+                                            aria-label="Delete Booking"
                                             onClick={() => handleOpenModal(apartment._id)}
                                             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
                                         >

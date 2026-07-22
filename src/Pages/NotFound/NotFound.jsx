@@ -14,6 +14,7 @@ const NotFound = () => {
             {/* Buttons */}
             <div className="mt-6 flex flex-col sm:flex-row gap-4">
                 <button
+                    type="button"
                     onClick={() => navigate("/")}
                     aria-label="Go back to home page"
                     className="px-6 py-3 rounded bg-green-600 text-white font-medium shadow hover:bg-green-700 transition"
@@ -21,6 +22,8 @@ const NotFound = () => {
                     Back to Home
                 </button>
                 <button
+                    type="button"
+                    aria-label="Browse homes"
                     onClick={() => navigate("/apartments")}
                     className="px-6 py-3 rounded border-2 border-green-600 text-green-700 font-medium hover:bg-green-50 transition"
                 >

@@ -70,7 +70,12 @@ const EmptyState = ({ searchQuery, onClear }) => (
             {searchQuery ? (
                 <>
                     No users match your search. Try different keywords or{" "}
-                    <button onClick={onClear} className="text-blue-600 hover:underline">
+                    <button
+                        type="button"
+                        aria-label="clear search"
+                        onClick={onClear}
+                        className="text-blue-600 hover:underline"
+                    >
                         clear search
                     </button>
                     .
@@ -126,6 +131,8 @@ const UserCard = ({ user, onMakeAdmin, onDelete, isLastAdmin, actionLoading }) =
 
         <div className="flex gap-2">
             <button
+                type="button"
+                aria-label={user.role === "admin" ? "Remove Admin" : "Make Admin"}
                 onClick={() => onMakeAdmin(user.email, user.role)}
                 disabled={isLastAdmin || actionLoading === user._id}
                 className={`flex-1 ${
@@ -141,6 +148,8 @@ const UserCard = ({ user, onMakeAdmin, onDelete, isLastAdmin, actionLoading }) =
                 {actionLoading === user._id ? "..." : user.role === "admin" ? "Remove Admin" : "Make Admin"}
             </button>
             <button
+                type="button"
+                aria-label="Delete User"
                 onClick={() => onDelete(user._id, user.role)}
                 disabled={isLastAdmin || actionLoading === user._id}
                 className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1"
@@ -365,6 +374,8 @@ const UserList = () => {
                     <p className="mt-1 text-sm text-gray-500">{error}</p>
                 </div>
                 <button
+                    type="button"
+                    aria-label="try again"
                     onClick={fetchUsers}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                 >
@@ -415,6 +426,8 @@ const UserList = () => {
                             </div>
                             <div className="flex gap-2">
                                 <button
+                                    type="button"
+                                    aria-label="refresh users"
                                     onClick={fetchUsers}
                                     className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                                 >
@@ -422,8 +435,11 @@ const UserList = () => {
                                     <span>Refresh</span>
                                 </button>
                                 <button
+                                    type="button"
+                                    aria-label="make admin"
                                     onClick={() => navigate("/makeAdmin")}
                                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                    aria-label="Make Admin"
                                 >
                                     <FaPlus size={14} />
                                     <span>Make Admin</span>
@@ -463,6 +479,8 @@ const UserList = () => {
                             </select>
                             {(searchQuery || roleFilter !== "all") && (
                                 <button
+                                    type="button"
+                                    aria-label="clear filters"
                                     onClick={handleClearFilters}
                                     className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                                 >
@@ -561,6 +579,10 @@ const UserList = () => {
                                                     <td className="px-4 py-3 text-center">
                                                         <div className="flex justify-center gap-2">
                                                             <button
+                                                                type="button"
+                                                                aria-label={
+                                                                    userRole === "admin" ? "Remove Admin" : "Make Admin"
+                                                                }
                                                                 onClick={() => handleMakeAdmin(user.email, userRole)}
                                                                 disabled={isMasterAdmin || actionLoading === user._id}
                                                                 className={`${
@@ -582,6 +604,8 @@ const UserList = () => {
                                                                       : "Make Admin"}
                                                             </button>
                                                             <button
+                                                                type="button"
+                                                                aria-label="Delete User"
                                                                 onClick={() => handleOpenModal(user._id, userRole)}
                                                                 disabled={isMasterAdmin || actionLoading === user._id}
                                                                 className="bg-red-500 hover:bg-red-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-3 py-1 rounded text-sm transition-colors flex items-center gap-1"
@@ -611,6 +635,8 @@ const UserList = () => {
                                     </div>
                                     <div className="flex gap-2">
                                         <button
+                                            type="button"
+                                            aria-label="previous page"
                                             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                                             disabled={currentPage === 1}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -631,6 +657,8 @@ const UserList = () => {
                                                 }
                                                 return (
                                                     <button
+                                                        type="button"
+                                                        aria-label={`Go to page ${page}`}
                                                         key={page}
                                                         onClick={() => setCurrentPage(page)}
                                                         className={`px-3 py-2 rounded-lg transition-colors ${
@@ -645,6 +673,8 @@ const UserList = () => {
                                             })}
                                         </div>
                                         <button
+                                            type="button"
+                                            aria-label="next page"
                                             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                                             disabled={currentPage === totalPages}
                                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"

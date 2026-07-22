@@ -234,6 +234,7 @@ const EditReviews = () => {
                         <div className="flex justify-between items-center pt-4 border-t border-gray-200">
                             <button
                                 type="button"
+                                aria-label="Delete Review"
                                 onClick={handleOpenModal}
                                 className="bg-white border border-red-500 text-red-500 px-4 py-2 rounded shadow hover:text-white hover:bg-red-600 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
                                 disabled={submitLoading}
@@ -245,6 +246,7 @@ const EditReviews = () => {
                             <div className="flex gap-3">
                                 <button
                                     type="button"
+                                    aria-label="Cancel Edit"
                                     onClick={() => navigate("/my-reviews")}
                                     className="bg-gray-500 text-white px-6 py-2 rounded shadow hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
                                     disabled={submitLoading}
@@ -253,6 +255,7 @@ const EditReviews = () => {
                                 </button>
                                 <button
                                     type="submit"
+                                    aria-label="Save Changes"
                                     className="px-6 py-2 rounded shadow bg-green-600 text-white hover:bg-green-700 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
                                     disabled={submitLoading}
                                 >
