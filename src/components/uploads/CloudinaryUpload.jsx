@@ -5,7 +5,6 @@ import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 
 const CloudinaryUpload = ({ onUploadSuccess, isEditMode, multiple, folderName, existingImages, error }) => {
-    console.log("existingImages", existingImages);
     const [images, setImages] = useState([]); // {file, url, status, progress, error}
 
     // Load existing images in edit mode
