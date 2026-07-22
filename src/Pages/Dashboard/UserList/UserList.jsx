@@ -1,7 +1,8 @@
 import moment from "moment";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { FaCrown, FaRedo, FaSearch, FaTrash, FaUser, FaUserShield } from "react-icons/fa";
+import { FaCrown, FaPlus, FaRedo, FaSearch, FaTrash, FaUser, FaUserShield } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Avatar1 from "../../../assets/images/avatar1.png";
 import Loader from "../../../components/Loader/Loader";
 import ConfirmationModal from "../../../components/modals/ConfirmationModal";
@@ -131,8 +132,8 @@ const UserCard = ({ user, onMakeAdmin, onDelete, isLastAdmin, actionLoading }) =
                     isLastAdmin
                         ? "bg-gray-400 cursor-not-allowed"
                         : user.role === "admin"
-                        ? "bg-red-500 hover:bg-red-600"
-                        : "bg-green-500 hover:bg-green-600"
+                          ? "bg-red-500 hover:bg-red-600"
+                          : "bg-green-500 hover:bg-green-600"
                 } disabled:bg-gray-300 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-1`}
                 title={isLastAdmin ? "Cannot remove the last admin" : ""}
             >
@@ -157,7 +158,7 @@ const UserCard = ({ user, onMakeAdmin, onDelete, isLastAdmin, actionLoading }) =
  */
 const UserList = () => {
     const { axiosInstance } = useAxiosInstance();
-
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -412,13 +413,22 @@ const UserList = () => {
                                     {filteredUsers.length} user{filteredUsers.length !== 1 ? "s" : ""} found
                                 </p>
                             </div>
-                            <button
-                                onClick={fetchUsers}
-                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                                <FaRedo size={14} />
-                                <span>Refresh</span>
-                            </button>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={fetchUsers}
+                                    className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                                >
+                                    <FaRedo size={14} />
+                                    <span>Refresh</span>
+                                </button>
+                                <button
+                                    onClick={() => navigate("/makeAdmin")}
+                                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                >
+                                    <FaPlus size={14} />
+                                    <span>Make Admin</span>
+                                </button>
+                            </div>
                         </div>
 
                         {/* Statistics */}
@@ -557,8 +567,8 @@ const UserList = () => {
                                                                     isMasterAdmin
                                                                         ? "bg-gray-400 cursor-not-allowed"
                                                                         : userRole === "admin"
-                                                                        ? "bg-red-500 hover:bg-red-600"
-                                                                        : "bg-green-500 hover:bg-green-600"
+                                                                          ? "bg-red-500 hover:bg-red-600"
+                                                                          : "bg-green-500 hover:bg-green-600"
                                                                 } disabled:bg-gray-300 text-white px-3 py-1 rounded text-sm transition-colors flex items-center gap-1`}
                                                                 title={
                                                                     isMasterAdmin ? "Cannot remove the last admin" : ""
@@ -568,8 +578,8 @@ const UserList = () => {
                                                                 {actionLoading === user._id
                                                                     ? "..."
                                                                     : userRole === "admin"
-                                                                    ? "Remove Admin"
-                                                                    : "Make Admin"}
+                                                                      ? "Remove Admin"
+                                                                      : "Make Admin"}
                                                             </button>
                                                             <button
                                                                 onClick={() => handleOpenModal(user._id, userRole)}
