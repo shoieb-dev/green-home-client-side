@@ -135,7 +135,6 @@ const UserDashboard = ({ data, onRefresh }) => {
                 {onRefresh && (
                     <button
                         type="button"
-                        aria-label="Refresh all data"
                         onClick={onRefresh}
                         className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
                         aria-label="Refresh all data"
